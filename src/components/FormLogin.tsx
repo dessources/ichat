@@ -5,22 +5,24 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-
+import userService from "@/services/user";
 import * as styles from "@/styles/UnauthApp";
-
+import { UserContext } from "@/pages";
 interface FormLoginProps {
   create: boolean;
-  login: Function;
-  register: Function;
-  logout: Function;
+
+  setStatus: Function;
+  setError: Function;
 }
 
 function FormLogin({
   create = false,
-  login,
-  register,
-  logout,
+
+  setError,
+  setStatus,
 }: FormLoginProps) {
+  const userContext = React.useContext(UserContext);
+
   const [checked, setChecked] = React.useState(false);
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -29,8 +31,36 @@ function FormLogin({
 
   const label = create ? "Signup" : "Login";
 
+  const handleRegister = () =>
+    userService.register({
+      name,
+      username,
+      cPassword,
+      password,
+    });
+
+  const handleLogin = async () => {
+    setStatus("fetching");
+    userService
+      .login({ username, password })
+      .then((user) => {
+        userContext?.setUser(user);
+      })
+      .catch((err) => {
+        setError(err);
+      })
+      .finally(() => setStatus("done"));
+  };
+
+  const handleSubmit = create ? handleRegister : handleLogin;
+
   return (
-    <form style={styles.root} noValidate autoComplete="off">
+    <form
+      style={styles.root}
+      noValidate
+      autoComplete="off"
+      onSubmit={handleSubmit}
+    >
       {create ? (
         <TextField
           id="filled-basic"
@@ -75,9 +105,7 @@ function FormLogin({
             style={styles.submit}
             variant="contained"
             color="secondary"
-            onClick={() =>
-              register({ name, username, cPassword, password })
-            }
+            onClick={handleRegister}
           >
             {label}
           </Button>
@@ -90,7 +118,7 @@ function FormLogin({
             style={styles.submit}
             variant="contained"
             color="secondary"
-            onClick={() => login({ username, password })}
+            onClick={handleLogin}
           >
             {label}
           </Button>

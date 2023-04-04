@@ -11,41 +11,26 @@ import CircularProgress from "@mui/material/CircularProgress";
 import FormLogin from "./FormLogin";
 import * as styles from "@/styles/UnauthApp";
 
-interface UnauthAppProps {
-  open: boolean;
-  handleClose:
-    | ((event: {}, reason: "backdropClick" | "escapeKeyDown") => void)
-    | undefined;
-  signup: boolean;
-  login: Function;
-  logout: Function;
-  register: Function;
-  error: any;
-  status: string;
-}
+function UnauthApp() {
+  const [create, setCreate] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
+  const [error, setError] = React.useState<Error>();
+  const [status, setStatus] = React.useState<
+    "fetching" | "done" | "idle"
+  >("idle");
 
-function UnauthApp({
-  open,
-  handleClose,
-  signup = false,
-  login,
-  register,
-  logout,
-  error,
-  status,
-}: UnauthAppProps) {
-  const [create, setCreate] = React.useState(signup);
   const handleSignUp = () => {
     setCreate(true);
   };
   const handleSignIn = () => {
     setCreate(false);
   };
+  const handleClose = () => {};
   const label = create ? "Signup" : "Login";
 
   const spinner =
-    status === "fetching " ? (
-      <CircularProgress color="secondary" />
+    status === "fetching" ? (
+      <CircularProgress color="secondary" style={styles.progress} />
     ) : (
       <></>
     );
@@ -60,15 +45,16 @@ function UnauthApp({
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">{label}</DialogTitle>
-        <DialogContent>
+        <DialogContent sx={styles.dialogContent}>
           <FormLogin
             create={create}
-            login={login}
-            register={register}
-            logout={logout}
+            setError={setError}
+            setStatus={setStatus}
           />
           {error ? (
-            <Alert severity="error">Erreur : {error.message}</Alert>
+            <Alert severity="error">
+              <>Error : {error}</>
+            </Alert>
           ) : null}
         </DialogContent>
         <DialogActions style={{ justifyContent: "flex-start" }}>

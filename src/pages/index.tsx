@@ -2,10 +2,14 @@ import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import React from "react";
 import UnauthApp from "@/components/UnauthApp";
+import User from "@/models/User";
 
-import userService from "@/services/user";
+export const UserContext = React.createContext<
+  { user: User | undefined; setUser: Function } | undefined
+>(undefined);
+
 export default function Home() {
-  const [authenticated, setAuthenticated] = React.useState(false);
+  const [user, setUser] = React.useState<User>();
   return (
     <>
       <Head>
@@ -17,25 +21,20 @@ export default function Home() {
         />
         <link rel="icon" href="/chat.png" />
       </Head>
-      {authenticated ? (
-        <div>Chat away !</div>
-      ) : (
-        <main className={styles.main}>
-          <div className={styles.header}>
-            <h1>Ichat</h1>
-          </div>
-          <UnauthApp
-            open={true}
-            handleClose={undefined}
-            signup={false}
-            login={userService.login}
-            logout={userService.logout}
-            register={userService.register}
-            error={undefined}
-            status={""}
-          />
-        </main>
-      )}
+      <UserContext.Provider value={{ user, setUser }}>
+        <>
+          {user ? (
+            <div>Chat away !</div>
+          ) : (
+            <main className={styles.main}>
+              <div className={styles.header}>
+                <h1>Ichat</h1>
+              </div>
+              <UnauthApp />
+            </main>
+          )}
+        </>
+      </UserContext.Provider>
     </>
   );
 }
