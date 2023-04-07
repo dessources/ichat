@@ -1,7 +1,6 @@
 import React from "react";
-
-import ComponentStyle from "@/models/ComponentStyle";
 import { SxProps, Theme } from "@mui/material";
+
 export const root: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
@@ -13,6 +12,14 @@ export const dialog: SxProps<Theme> | undefined = {
     color: "var(--accent-color)",
   },
   opacity: "0.9",
+};
+export const textField: SxProps<Theme> | undefined = {
+  "& label.Mui-focused": {
+    color: "var(--accent-color)",
+  },
+  "& div.Mui-focused:after": {
+    borderColor: "var(--accent-color)",
+  },
 };
 export const dialogContent: SxProps<Theme> | undefined = {
   width: "378px",

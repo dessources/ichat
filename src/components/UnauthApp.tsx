@@ -1,6 +1,7 @@
 //@ts-nochec
 
 import React from "react";
+import { ThemeProvider } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -9,15 +10,14 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import FormLogin from "./FormLogin";
+import theme from "@/themes/ichat";
 import * as styles from "@/styles/UnauthApp";
 
 function UnauthApp() {
   const [create, setCreate] = React.useState(false);
   const [open, setOpen] = React.useState(true);
   const [error, setError] = React.useState<Error>();
-  const [status, setStatus] = React.useState<
-    "fetching" | "done" | "idle"
-  >("idle");
+  const [status, setStatus] = React.useState<"fetching" | "done" | "idle">("idle");
 
   const handleSignUp = () => {
     setCreate(true);
@@ -30,12 +30,12 @@ function UnauthApp() {
 
   const spinner =
     status === "fetching" ? (
-      <CircularProgress color="secondary" style={styles.progress} />
+      <CircularProgress color="primary" style={styles.progress} />
     ) : (
       <></>
     );
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Dialog
         sx={styles.dialog}
         style={{ backgroundColor: "transparent" }}
@@ -46,11 +46,7 @@ function UnauthApp() {
       >
         <DialogTitle id="alert-dialog-title">{label}</DialogTitle>
         <DialogContent sx={styles.dialogContent}>
-          <FormLogin
-            create={create}
-            setError={setError}
-            setStatus={setStatus}
-          />
+          <FormLogin create={create} setError={setError} setStatus={setStatus} />
           {error ? (
             <Alert severity="error">
               <>Error : {error}</>
@@ -63,17 +59,13 @@ function UnauthApp() {
               New on Ichat ? {spinner}
             </Button>
           ) : (
-            <Button
-              onClick={handleSignIn}
-              autoFocus
-              sx={styles.actionText}
-            >
+            <Button onClick={handleSignIn} autoFocus sx={styles.actionText}>
               Already have an account ? {spinner}
             </Button>
           )}
         </DialogActions>
       </Dialog>
-    </>
+    </ThemeProvider>
   );
 }
 export default UnauthApp;

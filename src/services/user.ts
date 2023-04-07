@@ -14,17 +14,17 @@ class UserService {
     username,
     password,
     cPassword,
-  }: UserAuthInFo): Promise<String | Error> {
+  }: UserAuthInFo): Promise<User | Error> {
     if (password === cPassword) {
-      const userId = await ContentAPIService.registerUser({
+      const user = await ContentAPIService.registerUser({
         name,
         username,
         password,
       });
 
-      return userId;
+      return user;
     } else {
-      return Promise.reject("Could not register the user.");
+      return Promise.reject("The password and confirm password fields do not match");
     }
   }
 

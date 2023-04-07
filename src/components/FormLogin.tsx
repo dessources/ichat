@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FormEvent } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -10,7 +10,6 @@ import * as styles from "@/styles/UnauthApp";
 import { UserContext } from "@/pages";
 interface FormLoginProps {
   create: boolean;
-
   setStatus: Function;
   setError: Function;
 }
@@ -31,13 +30,21 @@ function FormLogin({
 
   const label = create ? "Signup" : "Login";
 
-  const handleRegister = () =>
-    userService.register({
-      name,
-      username,
-      cPassword,
-      password,
-    });
+  const handleRegister = () => {
+    setStatus("fetching");
+    userService
+      .register({
+        name,
+        username,
+        cPassword,
+        password,
+      })
+      .then((user) => userContext?.setUser(user))
+      .catch((err) => {
+        setError(err);
+      })
+      .finally(() => setStatus("done"));
+  };
 
   const handleLogin = async () => {
     setStatus("fetching");
@@ -52,21 +59,21 @@ function FormLogin({
       .finally(() => setStatus("done"));
   };
 
-  const handleSubmit = create ? handleRegister : handleLogin;
+  const handleEnter = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    console.log(e.key);
+    if (!/Enter|NumpadEnter/.test(e.key)) return;
+    if (create) handleRegister();
+    else handleLogin();
+  };
 
   return (
-    <form
-      style={styles.root}
-      noValidate
-      autoComplete="off"
-      onSubmit={handleSubmit}
-    >
+    <form style={styles.root} noValidate autoComplete="off" onKeyDown={handleEnter}>
       {create ? (
         <TextField
           id="filled-basic"
           label="Name"
           variant="filled"
-          sx={{ color: "var(--accent-color)" }}
+          color="primary"
           value={name}
           onChange={(e) => setName(e.target.value)}
           style={{ opacity: "1" }}
@@ -76,7 +83,7 @@ function FormLogin({
         id="filled-basic"
         label="Username"
         variant="filled"
-        sx={{ color: "var(--accent-color)" }}
+        color="primary"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         style={{ opacity: "1" }}
@@ -85,6 +92,7 @@ function FormLogin({
         id="filled-basic"
         type="password"
         label="Password"
+        color="primary"
         variant="filled"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
@@ -93,6 +101,7 @@ function FormLogin({
         <TextField
           id="filled-basic"
           type="password"
+          color="primary"
           label="Confirm Password"
           variant="filled"
           value={cPassword}
@@ -104,7 +113,7 @@ function FormLogin({
           <Button
             style={styles.submit}
             variant="contained"
-            color="secondary"
+            color="primary"
             onClick={handleRegister}
           >
             {label}
@@ -134,10 +143,7 @@ function FormLogin({
                   />
                 }
                 label={
-                  <Typography
-                    component={"span"}
-                    style={styles.checkBoxText}
-                  >
+                  <Typography component={"span"} style={styles.checkBoxText}>
                     Remember me
                   </Typography>
                 }

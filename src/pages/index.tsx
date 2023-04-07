@@ -2,6 +2,7 @@ import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import React from "react";
 import UnauthApp from "@/components/UnauthApp";
+import Ichat from "@/components/Ichat";
 import User from "@/models/User";
 
 export const UserContext = React.createContext<
@@ -15,16 +16,13 @@ export default function Home() {
       <Head>
         <title> Ichat </title>
         <meta name="description" content="Chat app" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/chat.png" />
       </Head>
       <UserContext.Provider value={{ user, setUser }}>
         <>
           {user ? (
-            <div>Chat away !</div>
+            <Ichat />
           ) : (
             <main className={styles.main}>
               <div className={styles.header}>
