@@ -1,0 +1,39 @@
+name: SimplePipeline
+
+on:
+  push:
+    branches: [dev]
+
+jobs:
+  lintTest:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: |
+          echo "Running Installing Dependencies ..."
+      - name: Run Linting
+        run: |
+          echo "Running Linting tests..."
+          npm run lint
+        env:
+          CI: true
+  securityCheck:
+    name: security check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking Security
+        run: |
+          echo "Runing Securit Checks"
+          sleep 5s;
+
+  deploy:
+    name: Deployment
+    runs-on: ubuntu-latest
+    needs: [lintTest, securityCheck]
+    steps:
+      - name: Install Dependencies
+        run: |
+          echo "Running Installing Dependencies ..."

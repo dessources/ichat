@@ -4,14 +4,20 @@ import theme from "@/themes/ichat";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import AppBar from "@mui/material/AppBar";
+import Grid from "@mui/material/Grid";
 
-import Navigator from "./Navigator";
-import Navigator2 from "./Navigator2";
+//My Components
+import ChatList from "./ChatList";
 import Content from "./Content";
 import Header from "./Header";
 import Copyright from "./Copyright";
 
-const drawerWidth = 256;
+//styles
+import * as styles from "@/styles/Ichat";
+import { paper } from "@/styles/ChatList";
+const drawerWidth = 288;
 
 export default function Ichat() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -23,53 +29,37 @@ export default function Ichat() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: "flex", minHeight: "100vh" }}>
-        <CssBaseline />
-        <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
+      <CssBaseline />
+      <Header onDrawerToggle={handleDrawerToggle} />
+      <Box sx={{ display: "flex", minHeight: "100vh", overflow: "hidden" }}>
+        <AppBar color="secondary" sx={styles.sidebar}>
+          <Toolbar>
+            <Grid id="thisis" container spacing={1} alignItems="center">
+              xxx
+            </Grid>
+          </Toolbar>
+        </AppBar>
+        <Box component="nav" sx={{ ...styles.chatContainer, width: { sm: drawerWidth } }}>
           {isSmUp ? null : (
-            <Navigator
-              PaperProps={{ style: { width: drawerWidth } }}
+            <ChatList
+              PaperProps={{ sx: { ...paper, width: drawerWidth } }}
               variant="temporary"
               open={mobileOpen}
               onClose={handleDrawerToggle}
             />
           )}
-          <Navigator
-            PaperProps={{ style: { width: drawerWidth } }}
+          <ChatList
+            PaperProps={{ sx: { ...paper, width: drawerWidth } }}
             sx={{ display: { sm: "block", xs: "none" } }}
           />
-          {/* <Navigator2
-            PaperProps={{ style: { width: drawerWidth } }}
-            sx={{ display: { sm: "block", xs: "none" } }}
-          /> */}
         </Box>
         <Box sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          <Header onDrawerToggle={handleDrawerToggle} />
-          <Box
-            component="main"
-            sx={{
-              flex: 1,
-              py: 6,
-              px: 4,
-              background: "url('/micro_carbon.png')",
-              position: "relative",
-              "&:before": {
-                position: "absolute",
-                background: "#081627",
-                content: `" "`,
-                width: "1rem",
-                "z-index": -1,
-                height: "1rem",
-                top: 0,
-                left: 0,
-              },
-            }}
-          >
+          <Box component="main" sx={styles.main}>
             <Content />
           </Box>
-          <Box component="footer" sx={{ p: 2, bgcolor: "#eaeff1" }}>
+          {/* <Box component="footer" sx={{ p: 2, bgcolor: "#eaeff1" }}>
             <Copyright />
-          </Box>
+          </Box> */}
         </Box>
       </Box>
     </ThemeProvider>

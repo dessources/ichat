@@ -3,9 +3,9 @@ import { createTheme } from "@mui/material/styles";
 let theme = createTheme({
   palette: {
     primary: {
-      main: "rgb(21 161 137 / 95%)",
+      main: "rgba(21, 161, 137, 0.95)",
       light: "#63ccff",
-      dark: "rgb(21 16 104 / 95%)",
+      dark: "rgba(21, 16, 104,  0.95)",
     },
     secondary: {
       main: "#081627",
@@ -111,6 +111,7 @@ theme = {
         root: {
           "&.Mui-selected": {
             color: "#4fc3f7",
+            bgcolor: "red",
           },
         },
       },
