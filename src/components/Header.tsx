@@ -13,7 +13,11 @@ import Tabs from "@mui/material/Tabs";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Image from "next/image";
 
+//styles
+import * as styles from "@/styles/Header";
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
 interface HeaderProps {
@@ -25,18 +29,20 @@ export default function Header(props: HeaderProps) {
 
   return (
     <React.Fragment>
-      <AppBar color="secondary" position="sticky" elevation={0}>
-        <Toolbar>
+      <AppBar color="secondary" position="fixed" elevation={1} sx={styles.root}>
+        <Toolbar sx={styles.toolbar}>
           <Grid container spacing={1} alignItems="center">
-            <Grid sx={{ display: { sm: "none", xs: "block" } }} item>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={onDrawerToggle}
-                edge="start"
+            <Grid item>
+              <Box
+                sx={{
+                  fontSize: 22,
+                  color: "#fff",
+                  padding: "0.4rem 0.5rem",
+                }}
               >
-                <MenuIcon />
-              </IconButton>
+                <Image src="/chat.png" width="30" height="30" alt="" style={styles.logo} />{" "}
+                Ichat
+              </Box>
             </Grid>
             <Grid item xs />
 

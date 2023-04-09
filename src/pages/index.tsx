@@ -10,7 +10,15 @@ export const UserContext = React.createContext<
 >(undefined);
 
 export default function Home() {
-  const [user, setUser] = React.useState<User>();
+  const defaultUser: User = {
+    id: "user1235",
+    name: "peter",
+    username: "quill",
+    password: "",
+    online: true,
+    profilePicture: "",
+  };
+  const [user, setUser] = React.useState<User>(defaultUser);
   return (
     <>
       <Head>
