@@ -30,9 +30,6 @@ on:
       - main
 jobs:
   Deploy-Production:
-    strategy:
-      matrix:
-        node-version: [16]
     runs-on: ubuntu-latest
     steps:
       - name: Install Vercel CLI
