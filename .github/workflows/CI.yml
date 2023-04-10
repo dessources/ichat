@@ -1,11 +1,11 @@
-name: SimplePipeline
+name: Development pipeline
 
 on:
   push:
     branches: [dev]
 
 jobs:
-  lintTest:
+  Test:
     name: Lint
     runs-on: ubuntu-latest
     steps:
@@ -15,10 +15,11 @@ jobs:
       - name: Install Dependencies
         run: |
           echo "Running Installing Dependencies ..."
-      - name: Run Linting
+          npm i
+      - name: Run Tests
         run: |
-          echo "Running Linting tests..."
-          npm run lint
+          echo "Running  tests..."
+          npm run test:ci
         env:
           CI: true
   securityCheck:
@@ -28,4 +29,19 @@ jobs:
       - name: Checking Security
         run: |
           echo "Runing Securit Checks"
-          sleep 5s;
+
+  Deploy-Preview:
+    name: Deploy to Preview on vercel
+    needs: [Test, securityCheck]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: |
+          vercel build  --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt  --token=${{ secrets.VERCEL_TOKEN }}
