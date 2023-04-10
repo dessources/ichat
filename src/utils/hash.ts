@@ -1,2 +1,2 @@
 import * as bcrypt from "bcrypt";
-console.log();
+console.log("this");
