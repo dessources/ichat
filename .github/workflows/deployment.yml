@@ -19,11 +19,7 @@ jobs:
       - name: Run Tests
         run: |
           echo "Running  tests..."
-<<<<<<< HEAD
           npm run test:ci
-=======
-          npm run test
->>>>>>> d6666d3ca376471f55857c4fdb6cddf4d0b52b5e
         env:
           CI: true
 
