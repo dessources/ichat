@@ -5,7 +5,7 @@ on:
     branches: [dev]
 
 jobs:
-  Test:
+  Test_and_Lint:
     name: Testing and linting
     runs-on: ubuntu-latest
     steps:
@@ -36,16 +36,22 @@ jobs:
 
   Deploy-Preview:
     name: Deploy to Preview on vercel
-    needs: [Test, securityCheck]
+    needs: [Test_and_Lint, securityCheck]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-      - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Build Project Artifacts
-        run: |
-          vercel build  --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt  --token=${{ secrets.VERCEL_TOKEN }}
+      - uses: amondnet/vercel-action@v20 #deploy
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          # vercel-args: '--prod' #Optional
+          vercel-org-id: ${{ secrets.ORG_ID}} #Required
+          vercel-project-id: ${{ secrets.PROJECT_ID}} #Required
+      # - name: Install Vercel CLI
+      #   run: npm install --global vercel@latest
+      # - name: Pull Vercel Environment Information
+      #   run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      # - name: Build Project Artifacts
+      #   run: |
+      #     vercel build  --token=${{ secrets.VERCEL_TOKEN }}
+      # - name: Deploy Project Artifacts to Vercel
+      #   run: vercel deploy --prebuilt  --token=${{ secrets.VERCEL_TOKEN }}
