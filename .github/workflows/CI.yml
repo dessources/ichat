@@ -43,6 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [unit_tests_and_lint]
     strategy:
+      fail-fast: false
       matrix:
         browsers: ["chrome", "firefox", "edge"]
     steps:
@@ -54,8 +55,10 @@ jobs:
           build: npm run build
           start: npm run start
           browser: ${{matrix.browsers}}
-          # record: true
+          record: true
+          parallel: true
         env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
 
   Deploy-Preview:
