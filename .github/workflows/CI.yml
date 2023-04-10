@@ -5,7 +5,15 @@ on:
     branches: [dev]
 
 jobs:
-  Test_and_Lint:
+  securityCheck:
+    name: security check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking Security
+        run: |
+          echo "Runing Security Checks"
+
+  unit_tests_and_lint:
     name: Testing and linting
     runs-on: ubuntu-latest
     steps:
@@ -23,23 +31,35 @@ jobs:
         run: |
           echo "Running Linting"
           npm run lint
-      - name: Run Tests
+      - name: Run Unit Tests
         run: |
-          echo "Running  tests..."
+          echo "Running  unit tests..."
           npm run test:ci
         env:
           CI: true
-  securityCheck:
-    name: security check
+
+  cypress_e2e_tests:
+    name: Cypress E2E tests
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browsers: ["chrome", "firefox", "edge"]
     steps:
-      - name: Checking Security
-        run: |
-          echo "Runing Securit Checks"
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          build: npm run build
+          start: npm run start
+          browser: ${{matrix.browsers}}
+          # record: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
 
   Deploy-Preview:
     name: Deploy to Preview on vercel
-    needs: [Test_and_Lint, securityCheck]
+    needs: [unit_tests_and_lint, securityCheck, cypress_e2e_tests]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
