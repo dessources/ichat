@@ -1,0 +1,231 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders homepage unchanged 1`] = `
+<div>
+  <header
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation1 MuiAppBar-root MuiAppBar-colorSecondary MuiAppBar-positionFixed mui-fixed css-87zvxx-MuiPaper-root-MuiAppBar-root"
+  >
+    <div
+      class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-1qfrumo-MuiToolbar-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-7ldjcq-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+        >
+          <div
+            class="MuiBox-root css-q64yrk"
+          >
+            <img
+              alt=""
+              data-nimg="1"
+              decoding="async"
+              height="30"
+              loading="lazy"
+              src="/_next/image?url=%2Fchat.png&w=64&q=75"
+              srcset="/_next/image?url=%2Fchat.png&w=32&q=75 1x, /_next/image?url=%2Fchat.png&w=64&q=75 2x"
+              style="color: transparent; margin-right: 0.5rem; vertical-align: top;"
+              width="30"
+            />
+             
+            Ichat
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-1vd824g-MuiGrid-root"
+        />
+        <div
+          class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+        >
+          <button
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-lwljas-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <div
+              class="MuiAvatar-root MuiAvatar-circular css-1hydjyt-MuiAvatar-root"
+            >
+              <img
+                alt="My Avatar"
+                class="MuiAvatar-img css-1pqm26d-MuiAvatar-img"
+                src="/static/images/avatar/1.jpg"
+              />
+            </div>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div
+    class="MuiBox-root css-11noci7"
+  >
+    <header
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorSecondary MuiAppBar-positionFixed mui-fixed css-59ul5h-MuiPaper-root-MuiAppBar-root"
+    >
+      <div
+        class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-10ltm04-MuiToolbar-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-7ldjcq-MuiGrid-root"
+          id="thisis"
+        >
+          xxx
+        </div>
+      </div>
+    </header>
+    <nav
+      class="MuiBox-root css-1sgwb1i"
+    >
+      <div
+        class="MuiDrawer-root MuiDrawer-docked css-17kze6f-MuiDrawer-docked"
+      >
+        <div
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiDrawer-paper MuiDrawer-paperAnchorLeft MuiDrawer-paperAnchorDockedLeft css-1we3mvu-MuiPaper-root-MuiDrawer-paper"
+        >
+          <ul
+            class="MuiList-root css-1mk9mw3-MuiList-root"
+          >
+            <li
+              class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-u0m5z1-MuiListItem-root"
+            >
+              <h5
+                class="MuiTypography-root MuiTypography-h5 css-k4b234-MuiTypography-root"
+              >
+                Chats
+              </h5>
+            </li>
+            <div
+              class="MuiBox-root css-15g2oxy"
+            >
+              <li
+                class="MuiListItem-root MuiListItem-gutters css-1s7ly2o-MuiListItem-root"
+              >
+                <div
+                  class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-1d9hqyj-MuiButtonBase-root-MuiListItemButton-root"
+                  role="button"
+                  tabindex="0"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-lwljas-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <div
+                      class="MuiAvatar-root MuiAvatar-circular css-1hydjyt-MuiAvatar-root"
+                    >
+                      <img
+                        alt="Avatar of Jean-Jacques"
+                        class="MuiAvatar-img css-1pqm26d-MuiAvatar-img"
+                        src="/static/images/avatar/1.jpg"
+                      />
+                    </div>
+                    <span
+                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                    />
+                  </button>
+                  <div>
+                    Jean-Jacques
+                  </div>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </div>
+                <hr
+                  class="MuiDivider-root MuiDivider-fullWidth css-1hw2z9a-MuiDivider-root"
+                />
+              </li>
+              <li
+                class="MuiListItem-root MuiListItem-gutters css-1s7ly2o-MuiListItem-root"
+              >
+                <div
+                  class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-1d9hqyj-MuiButtonBase-root-MuiListItemButton-root"
+                  role="button"
+                  tabindex="0"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-lwljas-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <div
+                      class="MuiAvatar-root MuiAvatar-circular css-1hydjyt-MuiAvatar-root"
+                    >
+                      <img
+                        alt="Avatar of Norie"
+                        class="MuiAvatar-img css-1pqm26d-MuiAvatar-img"
+                        src="/static/images/avatar/1.jpg"
+                      />
+                    </div>
+                    <span
+                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                    />
+                  </button>
+                  <div>
+                    Norie
+                  </div>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </div>
+                <hr
+                  class="MuiDivider-root MuiDivider-fullWidth css-1hw2z9a-MuiDivider-root"
+                />
+              </li>
+              <li
+                class="MuiListItem-root MuiListItem-gutters css-1s7ly2o-MuiListItem-root"
+              >
+                <div
+                  class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-1d9hqyj-MuiButtonBase-root-MuiListItemButton-root"
+                  role="button"
+                  tabindex="0"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-lwljas-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <div
+                      class="MuiAvatar-root MuiAvatar-circular css-1hydjyt-MuiAvatar-root"
+                    >
+                      <img
+                        alt="Avatar of Anderson"
+                        class="MuiAvatar-img css-1pqm26d-MuiAvatar-img"
+                        src="/static/images/avatar/1.jpg"
+                      />
+                    </div>
+                    <span
+                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                    />
+                  </button>
+                  <div>
+                    Anderson
+                  </div>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </div>
+                <hr
+                  class="MuiDivider-root MuiDivider-fullWidth css-1hw2z9a-MuiDivider-root"
+                />
+              </li>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div
+      class="MuiBox-root css-k0sogd"
+    >
+      <main
+        class="MuiBox-root css-17b434b"
+      >
+        <div />
+      </main>
+    </div>
+  </div>
+</div>
+`;
