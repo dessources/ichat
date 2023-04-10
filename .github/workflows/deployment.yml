@@ -24,8 +24,9 @@ jobs:
       - name: Build Project Artifacts
         run: |
           pwd
+          ls -a
           cd ..
-          ls
+          ls -a
 
           vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy Project Artifacts to Vercel
