@@ -8,9 +8,14 @@ on:
       - main
 jobs:
   Deploy-Production:
+    strategy:
+      matrix:
+        node-version: [16]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          node-version: ${{matrix.node-version}}
       - name: Install Vercel CLI
         run: echo "installing vercel CLI"
         # run: npm install --global vercel@latest
