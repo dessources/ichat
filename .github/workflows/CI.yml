@@ -6,7 +6,7 @@ on:
 
 jobs:
   Test:
-    name: Lint
+    name: Testing and linting
     runs-on: ubuntu-latest
     steps:
       - name: Clone Repository
@@ -16,6 +16,10 @@ jobs:
         run: |
           echo "Running Installing Dependencies ..."
           npm i
+      - name: Run linting
+        run: |
+          echo "Running Linting"
+          npm run lint
       - name: Run Tests
         run: |
           echo "Running  tests..."
