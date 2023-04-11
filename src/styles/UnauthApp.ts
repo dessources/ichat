@@ -1,31 +1,43 @@
 import React from "react";
-
-import ComponentStyle from "@/models/ComponentStyle";
 import { SxProps, Theme } from "@mui/material";
-const root: React.CSSProperties = {
+
+export const root: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
   minWidth: "330px",
 };
 
-const dialog: SxProps<Theme> | undefined = {
+export const dialog: SxProps<Theme> | undefined = {
   "&  h2": {
     color: "var(--accent-color)",
   },
   opacity: "0.9",
 };
+export const textField: SxProps<Theme> | undefined = {
+  "& label.Mui-focused": {
+    color: "var(--accent-color)",
+  },
+  "& div.Mui-focused:after": {
+    borderColor: "var(--accent-color)",
+  },
+};
+export const dialogContent: SxProps<Theme> | undefined = {
+  width: "378px",
+};
 
-const submit: React.CSSProperties = {
+export const submit: React.CSSProperties = {
   margin: "20px 0 5px 0",
   background: "var(--accent-color)",
 };
 
-const checkBoxText: React.CSSProperties = {
+export const checkBoxText: React.CSSProperties = {
   fontSize: "0.8rem",
 };
 
-const actionText: SxProps<Theme> | undefined = {
+export const actionText: SxProps<Theme> | undefined = {
   color: "var(--accent-color)",
 };
 
-export { root, dialog, submit, checkBoxText, actionText };
+export const progress: React.CSSProperties = {
+  marginLeft: "1rem",
+};

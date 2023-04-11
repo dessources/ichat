@@ -1,6 +1,7 @@
 //@ts-nochec
 
 import React from "react";
+import { ThemeProvider } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -9,48 +10,32 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import FormLogin from "./FormLogin";
+import theme from "@/themes/ichat";
 import * as styles from "@/styles/UnauthApp";
 
-interface UnauthAppProps {
-  open: boolean;
-  handleClose:
-    | ((event: {}, reason: "backdropClick" | "escapeKeyDown") => void)
-    | undefined;
-  signup: boolean;
-  login: Function;
-  logout: Function;
-  register: Function;
-  error: any;
-  status: string;
-}
+function UnauthApp() {
+  const [create, setCreate] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
+  const [error, setError] = React.useState<Error>();
+  const [status, setStatus] = React.useState<"fetching" | "done" | "idle">("idle");
 
-function UnauthApp({
-  open,
-  handleClose,
-  signup = false,
-  login,
-  register,
-  logout,
-  error,
-  status,
-}: UnauthAppProps) {
-  const [create, setCreate] = React.useState(signup);
   const handleSignUp = () => {
     setCreate(true);
   };
   const handleSignIn = () => {
     setCreate(false);
   };
+  const handleClose = () => {};
   const label = create ? "Signup" : "Login";
 
   const spinner =
-    status === "fetching " ? (
-      <CircularProgress color="secondary" />
+    status === "fetching" ? (
+      <CircularProgress color="primary" style={styles.progress} />
     ) : (
       <></>
     );
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Dialog
         sx={styles.dialog}
         style={{ backgroundColor: "transparent" }}
@@ -60,15 +45,12 @@ function UnauthApp({
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">{label}</DialogTitle>
-        <DialogContent>
-          <FormLogin
-            create={create}
-            login={login}
-            register={register}
-            logout={logout}
-          />
+        <DialogContent sx={styles.dialogContent}>
+          <FormLogin create={create} setError={setError} setStatus={setStatus} />
           {error ? (
-            <Alert severity="error">Erreur : {error.message}</Alert>
+            <Alert severity="error">
+              <>Error : {error}</>
+            </Alert>
           ) : null}
         </DialogContent>
         <DialogActions style={{ justifyContent: "flex-start" }}>
@@ -77,17 +59,13 @@ function UnauthApp({
               New on Ichat ? {spinner}
             </Button>
           ) : (
-            <Button
-              onClick={handleSignIn}
-              autoFocus
-              sx={styles.actionText}
-            >
+            <Button onClick={handleSignIn} autoFocus sx={styles.actionText}>
               Already have an account ? {spinner}
             </Button>
           )}
         </DialogActions>
       </Dialog>
-    </>
+    </ThemeProvider>
   );
 }
 export default UnauthApp;

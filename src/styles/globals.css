@@ -1,9 +1,8 @@
 :root {
-  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono",
-    "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace",
-    "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New",
-    monospace;
-  --accent-color: rgb(21 16 104 / 95%);
+  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono",
+    "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono",
+    "Courier New", monospace;
+  --accent-color: rgb(21 161 137 / 95%);
 }
 
 * {
@@ -20,8 +19,7 @@ body {
 
 body {
   color: rgb(255, 255, 255);
-  background: linear-gradient(to bottom, transparent, rgb(0, 0, 0))
-    rgb(0, 0, 0);
+  background: linear-gradient(to bottom, transparent, rgb(0, 0, 0)) rgb(0, 0, 0);
 }
 
 a {
