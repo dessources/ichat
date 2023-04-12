@@ -1,5 +1,3 @@
-//@ts-nochec
-
 import React from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import Button from "@mui/material/Button";
@@ -12,6 +10,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import FormLogin from "./FormLogin";
 import theme from "@/themes/ichat";
 import * as styles from "@/styles/UnauthApp";
+import userService from "@/services/user";
 
 function UnauthApp() {
   const [create, setCreate] = React.useState(false);
@@ -21,6 +20,7 @@ function UnauthApp() {
 
   const handleSignUp = () => {
     setCreate(true);
+    userService.register;
   };
   const handleSignIn = () => {
     setCreate(false);
