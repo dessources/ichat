@@ -9,7 +9,7 @@ import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import FormLogin from "./FormLogin";
 import theme from "@/themes/ichat";
-import * as styles from "@/styles/UnauthApp";
+import * as styles from "@/styles/UnauthApp.style";
 import userService from "@/services/user";
 
 function UnauthApp() {
@@ -20,7 +20,6 @@ function UnauthApp() {
 
   const handleSignUp = () => {
     setCreate(true);
-    userService.register;
   };
   const handleSignIn = () => {
     setCreate(false);
@@ -38,28 +37,29 @@ function UnauthApp() {
     <ThemeProvider theme={theme}>
       <Dialog
         sx={styles.dialog}
-        style={{ backgroundColor: "transparent" }}
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{label}</DialogTitle>
+        <DialogTitle id="alert-dialog-title" color="primary">
+          {label}
+        </DialogTitle>
         <DialogContent sx={styles.dialogContent}>
           <FormLogin create={create} setError={setError} setStatus={setStatus} />
           {error ? (
-            <Alert severity="error">
-              <>Error : {error}</>
+            <Alert severity="error" style={styles.alert}>
+              <>Error : {error.message}</>
             </Alert>
           ) : null}
         </DialogContent>
         <DialogActions style={{ justifyContent: "flex-start" }}>
           {!create ? (
-            <Button onClick={handleSignUp} sx={styles.actionText}>
+            <Button onClick={handleSignUp} color="primary">
               New on Ichat ? {spinner}
             </Button>
           ) : (
-            <Button onClick={handleSignIn} autoFocus sx={styles.actionText}>
+            <Button onClick={handleSignIn} autoFocus color="primary">
               Already have an account ? {spinner}
             </Button>
           )}

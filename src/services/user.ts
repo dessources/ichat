@@ -4,6 +4,7 @@ import axios from "axios";
 class UserService {
   async login(input: UserAuthInFo): Promise<any | Error> {
     const response = await axios.post("/api/auth/login", input);
+
     return response;
   }
 
@@ -16,9 +17,9 @@ class UserService {
     const passwordValidations = [password === cPassword];
     for (let condition of passwordValidations) {
       if (!condition)
-        return Promise.reject(
-          "The password and confirm password fields do not match"
-        );
+        return Promise.reject({
+          message: "The password and confirm password fields do not match",
+        });
     }
 
     const response = await axios.post("/api/auth/register", {

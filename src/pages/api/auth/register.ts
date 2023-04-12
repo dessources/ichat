@@ -9,9 +9,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const users: mongoDB.Collection = client.db("ichat").collection("users");
     const data = req.body;
     const hashedPassword = await hash(data.password, 10);
-    console.log(hashedPassword);
+    const username = data.username.toLowerCase();
+    const name = data.name
+      .split(" ")
+      .map((word: string) => word[0].toUpperCase() + word.slice(1))
+      .join(" ");
     await users
-      .insertOne({ ...data, password: hashedPassword })
+      .insertOne({ ...data, name, username, password: hashedPassword })
       .then((result) => res.status(200).json(result))
       .catch((e) => res.status(400).json(e));
   } else {

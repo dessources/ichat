@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import userService from "@/services/user";
-import * as styles from "@/styles/UnauthApp";
+import * as styles from "@/styles/UnauthApp.style";
 import { UserContext } from "@/pages";
 interface FormLoginProps {
   create: boolean;
@@ -39,7 +39,7 @@ function FormLogin({
         cPassword,
         password,
       })
-      .then((user) => userContext?.setUser(user))
+      .then((token) => userContext?.setUser(token))
       .catch((err) => {
         setError(err);
       })
@@ -50,27 +50,32 @@ function FormLogin({
     setStatus("fetching");
     userService
       .login({ username, password })
-      .then((user) => {
-        userContext?.setUser(user);
+      .then((token) => {
+        userContext?.setUser(token);
       })
       .catch((err) => {
+        console.log(err);
         setError(err);
       })
       .finally(() => setStatus("done"));
   };
 
   const handleEnter = (e: React.KeyboardEvent<HTMLFormElement>) => {
-    console.log(e.key);
     if (!/Enter|NumpadEnter/.test(e.key)) return;
     if (create) handleRegister();
     else handleLogin();
   };
 
   return (
-    <form style={styles.root} noValidate autoComplete="off" onKeyDown={handleEnter}>
+    <form
+      style={styles.root}
+      noValidate
+      autoComplete="off"
+      onKeyDown={handleEnter}
+    >
       {create ? (
         <TextField
-          id="filled-basic"
+          id="name"
           label="Name"
           variant="filled"
           color="primary"
@@ -80,7 +85,7 @@ function FormLogin({
         />
       ) : null}
       <TextField
-        id="filled-basic"
+        id="username"
         label="Username"
         variant="filled"
         color="primary"
@@ -89,7 +94,7 @@ function FormLogin({
         style={{ opacity: "1" }}
       />
       <TextField
-        id="filled-basic"
+        id="password"
         type="password"
         label="Password"
         color="primary"
@@ -99,7 +104,7 @@ function FormLogin({
       />
       {create ? (
         <TextField
-          id="filled-basic"
+          id="password"
           type="password"
           color="primary"
           label="Confirm Password"
@@ -126,7 +131,7 @@ function FormLogin({
           <Button
             style={styles.submit}
             variant="contained"
-            color="secondary"
+            color="primary"
             onClick={handleLogin}
           >
             {label}

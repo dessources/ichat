@@ -16,7 +16,7 @@ import Copyright from "./Copyright";
 
 //styles
 import * as styles from "@/styles/Ichat";
-import { paper } from "@/styles/ChatList";
+import { paper } from "@/styles/ChatList.style";
 const drawerWidth = 288;
 
 export default function Ichat() {
@@ -39,7 +39,10 @@ export default function Ichat() {
             </Grid>
           </Toolbar>
         </AppBar>
-        <Box component="nav" sx={{ ...styles.chatContainer, width: { sm: drawerWidth } }}>
+        <Box
+          component="nav"
+          sx={{ ...styles.chatContainer, width: { sm: drawerWidth } }}
+        >
           {isSmUp ? null : (
             <ChatList
               PaperProps={{ sx: { ...paper, width: drawerWidth } }}
