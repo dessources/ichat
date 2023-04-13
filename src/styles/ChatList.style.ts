@@ -4,17 +4,9 @@ import { SxProps, Theme } from "@mui/material";
 export const paper: SxProps<Theme> = {
   left: "3rem",
   top: "3rem",
-  background: "#1b1b1b",
+  background: "var(--light_gray)",
   borderTopLeftRadius: "20px",
-  "&:before": {
-    position: "absolute",
-    content: `" "`,
-    width: "1rem",
-    "z-index": -1,
-    height: "1rem",
-    top: 0,
-    left: 0,
-  },
+  borderRight: "1px solid rgba(0,0,0,0.3)",
 };
 
 export const chat = {

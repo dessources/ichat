@@ -8,6 +8,10 @@ import Button from "@mui/material/Button";
 import userService from "@/services/user";
 import * as styles from "@/styles/UnauthApp.style";
 import { UserContext } from "@/pages";
+
+//utils
+import { findExistingUsername } from "@/utils/findExistingUsername";
+
 interface FormLoginProps {
   create: boolean;
   setStatus: Function;
@@ -52,6 +56,7 @@ function FormLogin({
       .login({ username, password })
       .then((token) => {
         userContext?.setUser(token);
+        console.log(token);
       })
       .catch((err) => {
         console.log(err);
@@ -64,6 +69,12 @@ function FormLogin({
     if (!/Enter|NumpadEnter/.test(e.key)) return;
     if (create) handleRegister();
     else handleLogin();
+  };
+
+  const handleUsernameChange = async (e: React.FocusEvent<HTMLInputElement>) => {
+    if (create && (await findExistingUsername(username)))
+      setError({ message: "Username already exists" });
+    else setError(null);
   };
 
   return (
@@ -91,6 +102,7 @@ function FormLogin({
         color="primary"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
+        onBlur={handleUsernameChange}
         style={{ opacity: "1" }}
       />
       <TextField
@@ -124,7 +136,9 @@ function FormLogin({
             {label}
           </Button>
 
-          <small>This page is protected by Google reCAPTCHA</small>
+          <small style={styles.small}>
+            This page is protected by Google reCAPTCHA
+          </small>
         </>
       ) : (
         <>

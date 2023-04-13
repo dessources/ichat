@@ -1,11 +1,31 @@
 import UserAuthInFo from "@/models/UserAuthInfo";
-import User from "../models/User";
+import AuthResponse from "@/models/AuthResponse";
+import type { AxiosRequestConfig } from "axios";
 import axios from "axios";
+import { validateInputs } from "@/utils/validate";
 class UserService {
-  async login(input: UserAuthInFo): Promise<any | Error> {
-    const response = await axios.post("/api/auth/login", input);
+  private config: AxiosRequestConfig<any> = {
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_UNAUTHENTICATED_USER_TOKEN}`,
+    },
+  };
 
-    return response;
+  async login({ username, password }: UserAuthInFo): Promise<string | Error> {
+    if (!(username && password))
+      return Promise.reject(new Error("Invalid Inputs"));
+
+    const response = axios.post<AuthResponse>(
+      "/api/auth/login",
+      {
+        username,
+        password,
+      },
+      this.config
+    );
+
+    return response
+      .then(({ data }) => data.authToken)
+      .catch((e) => Promise.reject(e.response.data));
   }
 
   async register({
@@ -13,28 +33,34 @@ class UserService {
     username,
     password,
     cPassword,
-  }: UserAuthInFo): Promise<any | Error> {
-    const passwordValidations = [password === cPassword];
-    for (let condition of passwordValidations) {
-      if (!condition)
-        return Promise.reject({
-          message: "The password and confirm password fields do not match",
-        });
+  }: UserAuthInFo): Promise<string | Error> {
+    //Validate the user input
+    try {
+      validateInputs(name as string, username, password, cPassword as string);
+    } catch (e) {
+      return Promise.reject(e);
     }
 
-    const response = await axios.post("/api/auth/register", {
-      name,
-      username,
-      password,
-    });
-    return response;
+    const response = axios.post<AuthResponse>(
+      "/api/auth/register",
+      {
+        name,
+        username,
+        password,
+      },
+      this.config
+    );
+
+    return response
+      .then(({ data }) => data.authToken)
+      .catch((e) => Promise.reject(e.response.data));
   }
 
   async logout(token: string) {
-    const response = axios.post("/api/auth/logout", {
+    const { data } = await axios.post<AuthResponse>("/api/auth/logout", {
       Headers: { Authorization: token },
     });
-    return response;
+    return data.authToken;
   }
 }
 

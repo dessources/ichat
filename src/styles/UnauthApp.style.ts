@@ -27,6 +27,6 @@ export const progress: React.CSSProperties = {
   marginLeft: "1rem",
 };
 
-export const alert: React.CSSProperties = {
-  marginBottom: "0.5rem",
+export const small: React.CSSProperties = {
+  margin: "0.5rem 0 0.5rem",
 };

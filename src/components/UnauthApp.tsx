@@ -10,7 +10,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import FormLogin from "./FormLogin";
 import theme from "@/themes/ichat";
 import * as styles from "@/styles/UnauthApp.style";
-import userService from "@/services/user";
 
 function UnauthApp() {
   const [create, setCreate] = React.useState(false);
@@ -48,7 +47,7 @@ function UnauthApp() {
         <DialogContent sx={styles.dialogContent}>
           <FormLogin create={create} setError={setError} setStatus={setStatus} />
           {error ? (
-            <Alert severity="error" style={styles.alert}>
+            <Alert severity="error">
               <>Error : {error.message}</>
             </Alert>
           ) : null}
