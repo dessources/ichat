@@ -6,8 +6,13 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import userService from "@/services/user";
-import * as styles from "@/styles/UnauthApp";
+import * as styles from "@/styles/UnauthApp.style";
 import { UserContext } from "@/pages";
+
+//utils
+import { findExistingUsername } from "@/utils/findExistingUsername";
+import { verifyAccessToken } from "@/utils/jwt";
+
 interface FormLoginProps {
   create: boolean;
   setStatus: Function;
@@ -39,7 +44,10 @@ function FormLogin({
         cPassword,
         password,
       })
-      .then((user) => userContext?.setUser(user))
+      .then((token) => {
+        userContext?.setUser(token);
+        setError(null);
+      })
       .catch((err) => {
         setError(err);
       })
@@ -49,9 +57,11 @@ function FormLogin({
   const handleLogin = async () => {
     setStatus("fetching");
     userService
-      .login({ username, password })
-      .then((user) => {
-        userContext?.setUser(user);
+      .login({ username, password, rememberUser: checked })
+      .then((token) => {
+        userContext?.setUser(token);
+
+        setError(null);
       })
       .catch((err) => {
         setError(err);
@@ -60,17 +70,27 @@ function FormLogin({
   };
 
   const handleEnter = (e: React.KeyboardEvent<HTMLFormElement>) => {
-    console.log(e.key);
     if (!/Enter|NumpadEnter/.test(e.key)) return;
     if (create) handleRegister();
     else handleLogin();
   };
 
+  const handleUsernameChange = async (e: React.FocusEvent<HTMLInputElement>) => {
+    if (username && create && (await findExistingUsername(username)))
+      setError({ message: "Username already exists" });
+    else setError(null);
+  };
+
   return (
-    <form style={styles.root} noValidate autoComplete="off" onKeyDown={handleEnter}>
+    <form
+      style={styles.root}
+      noValidate
+      autoComplete="off"
+      onKeyDown={handleEnter}
+    >
       {create ? (
         <TextField
-          id="filled-basic"
+          id="name"
           label="Name"
           variant="filled"
           color="primary"
@@ -80,17 +100,20 @@ function FormLogin({
         />
       ) : null}
       <TextField
-        id="filled-basic"
+        id="username"
         label="Username"
+        autoComplete="username"
         variant="filled"
         color="primary"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
+        onBlur={handleUsernameChange}
         style={{ opacity: "1" }}
       />
       <TextField
-        id="filled-basic"
+        id="password"
         type="password"
+        autoComplete="current-password"
         label="Password"
         color="primary"
         variant="filled"
@@ -99,7 +122,7 @@ function FormLogin({
       />
       {create ? (
         <TextField
-          id="filled-basic"
+          id="password"
           type="password"
           color="primary"
           label="Confirm Password"
@@ -119,14 +142,16 @@ function FormLogin({
             {label}
           </Button>
 
-          <small>This page is protected by Google reCAPTCHA</small>
+          <small style={styles.small}>
+            This page is protected by Google reCAPTCHA
+          </small>
         </>
       ) : (
         <>
           <Button
             style={styles.submit}
             variant="contained"
-            color="secondary"
+            color="primary"
             onClick={handleLogin}
           >
             {label}
@@ -143,7 +168,11 @@ function FormLogin({
                   />
                 }
                 label={
-                  <Typography component={"span"} style={styles.checkBoxText}>
+                  <Typography
+                    component={"span"}
+                    color="secondary"
+                    style={styles.checkBoxText}
+                  >
                     Remember me
                   </Typography>
                 }

@@ -8,6 +8,9 @@ import Toolbar from "@mui/material/Toolbar";
 import AppBar from "@mui/material/AppBar";
 import Grid from "@mui/material/Grid";
 
+// hooks & utils
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+
 //My Components
 import ChatList from "./ChatList";
 import Content from "./Content";
@@ -16,7 +19,7 @@ import Copyright from "./Copyright";
 
 //styles
 import * as styles from "@/styles/Ichat";
-import { paper } from "@/styles/ChatList";
+import { paper } from "@/styles/ChatList.style";
 const drawerWidth = 288;
 
 export default function Ichat() {
@@ -26,6 +29,8 @@ export default function Ichat() {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const axiosPrivate = useAxiosPrivate();
 
   return (
     <ThemeProvider theme={theme}>
@@ -39,7 +44,10 @@ export default function Ichat() {
             </Grid>
           </Toolbar>
         </AppBar>
-        <Box component="nav" sx={{ ...styles.chatContainer, width: { sm: drawerWidth } }}>
+        <Box
+          component="nav"
+          sx={{ ...styles.chatContainer, width: { sm: drawerWidth } }}
+        >
           {isSmUp ? null : (
             <ChatList
               PaperProps={{ sx: { ...paper, width: drawerWidth } }}

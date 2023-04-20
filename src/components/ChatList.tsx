@@ -13,7 +13,7 @@ import DnsRoundedIcon from "@mui/icons-material/DnsRounded";
 //my components
 import ChatInfo from "./ChatInfo";
 //styles
-import * as styles from "@/styles/ChatList";
+import * as styles from "@/styles/ChatList.style";
 
 const chats = [
   {
@@ -39,7 +39,10 @@ export default function ChatList(props: DrawerProps) {
             <ListItem disablePadding key={i}>
               <ListItemButton sx={styles.chat}>
                 <IconButton color="inherit" sx={{ p: 0.5 }}>
-                  <Avatar src="/static/images/avatar/1.jpg" alt={`Avatar of ${name}`} />
+                  <Avatar
+                    src="/static/images/avatar/1.jpg"
+                    alt={`Avatar of ${name}`}
+                  />
                 </IconButton>
                 <ChatInfo name={name} />
               </ListItemButton>

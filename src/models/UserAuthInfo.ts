@@ -3,4 +3,5 @@ export default interface UserAuthInFo {
   password: string;
   cPassword?: string;
   name?: string;
+  rememberUser?: boolean;
 }

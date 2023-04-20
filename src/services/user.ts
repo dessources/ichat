@@ -1,36 +1,42 @@
 import UserAuthInFo from "@/models/UserAuthInfo";
-import User from "../models/User";
-import ContentAPIService from "./contentApi";
-
+import AuthResponse from "@/models/AuthResponse";
+import axios from "../../lib/axios";
+import { validateInputs } from "@/utils/validate";
 class UserService {
-  async login(input: UserAuthInFo): Promise<User | Error> {
-    const response = await ContentAPIService.loginUser(input);
+  async login(input: UserAuthInFo): Promise<string | Error> {
+    if (!(input.username && input.password))
+      return Promise.reject(new Error("Invalid Inputs"));
 
-    return response;
+    const response = axios.post<AuthResponse>("/auth/login", input);
+
+    return response
+      .then(({ data }) => data.accessToken)
+      .catch((e) => Promise.reject(e.response.data));
   }
 
-  async register({
-    name,
-    username,
-    password,
-    cPassword,
-  }: UserAuthInFo): Promise<User | Error> {
-    if (password === cPassword) {
-      const user = await ContentAPIService.registerUser({
-        name,
-        username,
-        password,
-      });
-
-      return user;
-    } else {
-      return Promise.reject("The password and confirm password fields do not match");
+  async register(input: UserAuthInFo): Promise<string | Error> {
+    const { name, username, password, cPassword } = input;
+    //Validate the user input
+    try {
+      validateInputs(name as string, username, password, cPassword as string);
+    } catch (e) {
+      return Promise.reject(e);
     }
+
+    const response = axios.post<AuthResponse>("/auth/register", {
+      name,
+      username,
+      password,
+    });
+
+    return response
+      .then(({ data }) => data.accessToken)
+      .catch((e) => Promise.reject(e.response.data));
   }
 
-  async logout(id: string) {
-    const userId: string = await ContentAPIService.logoutUser(id);
-    return userId;
+  async logout(token: string) {
+    const { data } = await axios.post<AuthResponse>("/auth/logout", {});
+    return data.accessToken;
   }
 }
 
