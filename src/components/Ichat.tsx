@@ -8,6 +8,9 @@ import Toolbar from "@mui/material/Toolbar";
 import AppBar from "@mui/material/AppBar";
 import Grid from "@mui/material/Grid";
 
+// hooks & utils
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+
 //My Components
 import ChatList from "./ChatList";
 import Content from "./Content";
@@ -26,6 +29,8 @@ export default function Ichat() {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const axiosPrivate = useAxiosPrivate();
 
   return (
     <ThemeProvider theme={theme}>

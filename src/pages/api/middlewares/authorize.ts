@@ -20,7 +20,7 @@ export default function authorize(next: NextApiHandler) {
       // Call the next middleware or API route handler function
     } catch (error: any) {
       console.error(error);
-      return res.status(401).json({ message: "Authentication Failed" });
+      return res.status(403).json({ message: "Not authorized" });
     }
   };
 }
