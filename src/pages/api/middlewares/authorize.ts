@@ -4,6 +4,7 @@ import { verifyAccessToken } from "@/utils/jwt";
 export default function authorize(next: NextApiHandler) {
   return async function (req: NextApiRequest, res: NextApiResponse) {
     const apiAccessToken = req.headers.authorization?.split(" ")[1];
+    const headers = req.headers;
     let reason;
     try {
       if (!apiAccessToken) {
@@ -23,7 +24,7 @@ export default function authorize(next: NextApiHandler) {
       console.error(error);
       return res.status(403).json({
         message: "Not authorized " + reason,
-        headerKeys: Object.keys(req.headers).map((key) => key),
+        headerKeys: Object.keys(headers).map((key) => key),
         keys: [
           process.env.NEXT_PUBLIC_API_ACCESS_TOKEN,
           process.env.NEXT_PUBLIC_CONTENT_API_URL,
