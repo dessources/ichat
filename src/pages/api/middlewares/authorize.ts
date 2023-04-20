@@ -23,8 +23,8 @@ export default function authorize(next: NextApiHandler) {
       console.error(error);
       return res.status(403).json({
         message: "Not authorized " + reason,
+        req: req,
         keys: [
-          req,
           req.headers,
           process.env.NEXT_PUBLIC_API_ACCESS_TOKEN,
           process.env.NEXT_PUBLIC_CONTENT_API_URL,
