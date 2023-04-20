@@ -11,7 +11,12 @@
 
 // Select the database to use.
 use("ichat");
-
+// db.users.dropIndex({ username: 1 }, { unique: true });
+// db.users.createIndex(
+//   { username: 1 },
+//   { unique: true, collation: { locale: "en_US", strength: 2 } }
+// );
+// db.users.insertOne({ username: "Da_KOder", name: "hacker", password: "thisnuts" });
 // Inserrt a few documents into the sales collection.
 // db.getCollectionInfos({ name: "users" })[0];
 // validator["$or"] = []
@@ -42,43 +47,43 @@ use("ichat");
 //   profilePicture: "someurl",
 // });
 
-db.runCommand({
-  collMod: "users",
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      required: ["username", "password", "name"],
-      properties: {
-        username: {
-          bsonType: "string",
-          minLength: 2,
-          description: "must be a string and is required",
-        },
-        password: {
-          bsonType: "string",
-          minLength: 5,
-          description: "must be a string  and is required",
-        },
-        name: {
-          bsonType: "string",
-          minLength: 2,
-          description: "must be a string  and is required",
-        },
+// db.runCommand({
+//   collMod: "users",
+//   validator: {
+//     $jsonSchema: {
+//       bsonType: "object",
+//       required: ["username", "password", "name"],
+//       properties: {
+//         username: {
+//           bsonType: "string",
+//           minLength: 2,
+//           description: "must be a string and is required",
+//         },
+//         password: {
+//           bsonType: "string",
+//           minLength: 5,
+//           description: "must be a string  and is required",
+//         },
+//         name: {
+//           bsonType: "string",
+//           minLength: 2,
+//           description: "must be a string  and is required",
+//         },
 
-        profilePicture: {
-          bsonType: "string",
-          description: "must be a string",
-        },
-        chats: {
-          bsonType: "array",
+//         profilePicture: {
+//           bsonType: "string",
+//           description: "must be a string",
+//         },
+//         chats: {
+//           bsonType: "array",
 
-          description: "must be a string",
-        },
-        online: {
-          bsonType: "bool",
-          description: "must be a boolean",
-        },
-      },
-    },
-  },
-});
+//           description: "must be a string",
+//         },
+//         online: {
+//           bsonType: "bool",
+//           description: "must be a boolean",
+//         },
+//       },
+//     },
+//   },
+// });
