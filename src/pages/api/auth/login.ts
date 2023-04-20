@@ -34,7 +34,7 @@ export default authorize(async (req, res) => {
         // Set a cookie with the new access token
         res.setHeader(
           "Set-Cookie",
-          `accessToken=${accessToken}; HttpOnlyPath=/; Max-Age=${1 * 60 * 60}`
+          `accessToken=${accessToken}; HttpOnly; Path=/; Max-Age=${1 * 60 * 60}`
         );
         return res.status(200).json({ accessToken });
       } catch (err) {

@@ -1,14 +1,15 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { verifyAccessToken } from "@/utils/jwt";
-import { getCookie } from "cookies-next";
+import { getCookie, getCookies } from "cookies-next";
 
 export default function authenticate(next: NextApiHandler) {
   return async function (req: NextApiRequest, res: NextApiResponse) {
     // Parse the cookies
     const accessToken = getCookie("accessToken", { req, res });
-
+    let reason = "";
     try {
       if (!accessToken) {
+        reason = "access token does not exits";
         throw new Error();
       }
 
@@ -16,7 +17,7 @@ export default function authenticate(next: NextApiHandler) {
       // Check if the accessToken is defined, if so
       // we have an authenticated user if not we have
       // an unauthenticated user but with  the api access token
-
+      reason = "accessToken is invalid";
       const payload = verifyAccessToken(<string>accessToken) as {
         username: string;
       };
@@ -30,7 +31,7 @@ export default function authenticate(next: NextApiHandler) {
       return await next(req, res);
     } catch (error: any) {
       console.error(error);
-      return res.status(401).json({ message: "Authentication Failed" });
+      return res.status(401).json({ message: "Authentication Failed " + reason });
     }
   };
 }

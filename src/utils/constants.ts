@@ -7,7 +7,7 @@ export const MAX_NAME_LENGTH = 50;
 export const MIN_NAME_LENGTH = 2;
 export const SALT_ROUNDS = 10;
 export const LONG_REFRESH_TOKEN_DAYS_COUNT = 30;
-export const SHORT_REFRESH_TOKEN_DAYS_COUNT = 7;
+export const SHORT_REFRESH_TOKEN_DAYS_COUNT = 1;
 export const BASE_URL = "/api";
 export const AXIOS_CONFIG: AxiosRequestConfig = {
   headers: {

@@ -11,6 +11,7 @@ import { UserContext } from "@/pages";
 
 //utils
 import { findExistingUsername } from "@/utils/findExistingUsername";
+import { verifyAccessToken } from "@/utils/jwt";
 
 interface FormLoginProps {
   create: boolean;
@@ -101,6 +102,7 @@ function FormLogin({
       <TextField
         id="username"
         label="Username"
+        autoComplete="username"
         variant="filled"
         color="primary"
         value={username}
@@ -111,6 +113,7 @@ function FormLogin({
       <TextField
         id="password"
         type="password"
+        autoComplete="current-password"
         label="Password"
         color="primary"
         variant="filled"

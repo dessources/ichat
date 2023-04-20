@@ -1,6 +1,5 @@
 import UserAuthInFo from "@/models/UserAuthInfo";
 import AuthResponse from "@/models/AuthResponse";
-import type { AxiosRequestConfig } from "axios";
 import axios from "../../lib/axios";
 import { validateInputs } from "@/utils/validate";
 class UserService {
