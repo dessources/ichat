@@ -15,7 +15,7 @@ jobs:
 
   unit_tests_and_lint:
     needs: [securityCheck]
-    name: Testing and linting
+    name: Unit Testing and linting
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v2
