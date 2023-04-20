@@ -7,7 +7,7 @@ export default function authorize(next: NextApiHandler) {
     let reason;
     try {
       if (!apiAccessToken) {
-        reason = "No accessToken";
+        reason = "No accessToken" + process.env.NEXT_PUBLIC_API_ACCESS_TOKEN;
         throw new Error();
       }
       reason = "token invalid";
