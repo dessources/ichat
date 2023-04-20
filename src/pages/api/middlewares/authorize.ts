@@ -7,7 +7,7 @@ export default function authorize(next: NextApiHandler) {
     let reason;
     try {
       if (!apiAccessToken) {
-        reason = "No accessToken" + process.env.NEXT_PUBLIC_API_ACCESS_TOKEN;
+        reason = "No accessToken";
         throw new Error();
       }
       reason = "token invalid";
@@ -21,7 +21,19 @@ export default function authorize(next: NextApiHandler) {
       // Call the next middleware or API route handler function
     } catch (error: any) {
       console.error(error);
-      return res.status(403).json({ message: "Not authorized " + reason });
+      return res.status(403).json({
+        message: "Not authorized " + reason,
+        keys: [
+          process.env.NEXT_PUBLIC_API_ACCESS_TOKEN,
+          process.env.NEXT_PUBLIC_API_ACCESS_TOKEN,
+          process.env.NEXT_PUBLIC_CONTENT_API_URL,
+          process.env.NEXT_PUBLIC_CONTENT_API_TOKEN,
+          process.env.NEXT_PUBLIC_API_ACCESS_TOKEN,
+          process.env.MONGODB_URI,
+          process.env.JWT_ACCESS_TOKEN_SECRET,
+          process.env.JWT_REFRESH_TOKEN_SECRET,
+        ],
+      });
     }
   };
 }
