@@ -13,7 +13,6 @@ export const generateRefreshToken = (payload: any) => {
 export const verifyAccessToken = (token: string) => {
   const decoded = jwt.verify(token, <string>process.env.JWT_ACCESS_TOKEN_SECRET);
 
-  console.log(decoded);
   return decoded;
 };
 export const verifyRefreshToken = (token: string) => {
