@@ -1,26 +1,36 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { verifyToken } from "@/utils/jwt";
+import { verifyAccessToken } from "@/utils/jwt";
+import { getCookie } from "cookies-next";
 
-export async function authenticate(
-  req: NextApiRequest,
-  res: NextApiResponse,
-  next: NextApiHandler
-) {
-  const token = req.headers.authorization?.split(" ")[1];
+export default function authenticate(next: NextApiHandler) {
+  return async function (req: NextApiRequest, res: NextApiResponse) {
+    // Parse the cookies
+    const accessToken = getCookie("accessToken", { req, res });
 
-  try {
-    if (!token) {
-      throw new Error();
+    try {
+      if (!accessToken) {
+        throw new Error();
+      }
+
+      // Verify the token and extract the payload
+      // Check if the accessToken is defined, if so
+      // we have an authenticated user if not we have
+      // an unauthenticated user but with  the api access token
+
+      const payload = verifyAccessToken(<string>accessToken) as {
+        username: string;
+      };
+
+      /** Attach the payload to the request object for later use */
+      if (Object.keys(req.body).length === 0) {
+        req.body = { user: payload };
+      } else req.body.user = payload;
+
+      // Call the next middleware or API route handler function
+      return await next(req, res);
+    } catch (error: any) {
+      console.error(error);
+      return res.status(401).json({ message: "Authentication Failed" });
     }
-    // Verify the token and extract the payload
-    const payload = verifyToken(token) as { username: string };
-
-    // Attach the payload to the request object for later use
-    if (payload?.username !== "unauthenticated_user") req.body = payload;
-
-    // Call the next middleware or API route handler function
-    await next(req, res);
-  } catch (error: any) {
-    return res.status(401).json({ message: "Authentication Failed" });
-  }
+  };
 }

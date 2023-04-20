@@ -43,7 +43,10 @@ function FormLogin({
         cPassword,
         password,
       })
-      .then((token) => userContext?.setUser(token))
+      .then((token) => {
+        userContext?.setUser(token);
+        setError(null);
+      })
       .catch((err) => {
         setError(err);
       })
@@ -53,13 +56,13 @@ function FormLogin({
   const handleLogin = async () => {
     setStatus("fetching");
     userService
-      .login({ username, password })
+      .login({ username, password, rememberUser: checked })
       .then((token) => {
         userContext?.setUser(token);
-        console.log(token);
+
+        setError(null);
       })
       .catch((err) => {
-        console.log(err);
         setError(err);
       })
       .finally(() => setStatus("done"));
@@ -72,7 +75,7 @@ function FormLogin({
   };
 
   const handleUsernameChange = async (e: React.FocusEvent<HTMLInputElement>) => {
-    if (create && (await findExistingUsername(username)))
+    if (username && create && (await findExistingUsername(username)))
       setError({ message: "Username already exists" });
     else setError(null);
   };
@@ -162,7 +165,11 @@ function FormLogin({
                   />
                 }
                 label={
-                  <Typography component={"span"} style={styles.checkBoxText}>
+                  <Typography
+                    component={"span"}
+                    color="secondary"
+                    style={styles.checkBoxText}
+                  >
                     Remember me
                   </Typography>
                 }

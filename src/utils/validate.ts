@@ -73,7 +73,7 @@ export function validateInputs(
     let errorMessage = "Validation failed: ";
 
     if (!nameIsValid) {
-      errorMessage += `Name must be between ${MIN_NAME_LENGTH} and ${MAX_NAME_LENGTH} characters long. `;
+      errorMessage += `Name must be between ${MIN_NAME_LENGTH} and ${MAX_NAME_LENGTH} characters long and only contain letters and spaces. `;
     }
 
     if (!usernameIsValid) {
@@ -85,7 +85,7 @@ export function validateInputs(
     }
 
     if (!cPasswordIsValid) {
-      errorMessage += "The password and confirm password fields do not match";
+      errorMessage += "The password and confirm password fields do not match.";
     }
 
     throw new Error(errorMessage);

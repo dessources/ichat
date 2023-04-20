@@ -1,21 +1,34 @@
 import React from "react";
+
+// context
+import { UserContext } from "@/pages/index";
+
+//material ui
 import { ThemeProvider } from "@mui/material/styles";
 import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
+import { Typography, Box } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import FormLogin from "./FormLogin";
+
+//styles
 import theme from "@/themes/ichat";
 import * as styles from "@/styles/UnauthApp.style";
 
+// services  & utils
+import autoLogin from "@/utils/autoLogin";
+
 function UnauthApp() {
   const [create, setCreate] = React.useState(false);
-  const [open, setOpen] = React.useState(true);
   const [error, setError] = React.useState<Error>();
   const [status, setStatus] = React.useState<"fetching" | "done" | "idle">("idle");
+  const userContext = React.useContext(UserContext);
+
+  //try login in directly with refresh token
+  React.useEffect(() => {
+    autoLogin().then((accessToken) => userContext?.setUser(accessToken));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSignUp = () => {
     setCreate(true);
@@ -23,7 +36,7 @@ function UnauthApp() {
   const handleSignIn = () => {
     setCreate(false);
   };
-  const handleClose = () => {};
+
   const label = create ? "Signup" : "Login";
 
   const spinner =
@@ -34,25 +47,19 @@ function UnauthApp() {
     );
   return (
     <ThemeProvider theme={theme}>
-      <Dialog
-        sx={styles.dialog}
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title" color="primary">
+      <Box sx={styles.dialog}>
+        <Typography id="alert-dialog-title" variant="h5" color="primary">
           {label}
-        </DialogTitle>
-        <DialogContent sx={styles.dialogContent}>
+        </Typography>
+        <Box sx={styles.dialogContent}>
           <FormLogin create={create} setError={setError} setStatus={setStatus} />
           {error ? (
             <Alert severity="error">
               <>Error : {error.message}</>
             </Alert>
           ) : null}
-        </DialogContent>
-        <DialogActions style={{ justifyContent: "flex-start" }}>
+        </Box>
+        <Box sx={styles.dialogActions}>
           {!create ? (
             <Button onClick={handleSignUp} color="primary">
               New on Ichat ? {spinner}
@@ -62,8 +69,8 @@ function UnauthApp() {
               Already have an account ? {spinner}
             </Button>
           )}
-        </DialogActions>
-      </Dialog>
+        </Box>
+      </Box>
     </ThemeProvider>
   );
 }

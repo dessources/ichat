@@ -1,11 +1,7 @@
-import get from "axios";
-
+import axios from "../../lib/axios";
+import User from "@/models/User";
 export async function findExistingUsername(username: string) {
-  const { data } = await get(`/api/users?username=${username}`, {
-    headers: {
-      Authorization: `bearer ${process.env.NEXT_PUBLIC_UNAUTHENTICATED_USER_TOKEN}`,
-    },
-  });
+  const response = axios.get<Partial<User>>(`/api/users?username=${username}`);
 
-  return data.result ? true : false;
+  return await response.then(({ data }) => true).catch(() => false);
 }

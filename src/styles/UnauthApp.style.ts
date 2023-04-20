@@ -8,11 +8,17 @@ export const root: React.CSSProperties = {
 };
 
 export const dialog: SxProps<Theme> | undefined = {
-  opacity: "0.9",
+  background: "#fff",
+  padding: "1rem",
+  borderRadius: "20px",
+
+  "& h5": {
+    marginBottom: "1rem",
+  },
 };
 
 export const dialogContent: SxProps<Theme> | undefined = {
-  width: "378px",
+  width: "400px",
 };
 
 export const submit: React.CSSProperties = {
@@ -29,4 +35,10 @@ export const progress: React.CSSProperties = {
 
 export const small: React.CSSProperties = {
   margin: "0.5rem 0 0.5rem",
+  color: "var(--dark_gray)",
+};
+export const dialogActions: SxProps<Theme> = {
+  "& button": {
+    padding: "0.5rem 0",
+  },
 };
