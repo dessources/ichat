@@ -36,3 +36,9 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# APi request files
+# extension playground files
+
+*.rest
+*.mongodb.js

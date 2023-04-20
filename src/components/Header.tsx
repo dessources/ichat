@@ -17,7 +17,7 @@ import Box from "@mui/material/Box";
 import Image from "next/image";
 
 //styles
-import * as styles from "@/styles/Header";
+import * as styles from "@/styles/Header.style";
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
 interface HeaderProps {
@@ -40,7 +40,13 @@ export default function Header(props: HeaderProps) {
                   padding: "0.4rem 0.5rem",
                 }}
               >
-                <Image src="/chat.png" width="30" height="30" alt="" style={styles.logo} />{" "}
+                <Image
+                  src="/chat.png"
+                  width="30"
+                  height="30"
+                  alt=""
+                  style={styles.logo}
+                />{" "}
                 Ichat
               </Box>
             </Grid>
