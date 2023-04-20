@@ -10,7 +10,9 @@ class UserService {
     const response = axios.post<AuthResponse>("/auth/login", input);
 
     return response
-      .then(({ data }) => data.accessToken)
+      .then(({ data }) => {
+        return Promise.resolve(data.accessToken);
+      })
       .catch((e) => Promise.reject(e.response.data));
   }
 

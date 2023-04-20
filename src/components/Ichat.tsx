@@ -30,8 +30,6 @@ export default function Ichat() {
     setMobileOpen(!mobileOpen);
   };
 
-  const axiosPrivate = useAxiosPrivate();
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

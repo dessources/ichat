@@ -11,7 +11,6 @@ import { UserContext } from "@/pages";
 
 //utils
 import { findExistingUsername } from "@/utils/findExistingUsername";
-import { verifyAccessToken } from "@/utils/jwt";
 
 interface FormLoginProps {
   create: boolean;
@@ -54,19 +53,26 @@ function FormLogin({
       .finally(() => setStatus("done"));
   };
 
+  React.useEffect(() => {
+    console.log(userContext?.user);
+  }, [userContext?.user]);
+
   const handleLogin = async () => {
     setStatus("fetching");
     userService
       .login({ username, password, rememberUser: checked })
       .then((token) => {
+        console.log("token", token);
         userContext?.setUser(token);
-
         setError(null);
       })
       .catch((err) => {
         setError(err);
       })
-      .finally(() => setStatus("done"));
+      .finally(() => {
+        console.log("done");
+        setStatus("done");
+      });
   };
 
   const handleEnter = (e: React.KeyboardEvent<HTMLFormElement>) => {
