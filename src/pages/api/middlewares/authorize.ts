@@ -4,18 +4,20 @@ import { verifyAccessToken } from "@/utils/jwt";
 export default function authorize(next: NextApiHandler) {
   return async function (req: NextApiRequest, res: NextApiResponse) {
     const apiAccessToken = req.headers.authorization?.split(" ")[1];
-    return res.status(200).json({ message: "what now ?", apiAccessToken });
-    // const headers = structuredClone(req.headers);
+
     let reason;
     try {
-      // if (!apiAccessToken) {
-      //   reason = "No accessToken";
-      //   throw new Error();
-      // }
-      // reason = "token invalid";
-      // const { username } = verifyAccessToken(<string>apiAccessToken) as {
-      //   username: string;
-      // };
+      if (!apiAccessToken) {
+        reason = "No accessToken";
+        throw new Error();
+      }
+      reason = "token invalid";
+      const { username } = verifyAccessToken(<string>apiAccessToken) as {
+        username: string;
+      };
+      return res
+        .status(200)
+        .json({ message: "what now ?", apiAccessToken, username });
 
       /** Attach the payload to the request object for later use */
       /*/ if (username === "system")*/ return await next(req, res);
