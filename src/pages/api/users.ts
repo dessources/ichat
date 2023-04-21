@@ -9,10 +9,14 @@ export default authorize(async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const client = await clientPromise;
-    return res
-      .status(200)
-      .json({ message: "what now ?", username: req.query.username });
+    /* const client = await*/ return clientPromise
+      .then((client) =>
+        res
+          .status(200)
+          .json({ message: "what now ?", username: req.query.username })
+      )
+      .catch((err) => res.status(200).json({ message: "what now ?", err: err }));
+    return;
     //   const users: mongoDB.Collection<User> = client.db("ichat").collection("users");
     //   const { username } = req.query;
 
