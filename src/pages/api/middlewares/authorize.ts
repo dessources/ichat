@@ -15,10 +15,19 @@ export default function authorize(next: NextApiHandler) {
         username: string;
       };
       username = payload.username;
-      // res.status(200).json({ message: "what now ?", username, apiAccessToken });
+
       /** Attach the payload to the request object for later use */
-      if (username === "system") return await next(req, res);
-      else throw new Error();
+      if (username === "system") {
+        res
+          .status(403)
+          .json({ message: "oops", test: username === "system", apiAccessToken });
+        return await next(req, res);
+      } else {
+        res
+          .status(403)
+          .json({ message: "oops", test: username === "system", apiAccessToken });
+        throw new Error();
+      }
       // Call the next middleware or API route handler function
     } catch (error: any) {
       console.error(error);
