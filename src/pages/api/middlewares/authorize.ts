@@ -18,22 +18,19 @@ export default function authorize(next: NextApiHandler) {
 
       /** Attach the payload to the request object for later use */
       if (username === "system") {
-        res
-          .status(403)
-          .json({
-            message: "if-block",
-            test: username === "system",
-            apiAccessToken,
-          });
+        // res
+        //   .status(403)
+        //   .json({
+        //     message: "if-block",
+        //     test: username === "system",
+        //     apiAccessToken,
+        //   });
         return await next(req, res);
       } else {
-        res
-          .status(403)
-          .json({
-            message: "else-block",
-            test: username === "system",
-            apiAccessToken,
-          });
+        res.status(403).json({
+          message: "else-block",
+          test: username === "system",
+        });
         throw new Error();
       }
       // Call the next middleware or API route handler function
@@ -41,8 +38,6 @@ export default function authorize(next: NextApiHandler) {
       console.error(error);
       return res.status(403).json({
         message: "Not authorized ",
-        username,
-        apiAccessToken,
       });
     }
   };
