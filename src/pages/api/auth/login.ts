@@ -54,7 +54,9 @@ export default authorize(async (req, res) => {
         : null;
 
       if (user && passwordsMatch) {
-        users.updateOne({ _id: user._id }, { $set: { online: true } });
+        users
+          .updateOne({ _id: user._id }, { $set: { online: true } })
+          .catch((err) => res.json(err));
 
         // Generate an access token and a refresh token
         const accessToken = generateAccessToken({ username });
@@ -77,9 +79,12 @@ export default authorize(async (req, res) => {
         );
 
         // Return the access token in the response
-        // return res.status(200).json({ accessToken });
+        return res.status(200).json({ accessToken });
       } else {
-        res.status(401).json({ message: "Could not login user" });
+        res.status(401).json({
+          message: "Could not login user",
+          match: user && passwordsMatch,
+        });
       }
     }
   } else {
