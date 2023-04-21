@@ -8,23 +8,21 @@ export default function authorize(next: NextApiHandler) {
     let reason;
     try {
       if (!apiAccessToken) {
-        reason = "No accessToken";
         throw new Error();
       }
       reason = "token invalid";
       const { username } = verifyAccessToken(<string>apiAccessToken) as {
         username: string;
       };
-
+      res.status(200).json({ message: "what now ?", username, apiAccessToken });
       /** Attach the payload to the request object for later use */
       if (username === "system") return await next(req, res);
-
-      //else throw new Error();
+      else throw new Error();
       // Call the next middleware or API route handler function
     } catch (error: any) {
       console.error(error);
       return res.status(403).json({
-        message: "Not authorized " + reason,
+        message: "Not authorized ",
       });
     }
   };
