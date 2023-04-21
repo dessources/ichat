@@ -31,7 +31,6 @@ export default function authorize(next: NextApiHandler) {
           process.env.NEXT_PUBLIC_API_ACCESS_TOKEN,
           process.env.NEXT_PUBLIC_CONTENT_API_URL,
           process.env.NEXT_PUBLIC_CONTENT_API_TOKEN,
-          process.env.NEXT_PUBLIC_API_ACCESS_TOKEN,
           process.env.MONGODB_URI,
           process.env.JWT_ACCESS_TOKEN_SECRET,
           process.env.JWT_REFRESH_TOKEN_SECRET,

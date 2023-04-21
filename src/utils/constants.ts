@@ -12,6 +12,6 @@ export const BASE_URL = "/api";
 export const AXIOS_CONFIG: AxiosRequestConfig = {
   headers: {
     "Content-Type": "application/json",
-    authorization: `Bearer ${process.env.NEXT_PUBLIC_API_ACCESS_TOKEN}`,
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_ACCESS_TOKEN}`,
   },
 };
