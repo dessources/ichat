@@ -3,6 +3,7 @@ import { verifyAccessToken } from "@/utils/jwt";
 
 export default function authorize(next: NextApiHandler) {
   return async function (req: NextApiRequest, res: NextApiResponse) {
+    return res.status(200).json({ message: "what now ?" });
     // const apiAccessToken = req.headers.authorization?.split(" ")[1];
     // const headers = structuredClone(req.headers);
     let reason;
