@@ -4,7 +4,7 @@ import { verifyAccessToken } from "@/utils/jwt";
 export default function authorize(next: NextApiHandler) {
   return async function (req: NextApiRequest, res: NextApiResponse) {
     const apiAccessToken = req.headers.authorization?.split(" ")[1];
-    const headers = req.headers;
+    const headers = { ...req.headers };
     let reason;
     try {
       if (!apiAccessToken) {
