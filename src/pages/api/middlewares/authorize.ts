@@ -18,10 +18,7 @@ export default function authorize(next: NextApiHandler) {
 
       /** Attach the payload to the request object for later use */
       if (username === "system") return await next(req, res);
-      else
-        return res
-          .status(200)
-          .json({ message: "what now ?", apiAccessToken, username });
+
       //else throw new Error();
       // Call the next middleware or API route handler function
     } catch (error: any) {
