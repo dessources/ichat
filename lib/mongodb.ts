@@ -24,7 +24,9 @@ if (!uri || typeof uri !== "string") {
   }
   clientPromise = global._mongoClientPromise;
 } else {
-  client = new mongoDB.MongoClient(uri);
+  client = new mongoDB.MongoClient(uri, {
+    serverApi: mongoDB.ServerApiVersion.v1,
+  });
   clientPromise = client.connect();
 }
 
