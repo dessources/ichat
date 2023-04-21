@@ -44,48 +44,43 @@ export default authorize(async (req, res) => {
       }
     } else {
       const client = await clientPromise;
-      console.log("🚀 ~ file: login.ts:47 ~ authorize ~ client:", client);
       const users: mongoDB.Collection = client.db("ichat").collection("users");
-      console.log("🚀 ~ file: login.ts:49 ~ authorize ~ users:", users);
       const data = req.body;
-      console.log("🚀 ~ file: login.ts:51 ~ authorize ~ data :", data);
       const username = data?.username;
-      console.log("🚀 ~ file: login.ts:53 ~ authorize ~ usern:", username);
       const user = await users.findOne({ username: username });
-      console.log("🚀 ~ file: login.ts:55 ~ authorize ~ user :", user);
-      return res.json({ client, users, data, username, user });
-      // const passwordsMatch = user
-      //   ? await compare(data.password, user?.password)
-      //   : null;
 
-      // if (user && passwordsMatch) {
-      //   users.updateOne({ _id: user._id }, { $set: { online: true } });
+      const passwordsMatch = user
+        ? await compare(data.password, user?.password)
+        : null;
 
-      //   // Generate an access token and a refresh token
-      //   const accessToken = generateAccessToken({ username });
-      //   const refreshToken = generateRefreshToken({ username });
-      //   const refreshTokenDuration =
-      //     (data.rememberUser
-      //       ? LONG_REFRESH_TOKEN_DAYS_COUNT
-      //       : SHORT_REFRESH_TOKEN_DAYS_COUNT) * 86_400;
+      if (user && passwordsMatch) {
+        users.updateOne({ _id: user._id }, { $set: { online: true } });
 
-      //   // Set the access token as a cookie with a short expiration time
-      //   res.setHeader(
-      //     "Set-Cookie",
-      //     `accessToken=${accessToken}; HttpOnly; Path=/; Max-Age=${1 * 60 * 60}`
-      //   );
+        // Generate an access token and a refresh token
+        const accessToken = generateAccessToken({ username });
+        const refreshToken = generateRefreshToken({ username });
+        const refreshTokenDuration =
+          (data.rememberUser
+            ? LONG_REFRESH_TOKEN_DAYS_COUNT
+            : SHORT_REFRESH_TOKEN_DAYS_COUNT) * 86_400;
 
-      //   // Set the refresh token as a cookie with a longer expiration time
-      // res.setHeader(
-      //   "Set-Cookie",
-      //   `refreshToken=${refreshToken}; HttpOnly; Path=/; Max-Age=${refreshTokenDuration}`
-      // );
+        // Set the access token as a cookie with a short expiration time
+        res.setHeader(
+          "Set-Cookie",
+          `accessToken=${accessToken}; HttpOnly; Path=/; Max-Age=${1 * 60 * 60}`
+        );
 
-      // // Return the access token in the response
-      //   // return res.status(200).json({ accessToken });
-      // } else {
-      //   res.status(401).json({ message: "Could not login user" });
-      // }
+        // Set the refresh token as a cookie with a longer expiration time
+        res.setHeader(
+          "Set-Cookie",
+          `refreshToken=${refreshToken}; HttpOnly; Path=/; Max-Age=${refreshTokenDuration}`
+        );
+
+        // Return the access token in the response
+        // return res.status(200).json({ accessToken });
+      } else {
+        res.status(401).json({ message: "Could not login user" });
+      }
     }
   } else {
     res.status(405).json({ message: "Bad Request, only POST accepted" });

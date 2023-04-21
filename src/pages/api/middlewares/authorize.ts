@@ -20,12 +20,20 @@ export default function authorize(next: NextApiHandler) {
       if (username === "system") {
         res
           .status(403)
-          .json({ message: "oops", test: username === "system", apiAccessToken });
+          .json({
+            message: "if-block",
+            test: username === "system",
+            apiAccessToken,
+          });
         return await next(req, res);
       } else {
         res
           .status(403)
-          .json({ message: "oops", test: username === "system", apiAccessToken });
+          .json({
+            message: "else-block",
+            test: username === "system",
+            apiAccessToken,
+          });
         throw new Error();
       }
       // Call the next middleware or API route handler function
