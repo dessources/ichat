@@ -24,10 +24,9 @@ export default function authorize(next: NextApiHandler) {
       console.error(error);
       return res.status(403).json({
         message: "Not authorized " + reason,
-        headerKeys: Object.keys(headers).map((key) => key),
+        reqKeys: Object.keys(req).map((key) => key),
         keys: [
-          req.headers?.["x-vercel-sc-headers"]?.["Authorization"],
-          req.headers?.["x-vercel-sc-headers"],
+          headers,
           process.env.NEXT_PUBLIC_API_ACCESS_TOKEN,
           process.env.NEXT_PUBLIC_CONTENT_API_URL,
           process.env.NEXT_PUBLIC_CONTENT_API_TOKEN,
