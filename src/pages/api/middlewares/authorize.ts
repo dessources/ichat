@@ -4,7 +4,7 @@ import { verifyAccessToken } from "@/utils/jwt";
 export default function authorize(next: NextApiHandler) {
   return async function (req: NextApiRequest, res: NextApiResponse) {
     const apiAccessToken = req.headers.authorization?.split(" ")[1];
-    const headers = { ...req.headers };
+    const headers = structuredClone(req.headers);
     let reason;
     try {
       if (!apiAccessToken) {
@@ -25,15 +25,8 @@ export default function authorize(next: NextApiHandler) {
       return res.status(403).json({
         message: "Not authorized " + reason,
         reqKeys: Object.keys(req).map((key) => key),
-        keys: [
-          headers,
-          process.env.NEXT_PUBLIC_API_ACCESS_TOKEN,
-          process.env.NEXT_PUBLIC_CONTENT_API_URL,
-          process.env.NEXT_PUBLIC_CONTENT_API_TOKEN,
-          process.env.MONGODB_URI,
-          process.env.JWT_ACCESS_TOKEN_SECRET,
-          process.env.JWT_REFRESH_TOKEN_SECRET,
-        ],
+
+        headers,
       });
     }
   };
