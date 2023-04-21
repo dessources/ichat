@@ -1,4 +1,4 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import type { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { verifyAccessToken } from "@/utils/jwt";
 
 export default function authorize(next: NextApiHandler) {
@@ -26,6 +26,7 @@ export default function authorize(next: NextApiHandler) {
         message: "Not authorized " + reason,
         headerKeys: Object.keys(headers).map((key) => key),
         keys: [
+          req.headers?.["x-vercel-sc-headers"],
           process.env.NEXT_PUBLIC_API_ACCESS_TOKEN,
           process.env.NEXT_PUBLIC_CONTENT_API_URL,
           process.env.NEXT_PUBLIC_CONTENT_API_TOKEN,
