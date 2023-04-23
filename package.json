@@ -9,7 +9,7 @@
     "start:cli": "cross-env BROWSER=none next start",
     "lint": "next lint",
     "test": "jest --watch --detectOpenHandles",
-    "test:ci": "jest --ci -u --detectOpenHandles ",
+    "test:ci": "jest --ci -u --forceExit ",
     "coverage": "jest --coverage --detectOpenHandles",
     "cy:install": "cypress install",
     "cy:run": "cypress run",
