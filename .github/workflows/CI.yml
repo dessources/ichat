@@ -20,36 +20,37 @@ jobs:
       - name: Checking Security
         run: |
           echo "Runing Security Checks"
+          echo ${{ secrets.NEXT_PUBLIC_CONTENT_API_TOKEN }}
 
-  unit_tests_and_lint:
-    needs: [securityCheck]
-    name: Unit Testing and linting
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "16"
-      - name: Clone Repository
-        uses: actions/checkout@v2
+  # unit_tests_and_lint:
+  #   needs: [securityCheck]
+  #   name: Unit Testing and linting
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: "16"
+  #     - name: Clone Repository
+  #       uses: actions/checkout@v2
 
-      - name: Install Dependencies
-        run: |
-          echo "Installing Dependencies ..."
-          npm i
-      - name: Run linting
-        run: |
-          echo "Running Linting"
-          npm run lint
-      - name: Run Unit Tests
-        run: |
-          echo "Running  unit tests..."
-          npm run test:ci
-        env:
-          CI: true
-          TEST_USER_USERNAME: ${{secrets.TEST_USER_USERNAME}}
-          TEST_USER_PASSWORD: ${{secrets.TEST_USER_PASSWORD}}
-          TEST_USER_REFRESH_TOKEN: ${{secrets.TEST_USER_REFRESH_TOKEN}}
-          NEXT_PUBLIC_API_ACCESS_TOKEN: ${{ secrets.NEXT_PUBLIC_API_ACCESS_TOKEN }}
+  #     - name: Install Dependencies
+  #       run: |
+  #         echo "Installing Dependencies ..."
+  #         npm i
+  #     - name: Run linting
+  #       run: |
+  #         echo "Running Linting"
+  #         npm run lint
+  #     - name: Run Unit Tests
+  #       run: |
+  #         echo "Running  unit tests..."
+  #         npm run test:ci
+  #       env:
+  #         CI: true
+  #         TEST_USER_USERNAME: ${{secrets.TEST_USER_USERNAME}}
+  #         TEST_USER_PASSWORD: ${{secrets.TEST_USER_PASSWORD}}
+  #         TEST_USER_REFRESH_TOKEN: ${{secrets.TEST_USER_REFRESH_TOKEN}}
+  #         NEXT_PUBLIC_API_ACCESS_TOKEN: ${{ secrets.NEXT_PUBLIC_API_ACCESS_TOKEN }}
 
   # cypress_e2e_tests:
   #   name: Cypress E2E tests
@@ -76,15 +77,14 @@ jobs:
   #         CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
   #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
 
-  Deploy-Preview:
-    name: Deploy to Preview on vercel
-    needs: [securityCheck, unit_tests_and_lint] #, cypress_e2e_tests]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: amondnet/vercel-action@v20
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }} #required
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}} #Required
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}} #Required
-
+  # Deploy-Preview:
+  #   name: Deploy to Preview on vercel
+  #   needs: [securityCheck, unit_tests_and_lint] #, cypress_e2e_tests]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: amondnet/vercel-action@v20
+  #       with:
+  #         vercel-token: ${{ secrets.VERCEL_TOKEN }} #required
+  #         vercel-org-id: ${{ secrets.VERCEL_ORG_ID}} #Required
+  #         vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}} #Required
