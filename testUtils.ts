@@ -13,7 +13,11 @@ export function createRandomUser(): Partial<User> {
   };
 }
 
-export function mockRequestResponse(method: RequestMethod, body?: any) {
+export function mockRequestResponse(
+  method: RequestMethod,
+  body?: any,
+  headers?: any
+) {
   const { req, res }: { req: NextApiRequest; res: NextApiResponse } = createMocks({
     method,
   });
@@ -21,6 +25,7 @@ export function mockRequestResponse(method: RequestMethod, body?: any) {
   req.headers = {
     "Content-Type": "application/json",
     authorization: `Bearer ${process.env.NEXT_PUBLIC_API_ACCESS_TOKEN}`,
+    ...headers,
   };
 
   req.body = body;

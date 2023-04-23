@@ -3,9 +3,9 @@
  */
 
 import login from "@/pages/api/auth/login";
-import { mockRequestResponse, createRandomUser, testUser } from "../../testUtils";
+import { mockRequestResponse, testUser } from "../../../testUtils";
 
-import { setCookie, getCookie, getCookies } from "cookies-next";
+import { setCookie, getCookie } from "cookies-next";
 
 describe("Login API route", () => {
   it("should return a 401 error if user does not exist", async () => {

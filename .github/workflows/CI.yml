@@ -26,7 +26,6 @@ jobs:
       - name: Checking Security
         run: |
           echo "Runing Security Checks"
-          echo ${{ secrets.NEXT_PUBLIC_CONTENT_API_TOKEN }}
 
   unit_tests_and_lint:
     needs: [securityCheck]

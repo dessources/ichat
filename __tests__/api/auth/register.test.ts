@@ -8,9 +8,9 @@ import {
   createRandomUser,
   testUser,
   testUserWithWeakPassword,
-} from "../../testUtils";
+} from "../../../testUtils";
 
-import clientPromise from "../../lib/mongodb";
+import clientPromise from "../../../lib/mongodb";
 import { getCookie, getCookies } from "cookies-next";
 import * as mongoDb from "mongodb";
 import User from "@/models/User";

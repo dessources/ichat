@@ -22,7 +22,7 @@ export default function authorize(next: NextApiHandler) {
     } catch (error: any) {
       console.error(error);
       return res.status(403).json({
-        message: "Not authorized ",
+        message: "Not authorized",
       });
     }
   };
