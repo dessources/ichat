@@ -3,7 +3,7 @@
  */
 
 import login from "@/pages/api/auth/login";
-import { mockRequestResponse, createRandomUser, testUser } from "/testUtils";
+import { mockRequestResponse, createRandomUser, testUser } from "../../testUtils";
 import AuthResponse from "@/models/AuthResponse";
 import { setCookie } from "cookies-next";
 
