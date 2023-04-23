@@ -1,5 +1,4 @@
 import clientPromise from "../../../../lib/mongodb";
-import { NextApiRequest, NextApiResponse } from "next";
 import { getCookie } from "cookies-next";
 import * as mongoDB from "mongodb";
 import { compare } from "bcrypt";
@@ -40,7 +39,7 @@ export default authorize(async (req, res) => {
       } catch (err) {
         console.log(err);
         // Refresh token is invalid or has expired
-        return res.status(401).json({ message: "Unauthorized" });
+        return res.status(401).json({ message: "Could not login user" });
       }
     } else {
       const client = await clientPromise;
@@ -56,7 +55,7 @@ export default authorize(async (req, res) => {
       if (user && passwordsMatch) {
         users
           .updateOne({ _id: user._id }, { $set: { online: true } })
-          .catch((err) => res.json(err));
+          .catch((err) => res.status(500).json(err));
 
         // Generate an access token and a refresh token
         const accessToken = generateAccessToken({ username });
@@ -83,7 +82,6 @@ export default authorize(async (req, res) => {
       } else {
         res.status(401).json({
           message: "Could not login user",
-          match: user && passwordsMatch,
         });
       }
     }

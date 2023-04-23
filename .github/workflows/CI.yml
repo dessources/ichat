@@ -13,31 +13,34 @@ jobs:
         run: |
           echo "Runing Security Checks"
 
-  # unit_tests_and_lint:
-  #   needs: [securityCheck]
-  #   name: Unit Testing and linting
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/setup-node@v2
-  #       with:
-  #         node-version: "16"
-  #     - name: Clone Repository
-  #       uses: actions/checkout@v2
+  unit_tests_and_lint:
+    needs: [securityCheck]
+    name: Unit Testing and linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+      - name: Clone Repository
+        uses: actions/checkout@v2
 
-  #     - name: Install Dependencies
-  #       run: |
-  #         echo "Installing Dependencies ..."
-  #         npm i
-  #     - name: Run linting
-  #       run: |
-  #         echo "Running Linting"
-  #         npm run lint
-  #     - name: Run Unit Tests
-  #       run: |
-  #         echo "Running  unit tests..."
-  #         npm run test:ci
-  #       env:
-  #         CI: true
+      - name: Install Dependencies
+        run: |
+          echo "Installing Dependencies ..."
+          npm i
+      - name: Run linting
+        run: |
+          echo "Running Linting"
+          npm run lint
+      - name: Run Unit Tests
+        run: |
+          echo "Running  unit tests..."
+          npm run test:ci
+        env:
+          CI: true
+          TEST_USER_USERNAME: ${{secrets.TEST_USER_USERNAME}}
+          TEST_USER_PASSWORD: ${{secrets.TEST_USER_PASSWORD}}
+          TEST_USER_REFRESH_TOKEN: ${{secrets.TEST_USER_REFRESH_TOKEN}}
 
   # cypress_e2e_tests:
   #   name: Cypress E2E tests

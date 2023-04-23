@@ -53,10 +53,6 @@ function FormLogin({
       .finally(() => setStatus("done"));
   };
 
-  React.useEffect(() => {
-    console.log(userContext?.user);
-  }, [userContext?.user]);
-
   const handleLogin = async () => {
     setStatus("fetching");
     userService

@@ -15,9 +15,17 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/mongodb.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "lib/mongodb.ts",
+    "__tests__/pages/index.tsx",
+    "__tests__/api/login.js"
+  ],
+  "exclude": ["node_modules", "./cypress.config.ts", "cypress", "**/*.cy.tsx"]
 }

@@ -5,12 +5,11 @@ export default function authorize(next: NextApiHandler) {
   return async function (req: NextApiRequest, res: NextApiResponse) {
     const apiAccessToken = req.headers.authorization?.split(" ")[1];
 
-    let reason;
     try {
       if (!apiAccessToken) {
         throw new Error();
       }
-      reason = "token invalid";
+
       const { username } = verifyAccessToken(<string>apiAccessToken) as {
         username: string;
       };
