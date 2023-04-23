@@ -30,8 +30,10 @@ afterEach(async () => {
   if (newUser)
     await users
       .deleteMany({ id: { $exists: true } })
-      .then((value) => console.log(value))
-      .catch((reason) => console.log(reason));
+      .then((value) => {
+        process.env.NODE_ENV !== "test" && console.log(value);
+      })
+      .catch((reason) => process.env.NODE_ENV !== "test" && console.log(reason));
 });
 
 afterAll(async () => {

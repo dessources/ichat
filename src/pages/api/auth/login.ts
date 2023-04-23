@@ -42,7 +42,7 @@ export default authorize(async (req, res) => {
         });
         return res.status(200).json({ accessToken });
       } catch (err) {
-        console.log(err);
+        process.env.NODE_ENV !== "test" && console.log(err);
         // Refresh token is invalid or has expired
         return res.status(401).json({ message: "Could not login user" });
       }
