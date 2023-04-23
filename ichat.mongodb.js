@@ -11,6 +11,7 @@
 
 // Select the database to use.
 use("ichat");
+db.users.deleteMany({ id: { $exists: true } });
 // db.users.dropIndex({ username: 1 }, { unique: true });
 // db.users.createIndex(
 //   { username: 1 },
@@ -18,7 +19,6 @@ use("ichat");
 // );
 // db.users.insertOne({ username: "Da_KOder", name: "hacker", password: "thisnuts" });
 // Inserrt a few documents into the sales collection.
-// db.getCollectionInfos({ name: "users" })[0];
 // validator["$or"] = []
 
 // validator["$or"].push(
@@ -61,7 +61,7 @@ use("ichat");
 //         },
 //         password: {
 //           bsonType: "string",
-//           minLength: 5,
+//           minLength: 8,
 //           description: "must be a string  and is required",
 //         },
 //         name: {
@@ -87,3 +87,4 @@ use("ichat");
 //     },
 //   },
 // });
+// db.getCollectionInfos({ name: "users" })[0];

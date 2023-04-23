@@ -3,6 +3,7 @@ import { SALT_ROUNDS } from "./constants";
 
 export function normalizeName(name: string): string {
   // Normalize name by removing extra spaces and non-word characters
+
   const normalized = name
     .normalize("NFC")
     .replace(/[\u0300-\u036f]/g, "") // Remove diacritical marks (accents)

@@ -1,5 +1,5 @@
 import clientPromise from "../../../../lib/mongodb";
-import { getCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 import * as mongoDB from "mongodb";
 import { compare } from "bcrypt";
 
@@ -31,10 +31,15 @@ export default authorize(async (req, res) => {
         const accessToken = generateAccessToken({ username });
 
         // Set a cookie with the new access token
-        res.setHeader(
-          "Set-Cookie",
-          `accessToken=${accessToken}; HttpOnly; Path=/; Max-Age=${1 * 60 * 60}`
-        );
+
+        setCookie("accessToken", accessToken, {
+          req,
+          res,
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "development",
+          path: "/",
+          maxAge: 1 * 24 * 60 * 60,
+        });
         return res.status(200).json({ accessToken });
       } catch (err) {
         console.log(err);
@@ -66,16 +71,24 @@ export default authorize(async (req, res) => {
             : SHORT_REFRESH_TOKEN_DAYS_COUNT) * 86_400;
 
         // Set the access token as a cookie with a short expiration time
-        res.setHeader(
-          "Set-Cookie",
-          `accessToken=${accessToken}; HttpOnly; Path=/; Max-Age=${1 * 60 * 60}`
-        );
+
+        setCookie("accessToken", accessToken, {
+          req,
+          res,
+          httpOnly: true,
+          path: "/",
+          maxAge: 1 * 60 * 60,
+        });
 
         // Set the refresh token as a cookie with a longer expiration time
-        res.setHeader(
-          "Set-Cookie",
-          `refreshToken=${refreshToken}; HttpOnly; Path=/; Max-Age=${refreshTokenDuration}`
-        );
+
+        setCookie("refreshToken", refreshToken, {
+          req,
+          res,
+          httpOnly: true,
+          path: "/",
+          maxAge: refreshTokenDuration,
+        });
 
         // Return the access token in the response
         return res.status(200).json({ accessToken });
