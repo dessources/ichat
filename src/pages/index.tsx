@@ -1,8 +1,8 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import React from "react";
-import UnauthApp from "@/components/UnauthApp";
-import Ichat from "@/components/Ichat";
+import UnauthApp from "@/components/unauthApp";
+import Ichat from "@/components/ichat";
 import User from "@/models/User";
 
 export const UserContext = React.createContext<
