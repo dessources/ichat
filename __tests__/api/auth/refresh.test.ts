@@ -5,7 +5,7 @@
 import { mockRequestResponse } from "../../../testUtils";
 import refresh from "@/pages/api/auth/refresh";
 
-import { setCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 
 describe("Refresh  Api Route", () => {
   it("Should return a 405 error if request method is not POST", async () => {
@@ -39,12 +39,12 @@ describe("Refresh  Api Route", () => {
   it("Should return a new access Token when refresh token valid", async () => {
     const { req, res } = mockRequestResponse("POST");
     setCookie("refreshToken", process.env.TEST_USER_REFRESH_TOKEN, { req, res });
-    const resJsonSpy = jest.spyOn(res, "json");
 
     await refresh(req, res);
 
     expect(res.statusCode).toBe(200);
-    const accessToken = resJsonSpy.mock.lastCall?.[0].accessToken;
+    const accessToken = getCookie("accessToken", { req, res }) as string;
+
     expect(typeof accessToken).toBe("string");
     expect(accessToken.length).toBeGreaterThan(10);
   });

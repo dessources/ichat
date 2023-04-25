@@ -16,7 +16,7 @@
     "incremental": true,
     "paths": {
       "@/*": ["./src/*"],
-      "/*": ["./*"]
+      "@/hooks": ["./hooks/*"]
     }
   },
   "include": [
@@ -25,7 +25,7 @@
     "**/*.tsx",
     "lib/mongodb.ts",
     "__tests__/pages/index.tsx",
-    "__tests__/api/login.js"
+    "scripts/*.ts"
   ],
   "exclude": ["node_modules", "./cypress.config.ts", "cypress", "**/*.cy.tsx"]
 }

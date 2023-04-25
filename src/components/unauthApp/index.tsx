@@ -22,20 +22,13 @@ function UnauthApp() {
   const [create, setCreate] = React.useState(false);
   const [error, setError] = React.useState<Error>();
   const [status, setStatus] = React.useState<"fetching" | "done" | "idle">("idle");
-  const userContext = React.useContext(UserContext);
 
   //try login in directly with refresh token
   React.useEffect(() => {
-    autoLogin().then((accessToken) => userContext?.setUser(accessToken));
+    autoLogin();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleSignUp = () => {
-    setCreate(true);
-  };
-  const handleSignIn = () => {
-    setCreate(false);
-  };
   const label = create ? "Signup" : "Login";
 
   const spinner =
@@ -60,11 +53,11 @@ function UnauthApp() {
         </Box>
         <Box sx={styles.dialogActions}>
           {!create ? (
-            <Button onClick={handleSignUp} color="primary">
+            <Button onClick={() => setCreate(true)} color="primary">
               New on Ichat ? {spinner}
             </Button>
           ) : (
-            <Button onClick={handleSignIn} autoFocus color="primary">
+            <Button onClick={() => setCreate(false)} autoFocus color="primary">
               Already have an account ? {spinner}
             </Button>
           )}

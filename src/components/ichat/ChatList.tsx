@@ -1,5 +1,7 @@
-import * as React from "react";
-import Image from "next/image";
+//hooks
+import useChats from "@/hooks/useChats";
+
+//mui
 import Divider from "@mui/material/Divider";
 import Drawer, { DrawerProps } from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -7,27 +9,15 @@ import Box from "@mui/material/Box";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import { Avatar, IconButton, Typography } from "@mui/material";
-import ListItemText from "@mui/material/ListItemText";
-import DnsRoundedIcon from "@mui/icons-material/DnsRounded";
 
 //my components
 import ChatInfo from "./ChatInfo";
 //styles
 import * as styles from "@/styles/ChatList.style";
 
-const chats = [
-  {
-    name: "Jean-Jacques",
-    profilePicture: "someurl",
-    online: true,
-  },
-  { name: "Norie", online: false, profilePicture: "someurl" },
-  { name: "Anderson", online: false, profilePicture: "someurl" },
-];
-
 export default function ChatList(props: DrawerProps) {
   const { ...other } = props;
-
+  const { data: chats, isError, isLoading } = useChats();
   return (
     <Drawer variant="permanent" {...other}>
       <List disablePadding>

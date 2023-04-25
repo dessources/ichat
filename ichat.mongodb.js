@@ -11,13 +11,14 @@
 
 // Select the database to use.
 use("ichat");
-db.users.deleteMany({ id: { $exists: true } });
+
+// db.users.deleteMany({ id: { $exists: true } });
 // db.users.dropIndex({ username: 1 }, { unique: true });
 // db.users.createIndex(
 //   { username: 1 },
 //   { unique: true, collation: { locale: "en_US", strength: 2 } }
 // );
-// db.users.insertOne({ username: "Da_KOder", name: "hacker", password: "thisnuts" });
+// db.users.insertMany([]);
 // Inserrt a few documents into the sales collection.
 // validator["$or"] = []
 
@@ -34,11 +35,6 @@ db.users.deleteMany({ id: { $exists: true } });
 //   }
 // );
 
-// db.runCommand({
-//   collMod: "users",
-//   validator: validator,
-//   validationLevel: "strict",
-// });
 // db.getCollectionInfos({ name: "users" })[0].options.validator;
 // db.users.insertOne({
 //   name: " user",

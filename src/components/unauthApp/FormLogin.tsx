@@ -7,7 +7,6 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import userService from "@/services/user";
 import * as styles from "@/styles/UnauthApp.style";
-import { UserContext } from "@/pages";
 
 //utils
 import { findExistingUsername } from "@/utils/findExistingUsername";
@@ -18,14 +17,7 @@ interface FormLoginProps {
   setError: Function;
 }
 
-function FormLogin({
-  create = false,
-
-  setError,
-  setStatus,
-}: FormLoginProps) {
-  const userContext = React.useContext(UserContext);
-
+function FormLogin({ create = false, setError, setStatus }: FormLoginProps) {
   const [checked, setChecked] = React.useState(false);
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -43,8 +35,7 @@ function FormLogin({
         cPassword,
         password,
       })
-      .then((token) => {
-        userContext?.setUser(token);
+      .then(() => {
         setError(null);
       })
       .catch((err) => {
@@ -57,9 +48,7 @@ function FormLogin({
     setStatus("fetching");
     userService
       .login({ username, password, rememberUser: checked })
-      .then((token) => {
-        console.log("token", token);
-        userContext?.setUser(token);
+      .then(() => {
         setError(null);
       })
       .catch((err) => {

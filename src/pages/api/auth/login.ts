@@ -40,7 +40,7 @@ export default authorize(async (req, res) => {
           path: "/",
           maxAge: 1 * 24 * 60 * 60,
         });
-        return res.status(200).json({ accessToken });
+        return res.status(200);
       } catch (err) {
         process.env.NODE_ENV !== "test" && console.log(err);
         // Refresh token is invalid or has expired

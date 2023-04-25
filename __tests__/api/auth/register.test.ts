@@ -93,12 +93,14 @@ describe("Register API route", () => {
 
     expect(res.status).toHaveBeenCalledWith(201);
 
-    expect(typeof ResJsonSpy.mock.calls[0][0]?.accessToken).toBe("string");
-    expect(ResJsonSpy.mock.calls[0][0].accessToken.length).toBeGreaterThan(10);
-
-    const refreshToken = getCookie("refreshToken", { req, res }) as string;
+    const { refreshToken, accessToken } = getCookies({ req, res }) as {
+      refreshToken: string;
+      accessToken: string;
+    };
 
     expect(typeof refreshToken).toBe("string");
     expect(refreshToken.length).toBeGreaterThan(10);
+    expect(typeof accessToken).toBe("string");
+    expect(accessToken.length).toBeGreaterThan(10);
   });
 });

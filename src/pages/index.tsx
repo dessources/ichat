@@ -3,11 +3,12 @@ import styles from "@/styles/Home.module.css";
 import React from "react";
 import UnauthApp from "@/components/unauthApp";
 import Ichat from "@/components/ichat";
-import User from "@/models/User";
 
-export const UserContext = React.createContext<
-  { user: User | undefined; setUser: Function } | undefined
->(undefined);
+//models
+import User from "@/models/User";
+import UserContextType from "@/models/UserContextType";
+
+export const UserContext = React.createContext<UserContextType>(null);
 
 export default function Home() {
   const [user, setUser] = React.useState<User | undefined>();

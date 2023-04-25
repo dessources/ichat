@@ -1,4 +1,10 @@
 import * as React from "react";
+import { UserContext } from "@/pages";
+
+//utils && hooks
+import userService from "@/services/user";
+
+//mui
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "@/themes/ichat";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -7,9 +13,6 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import AppBar from "@mui/material/AppBar";
 import Grid from "@mui/material/Grid";
-
-// hooks & utils
-import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 
 //My Components
 import ChatList from "./ChatList";
@@ -20,6 +23,7 @@ import Copyright from "./Copyright";
 //styles
 import * as styles from "@/styles/Ichat";
 import { paper } from "@/styles/ChatList.style";
+import UserContextType from "@/models/UserContextType";
 const drawerWidth = 288;
 
 export default function Ichat() {
@@ -29,7 +33,14 @@ export default function Ichat() {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const userContext = React.useContext(UserContext);
 
+  React.useEffect(() => {
+    userService
+      .getUser()
+      .then((user) => userContext?.setUser(user))
+      .catch((err) => console.error("user not found", err));
+  }, [userContext]);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -37,7 +48,7 @@ export default function Ichat() {
       <Box sx={{ display: "flex", minHeight: "100vh", overflow: "hidden" }}>
         <AppBar color="secondary" sx={styles.sidebar}>
           <Toolbar>
-            <Grid id="thisis" container spacing={1} alignItems="center">
+            <Grid container spacing={1} alignItems="center">
               xxx
             </Grid>
           </Toolbar>
