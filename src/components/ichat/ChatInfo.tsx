@@ -1,7 +1,7 @@
 import React from "react";
 
 interface ChatInfoProps {
-  name: string;
+  name?: string;
 }
 
 export default function ChatInfo({ name }: ChatInfoProps) {

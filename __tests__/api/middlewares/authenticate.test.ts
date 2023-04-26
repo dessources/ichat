@@ -1,6 +1,6 @@
 import authenticate from "@/pages/api/middlewares/authenticate";
 
-import { mockRequestResponse } from "../../../testUtils";
+import { mockRequestResponse } from "../../testUtils";
 import { setCookie } from "cookies-next";
 
 describe("Authenticate middleware", () => {

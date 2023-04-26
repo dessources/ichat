@@ -15,8 +15,8 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["./src/*"],
-      "@/hooks": ["./hooks/*"]
+      "@/hooks": ["./hooks/*"],
+      "@/*": ["./src/*"]
     }
   },
   "include": [

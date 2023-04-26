@@ -1,6 +1,6 @@
 import authorize from "@/pages/api/middlewares/authorize";
 
-import { mockRequestResponse } from "../../../testUtils";
+import { mockRequestResponse } from "../../testUtils";
 
 describe("Authorize middleware", () => {
   let mockHandler: jest.Mock;

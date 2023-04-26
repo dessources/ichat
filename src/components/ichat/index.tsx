@@ -23,7 +23,7 @@ import Copyright from "./Copyright";
 //styles
 import * as styles from "@/styles/Ichat";
 import { paper } from "@/styles/ChatList.style";
-import UserContextType from "@/models/UserContextType";
+import { UserContextType } from "@/models";
 const drawerWidth = 288;
 
 export default function Ichat() {
@@ -38,9 +38,12 @@ export default function Ichat() {
   React.useEffect(() => {
     userService
       .getUser()
-      .then((user) => userContext?.setUser(user))
-      .catch((err) => console.error("user not found", err));
-  }, [userContext]);
+      .then((user) => {
+        userContext?.setUser(user);
+      })
+      .catch((err) => console.error("user not found", err)); //set error state
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

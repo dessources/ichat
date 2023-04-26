@@ -24,7 +24,6 @@ axiosPrivate.interceptors.response.use(
     const prevRequest = error?.config;
 
     if (error?.response?.status === 401 && !prevRequest?.sent) {
-      console.log("Getting new access token");
       prevRequest.sent = true;
       await axios.post("/auth/refresh");
 
