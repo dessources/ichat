@@ -1,11 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createMocks, RequestMethod } from "node-mocks-http";
 import { faker } from "@faker-js/faker";
-import User from "@/models/User";
+import { User } from "@/models";
 
 export function createRandomUser(): Partial<User> {
   return {
-    id: faker.datatype.uuid(),
     name: faker.name.fullName(),
     username: faker.internet.userName(),
     profilePicture: faker.image.avatar(),

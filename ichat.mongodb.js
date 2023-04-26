@@ -13,27 +13,15 @@
 use("ichat");
 
 // db.users.deleteMany({ id: { $exists: true } });
+db.users
+  .find({ username: "liza.koelpin" })
+  .collation({ locale: "en_US", strength: 2 });
 // db.users.dropIndex({ username: 1 }, { unique: true });
 // db.users.createIndex(
 //   { username: 1 },
-//   { unique: true, collation: { locale: "en_US", strength: 2 } }
+//   { unique: true, collation: { locale: "en", strength: 2 } }
 // );
-// db.users.insertMany([]);
-// Inserrt a few documents into the sales collection.
-// validator["$or"] = []
-
-// validator["$or"].push(
-//   {
-//     profilePicture: {
-//       $type: "string",
-//     },
-//   },
-//   {
-//     chats: {
-//       $type: "array",
-//     },
-//   }
-// );
+// db.users.getIndexes();
 
 // db.getCollectionInfos({ name: "users" })[0].options.validator;
 // db.users.insertOne({

@@ -1,7 +1,7 @@
 import React from "react";
 
 // context
-import { UserContext } from "@/pages/index";
+import { AuthContext, UserContext } from "@/pages/index";
 
 //material ui
 import { ThemeProvider } from "@mui/material/styles";
@@ -22,10 +22,14 @@ function UnauthApp() {
   const [create, setCreate] = React.useState(false);
   const [error, setError] = React.useState<Error>();
   const [status, setStatus] = React.useState<"fetching" | "done" | "idle">("idle");
-
+  const authContext = React.useContext(AuthContext);
   //try login in directly with refresh token
   React.useEffect(() => {
-    autoLogin();
+    autoLogin()
+      .then(() => {
+        authContext?.setAuth(true);
+      })
+      .catch((err) => console.log(err));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

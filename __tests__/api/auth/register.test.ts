@@ -8,16 +8,18 @@ import {
   createRandomUser,
   testUser,
   testUserWithWeakPassword,
-} from "../../../testUtils";
+} from "../../testUtils";
 
 import clientPromise from "../../../lib/mongodb";
-import { getCookie, getCookies } from "cookies-next";
+import { getCookies } from "cookies-next";
 import * as mongoDb from "mongodb";
-import User from "@/models/User";
+import { User } from "@/models";
+import { NextApiRequest, NextApiResponse } from "next";
 
 let client: mongoDb.MongoClient;
 let users: mongoDb.Collection;
 let newUser: Partial<User>;
+let reqRes: { req: NextApiRequest; res: NextApiResponse };
 
 beforeAll(async () => {
   client = await clientPromise;
@@ -25,15 +27,26 @@ beforeAll(async () => {
 });
 
 afterEach(async () => {
-  //clear registered test User
+  // Make sure that the api returned a response
+  // no matter what. We do that by checking
+  // the writableEnded property of res
+  expect(reqRes?.res.writableEnded).toBeTruthy();
 
-  if (newUser)
+  //delete registered test User
+  if (newUser) {
+    const [matchedUser] = await users
+      .find({ username: newUser.username })
+      .collation({ locale: "en", strength: 2 })
+      .toArray();
+
     await users
-      .deleteMany({ id: { $exists: true } })
+      .deleteOne({ _id: matchedUser?._id })
       .then((value) => {
-        process.env.NODE_ENV !== "test" && console.log(value);
+        expect(value.acknowledged).toBe(true);
+        expect(value.deletedCount).toBeGreaterThan(0);
       })
-      .catch((reason) => process.env.NODE_ENV !== "test" && console.log(reason));
+      .catch((reason) => process.env.NODE_ENV === "test" && console.log(reason));
+  }
 });
 
 afterAll(async () => {
@@ -43,7 +56,8 @@ afterAll(async () => {
 describe("Register API route", () => {
   it("should return a 405 if request is not POST", async () => {
     //Mock the request, response context
-    const { req, res } = mockRequestResponse("GET");
+    reqRes = mockRequestResponse("GET");
+    const { req, res } = reqRes;
 
     const resJsonSpy = jest.spyOn(res, "json");
 
@@ -56,7 +70,8 @@ describe("Register API route", () => {
   });
 
   it("should return a 500 error if user's username already exits", async () => {
-    const { req, res } = mockRequestResponse("POST", testUser);
+    reqRes = mockRequestResponse("POST", testUser);
+    const { req, res } = reqRes;
 
     const ResJsonSpy = jest.spyOn(res, "json");
 
@@ -70,7 +85,8 @@ describe("Register API route", () => {
   });
 
   it("should return a 500 error if user's password is not strong", async () => {
-    const { req, res } = mockRequestResponse("POST", testUserWithWeakPassword);
+    reqRes = mockRequestResponse("POST", testUserWithWeakPassword);
+    const { req, res } = reqRes;
 
     const ResJsonSpy = jest.spyOn(res, "json");
 
@@ -85,7 +101,8 @@ describe("Register API route", () => {
 
   it("should return a code 201 and access token and refresh token if user is valid", async () => {
     newUser = createRandomUser();
-    const { req, res } = mockRequestResponse("POST", newUser);
+    reqRes = mockRequestResponse("POST", newUser);
+    const { req, res } = reqRes;
     const ResJsonSpy = jest.spyOn(res, "json");
     jest.spyOn(res, "status");
 

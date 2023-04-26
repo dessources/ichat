@@ -1,7 +1,6 @@
-import axios from "../../lib/axios";
-import User from "@/models/User";
-export async function findExistingUsername(username: string) {
-  const response = axios.get<Partial<User>>(`/users?username=${username}`);
+import userService from "@/services/user";
 
+export async function findExistingUsername(username: string) {
+  const response = userService.getUser(username);
   return await response.then(() => true).catch(() => false);
 }

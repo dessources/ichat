@@ -10,6 +10,7 @@ import * as styles from "@/styles/UnauthApp.style";
 
 //utils
 import { findExistingUsername } from "@/utils/findExistingUsername";
+import { AuthContext } from "@/pages";
 
 interface FormLoginProps {
   create: boolean;
@@ -18,6 +19,7 @@ interface FormLoginProps {
 }
 
 function FormLogin({ create = false, setError, setStatus }: FormLoginProps) {
+  const authContext = React.useContext(AuthContext);
   const [checked, setChecked] = React.useState(false);
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -36,6 +38,7 @@ function FormLogin({ create = false, setError, setStatus }: FormLoginProps) {
         password,
       })
       .then(() => {
+        authContext?.setAuth(true);
         setError(null);
       })
       .catch((err) => {
@@ -49,17 +52,18 @@ function FormLogin({ create = false, setError, setStatus }: FormLoginProps) {
     userService
       .login({ username, password, rememberUser: checked })
       .then(() => {
+        authContext?.setAuth(true);
         setError(null);
       })
       .catch((err) => {
         setError(err);
       })
       .finally(() => {
-        console.log("done");
         setStatus("done");
       });
   };
 
+  //submit the form when user presses Enter
   const handleEnter = (e: React.KeyboardEvent<HTMLFormElement>) => {
     if (!/Enter|NumpadEnter/.test(e.key)) return;
     if (create) handleRegister();

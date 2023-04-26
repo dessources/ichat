@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
 
       // Return the new access token in the response
-      return res.status(200);
+      return res.status(200).end();
     } catch (err) {
       process.env.NODE_ENV === "test" && console.log(err);
       res.status(401).json({ message: "Authentication failed" });
