@@ -15,12 +15,22 @@ export default authenticate(
 
       try {
         const { userId } = req.body;
+<<<<<<< HEAD
 
         result = await chats
           .find({ users: { $in: [new ObjectId(userId)] } })
           .toArray();
       } catch (err) {
         process.env.NODE_ENV !== "production" && console.log(err);
+=======
+        console.log("the user ID is :", userId);
+        result = await chats
+          .find({ users: { $in: [new ObjectId(userId)] } })
+          .toArray();
+        console.log(result);
+      } catch (err) {
+        process.env.NODE_ENV === "test" && console.log(err);
+>>>>>>> c62a910a1b6c068893e007a074114ebdc69fdf09
         res.status(500).json({ message: "Something went wrong", error: err });
       }
 

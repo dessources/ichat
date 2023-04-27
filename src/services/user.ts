@@ -12,7 +12,13 @@ class UserService {
     const response = axios.post("/auth/login", input);
 
     return response
+<<<<<<< HEAD
       .then(() => Promise.resolve())
+=======
+      .then(({ data }) => {
+        return Promise.resolve();
+      })
+>>>>>>> c62a910a1b6c068893e007a074114ebdc69fdf09
       .catch((e) => Promise.reject(e.response.data));
   }
 
@@ -55,6 +61,7 @@ class UserService {
     url: string;
     userId: ObjectId;
   }): Promise<Chat[]> {
+<<<<<<< HEAD
     // Get the chats
     const chats = await axiosPrivate
       .post<Chat[]>(url, { userId })
@@ -83,6 +90,10 @@ class UserService {
     }
 
     return Promise.resolve([]);
+=======
+    console.log("user ID ", userId, "url :", url);
+    return axiosPrivate.post(url, { userId }).then((res) => res.data);
+>>>>>>> c62a910a1b6c068893e007a074114ebdc69fdf09
   }
 }
 
