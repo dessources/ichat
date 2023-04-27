@@ -1,3 +1,4 @@
+import { SxProps, Theme } from "@mui/material";
 import { ObjectId } from "mongodb";
 // export interface AuthResponse {
 //   accessToken: string;
@@ -7,6 +8,7 @@ export interface Chat {
   name?: string;
   chatPicture?: string;
   users: ObjectId[];
+  group: boolean;
 }
 
 export interface User {
@@ -35,6 +37,5 @@ export type AuthContextType = {
   auth: boolean;
   setAuth: Function;
 } | null;
-export interface ComponentStyle {
-  [className: string]: React.CSSProperties;
-}
+
+export type ComponentStyle = React.CSSProperties | SxProps<Theme>;

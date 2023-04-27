@@ -1,18 +1,12 @@
 import * as React from "react";
+import { UserContext } from "@/pages";
+
+// mui
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import HelpIcon from "@mui/icons-material/Help";
 import IconButton from "@mui/material/IconButton";
-import Link from "@mui/material/Link";
-import MenuIcon from "@mui/icons-material/Menu";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import Tab from "@mui/material/Tab";
-import Tabs from "@mui/material/Tabs";
 import Toolbar from "@mui/material/Toolbar";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Image from "next/image";
 
@@ -26,7 +20,7 @@ interface HeaderProps {
 
 export default function Header(props: HeaderProps) {
   const { onDrawerToggle } = props;
-
+  const userContext = React.useContext(UserContext);
   return (
     <React.Fragment>
       <AppBar color="secondary" position="fixed" elevation={1} sx={styles.root}>
@@ -54,7 +48,9 @@ export default function Header(props: HeaderProps) {
 
             <Grid item>
               <IconButton color="inherit" sx={{ p: 0.5 }}>
-                <Avatar src="/static/images/avatar/1.jpg" alt="My Avatar" />
+                <Avatar src={userContext?.user?.profilePicture} alt="My Avatar">
+                  {userContext?.user?.name.charAt(0)}
+                </Avatar>
               </IconButton>
             </Grid>
           </Grid>

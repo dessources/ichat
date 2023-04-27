@@ -12,9 +12,7 @@ class UserService {
     const response = axios.post("/auth/login", input);
 
     return response
-      .then(({ data }) => {
-        return Promise.resolve();
-      })
+      .then(() => Promise.resolve())
       .catch((e) => Promise.reject(e.response.data));
   }
 
@@ -57,8 +55,34 @@ class UserService {
     url: string;
     userId: ObjectId;
   }): Promise<Chat[]> {
-    console.log("user ID ", userId, "url :", url);
-    return axiosPrivate.post(url, { userId }).then((res) => res.data);
+    // Get the chats
+    const chats = await axiosPrivate
+      .post<Chat[]>(url, { userId })
+      .then((res) => res.data);
+
+    if (chats) {
+      // if the isn't a group chat set the name and the chatPicture
+      // properties of this chat to the name and profile picture
+      // respectively of the user that is in the chat with the
+      // app's current user
+      const normalizedChats = chats.map(async (chat) => {
+        if (!chat.group) {
+          const otherUserId = chat.users.find((id) => id !== userId);
+          const result = await userService
+            .getUser(otherUserId)
+            .then((otherUser) => ({
+              ...chat,
+              name: otherUser.name,
+              chatPicture: otherUser.profilePicture,
+            }))
+            .catch((err) => console.log(err));
+          return result as Chat;
+        } else return chat;
+      });
+      return await Promise.all(normalizedChats);
+    }
+
+    return Promise.resolve([]);
   }
 }
 
