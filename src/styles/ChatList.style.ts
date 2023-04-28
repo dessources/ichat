@@ -37,11 +37,6 @@ export const chatList: SxProps<Theme> = {
 //   px: 3,
 // };
 
-export const avatar: SxProps<Theme> = {
-  textTransform: "uppercase",
-  background: "#444",
-};
-
 export const chatListItem: SxProps<Theme> = {
   textTransform: "capitalize",
 };

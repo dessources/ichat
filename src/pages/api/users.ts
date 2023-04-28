@@ -55,7 +55,7 @@ export default authorize(async function handler(
     }
 
     const { name, profilePicture, _id, username } = user;
-    const result = { name, profilePicture, id: _id, username };
+    const result = { name, profilePicture, _id, username };
     return res.status(200).json(result);
   } else {
     res.status(405).json({ message: "Bad request" });

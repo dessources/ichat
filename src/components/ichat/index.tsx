@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { Chat } from "@/models";
 //utils && hooks
-import userService from "@/services/user";
+import userService from "@/services/userService";
 import useAppContext from "@/hooks/useAppContext";
 import { ChatContext, UserContext } from "@/contexts";
 import ContextProvider from "@/components/ContextProvider";
@@ -16,13 +16,13 @@ import Grid from "@mui/material/Grid";
 
 //My Components
 import ChatList from "./chatList";
-import Content from "./chat";
+import ChatBox from "./chat";
 import Header from "./Header";
 import Copyright from "./Copyright";
 
 //styles
 import theme from "@/themes/ichat";
-import * as styles from "@/styles/Ichat";
+import * as styles from "@/styles/Ichat.style";
 import { paper } from "@/styles/ChatList.style";
 
 const drawerWidth = 288;
@@ -77,9 +77,8 @@ export default function Ichat() {
           />
         </Box>
         <Box sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          <Box component="div" sx={styles.chat}>
-            <Content />
-          </Box>
+          <ChatBox />
+
           {/* <Box component="footer" sx={{ p: 2, bgcolor: "#eaeff1" }}>
             <Copyright />
           </Box> */}

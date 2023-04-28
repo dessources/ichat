@@ -1,7 +1,7 @@
 import React from "react";
 import { Context } from "@/models";
-export default function useAppContext(context: React.Context<Context<any>>) {
-  const value = React.useContext(context);
+export default function useAppContext<T>(context: React.Context<Context<any>>) {
+  const value: Context<T> = React.useContext(context);
 
   if (!value) {
     throw new Error(

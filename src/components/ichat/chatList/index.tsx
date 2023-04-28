@@ -2,12 +2,12 @@
 import React from "react";
 
 //utils && hooks && context
-import useChats from "@/hooks/useChats";
 import useAppContext from "@/hooks/useAppContext";
 import { UserContext } from "@/contexts";
 
-//mui
+import { Chat, User } from "@/models";
 
+//mui
 import Drawer, { DrawerProps } from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import { Typography } from "@mui/material";
@@ -18,12 +18,21 @@ import ChatListItem from "./ChatListItem";
 //styles
 import * as styles from "@/styles/ChatList.style";
 import { ObjectId } from "mongodb";
+import useFetchData from "@/hooks/useFetchData";
+import userService from "@/services/userService";
 
 export default function ChatList(props: DrawerProps) {
   const { ...other } = props;
-  const [user] = useAppContext(UserContext);
+  const [user] = useAppContext<User>(UserContext);
 
-  const { chats, isError, isLoading } = useChats(user?.id as ObjectId);
+  const {
+    data: chats,
+    isError,
+    isLoading,
+  } = useFetchData<Chat[]>(
+    { url: "/chats", userId: user?._id as ObjectId },
+    userService.getChats
+  );
 
   return (
     <Drawer variant="permanent" {...other}>

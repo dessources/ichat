@@ -1,18 +1,25 @@
-import { ObjectId } from "mongodb";
+import { ObjectId, Timestamp } from "mongodb";
 // export interface AuthResponse {
 //   accessToken: string;
 // }
 
 export interface Chat {
-  id: ObjectId;
+  _id: ObjectId;
   name?: string;
   chatPicture?: string;
   users: ObjectId[];
   group: boolean;
 }
+export interface Message {
+  _id: ObjectId;
+  sender: ObjectId;
+  chat: ObjectId;
+  content: string;
+  timestamp: Timestamp;
+}
 
 export interface User {
-  id: ObjectId;
+  _id: ObjectId;
   name: string;
   username: string;
   profilePicture?: string;

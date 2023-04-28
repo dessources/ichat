@@ -1,9 +1,9 @@
 import * as React from "react";
 import useAppContext from "@/hooks/useAppContext";
-import { UserContext } from "@/contexts";
+import { ChatContext } from "@/contexts";
 
 //models
-import { User } from "@/models";
+import { Chat } from "@/models";
 // mui
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
@@ -11,53 +11,36 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
-import Image from "next/image";
 
 //styles
-import * as styles from "@/styles/Header.style";
+import * as styles from "@/styles/Chat.style";
 import { avatar } from "@/styles/Ichat.style";
+import { Button, Tab, Tabs, Tooltip, Typography } from "@mui/material";
 
-const lightColor = "rgba(255, 255, 255, 0.7)";
-
-interface HeaderProps {
-  onDrawerToggle: () => void;
-}
-
-export default function Header(props: HeaderProps) {
-  const { onDrawerToggle } = props;
-  const [user] = useAppContext<User>(UserContext);
+export default function ChatHeader() {
+  const [currentChat] = useAppContext<Chat>(ChatContext);
   return (
     <React.Fragment>
-      <AppBar color="secondary" position="fixed" elevation={1} sx={styles.root}>
+      <AppBar elevation={1} sx={styles.header}>
         <Toolbar sx={styles.toolbar}>
           <Grid container spacing={1} alignItems="center">
             <Grid item>
-              <Box
-                sx={{
-                  fontSize: 22,
-                  color: "#fff",
-                  padding: "0.4rem 0.5rem",
-                }}
-              >
-                <Image
-                  src="/chat.png"
-                  width="30"
-                  height="30"
-                  alt=""
-                  style={styles.logo}
-                />{" "}
-                Ichat
-              </Box>
+              <IconButton color="inherit" sx={{ p: 0.5 }}>
+                <Avatar
+                  src={currentChat?.chatPicture}
+                  alt={currentChat?.name}
+                  sx={avatar}
+                >
+                  {currentChat?.name?.charAt(0)}
+                </Avatar>
+              </IconButton>
+              <Typography component={"span"} textTransform={"capitalize"}>
+                {currentChat?.name}
+              </Typography>
             </Grid>
             <Grid item xs />
 
-            <Grid item>
-              <IconButton color="inherit" sx={{ p: 0.5 }}>
-                <Avatar src={user?.profilePicture} alt="My Avatar" sx={avatar}>
-                  {user?.name.charAt(0)}
-                </Avatar>
-              </IconButton>
-            </Grid>
+            <Grid item></Grid>
           </Grid>
         </Toolbar>
       </AppBar>
@@ -87,15 +70,13 @@ export default function Header(props: HeaderProps) {
             </Grid>
             <Grid item>
               <Tooltip title="Help">
-                <IconButton color="inherit">
-                  <HelpIcon />
-                </IconButton>
+                <IconButton color="inherit"></IconButton>
               </Tooltip>
             </Grid>
           </Grid>
         </Toolbar>
-      </AppBar> */}
-      {/* <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>
+      </AppBar>
+      <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>
         <Tabs value={0} textColor="inherit">
           <Tab label="Users" />
           <Tab label="Sign-in method" />

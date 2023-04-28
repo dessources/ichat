@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import userService from "@/services/user";
+import userService from "@/services/userService";
 import type { ObjectId } from "mongodb";
 
 export default function useChats(userId: ObjectId) {

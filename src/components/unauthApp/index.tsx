@@ -8,9 +8,8 @@ import { AuthContext } from "@/contexts";
 import Button from "@mui/material/Button";
 import { Typography, Box } from "@mui/material";
 import Alert from "@mui/material/Alert";
-import CircularProgress from "@mui/material/CircularProgress";
 import FormLogin from "./FormLogin";
-
+import Spinner from "@/components/Spinner";
 //styles
 import * as styles from "@/styles/UnauthApp.style";
 
@@ -24,22 +23,20 @@ function UnauthApp() {
   const [, setAuth] = useAppContext(AuthContext);
   //try login in directly with refresh token
   React.useEffect(() => {
+    setStatus("fetching");
     autoLogin()
       .then(() => {
         setAuth?.(true);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setStatus("done");
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const label = create ? "Signup" : "Login";
 
-  const spinner =
-    status === "fetching" ? (
-      <CircularProgress color="primary" style={styles.progress} />
-    ) : (
-      <></>
-    );
   return (
     <Box sx={styles.dialog}>
       <Typography id="alert-dialog-title" variant="h5" color="primary">
@@ -56,11 +53,12 @@ function UnauthApp() {
       <Box sx={styles.dialogActions}>
         {!create ? (
           <Button onClick={() => setCreate(true)} color="primary">
-            New on Ichat ? {spinner}
+            New on Ichat ? {<Spinner isLoading={status === "fetching"} />}
           </Button>
         ) : (
           <Button onClick={() => setCreate(false)} autoFocus color="primary">
-            Already have an account ? {spinner}
+            Already have an account ?{" "}
+            {<Spinner isLoading={status === "fetching"} />}
           </Button>
         )}
       </Box>

@@ -1,5 +1,5 @@
 import React from "react";
-
+import theme from "@/themes/ichat";
 import { SxProps, Theme } from "@mui/material";
 
 export const sidebar: SxProps<Theme> = {
@@ -8,28 +8,28 @@ export const sidebar: SxProps<Theme> = {
   left: 0,
   zIndex: 1,
 };
+
 export const chatList: SxProps<Theme> = {
   flexShrink: { sm: 0 },
-  bgcolor: "secondary",
+  bgcolor: "var(--light_gray)",
   position: "relative",
 
   "&:before": {
     position: "absolute",
     content: `" "`,
     width: "1rem",
-    "z-index": -1,
     height: "1rem",
+    zIndex: 1,
     top: 0,
-    bgcolor: "var(--dark_gray)",
+    bgcolor: theme.palette.secondary.main,
     left: 0,
   },
 };
+
 export const chat: SxProps<Theme> = {
   flex: 1,
-  py: 6,
-  px: 4,
 
-  // background: "var(--light_gray)",
+  position: "relative",
   background: "url(background.png) fixed",
 };
 
@@ -40,4 +40,9 @@ export const main: SxProps = {
   marginTop: "3rem",
   marginLeft: "3rem",
   height: "calc(100vh - 3rem)",
+};
+
+export const avatar: SxProps<Theme> = {
+  textTransform: "uppercase",
+  background: "#444",
 };

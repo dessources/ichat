@@ -1,4 +1,4 @@
-import userService from "@/services/user";
+import userService from "@/services/userService";
 
 export async function findExistingUsername(username: string) {
   const response = userService.getUser(username);

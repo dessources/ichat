@@ -6,7 +6,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import userService from "@/services/user";
+import userService from "@/services/userService";
 import * as styles from "@/styles/UnauthApp.style";
 
 //utils & hooks
