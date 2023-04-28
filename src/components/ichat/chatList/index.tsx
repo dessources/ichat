@@ -3,13 +3,14 @@ import React from "react";
 
 //utils && hooks && context
 import useChats from "@/hooks/useChats";
-import { UserContext } from "@/pages";
-import getChatPictureURL from "@/utils/getChatPictureURL";
+import useAppContext from "@/hooks/useAppContext";
+import { UserContext } from "@/contexts";
+
 //mui
-import Divider from "@mui/material/Divider";
+
 import Drawer, { DrawerProps } from "@mui/material/Drawer";
 import List from "@mui/material/List";
-import { Avatar, IconButton, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
 //my components
 import ChatListItem from "./ChatListItem";
@@ -20,17 +21,20 @@ import { ObjectId } from "mongodb";
 
 export default function ChatList(props: DrawerProps) {
   const { ...other } = props;
-  const userContext = React.useContext(UserContext);
-  const userId = userContext?.user?.id;
+  const [user] = useAppContext(UserContext);
 
-  const { chats, isError, isLoading } = useChats(userId as ObjectId);
+  const { chats, isError, isLoading } = useChats(user?.id as ObjectId);
 
   return (
     <Drawer variant="permanent" {...other}>
       {isError ? (
-        <Typography component="p">Error !</Typography>
+        <Typography sx={styles.title} component="p">
+          Error !
+        </Typography>
       ) : isLoading ? (
-        <Typography component="p">Loading ...</Typography>
+        <Typography sx={styles.title} component="p">
+          Loading ...
+        </Typography>
       ) : (
         <>
           <Typography sx={styles.title} variant="h5">

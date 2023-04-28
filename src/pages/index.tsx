@@ -3,16 +3,17 @@ import styles from "@/styles/Home.module.css";
 import React from "react";
 import UnauthApp from "@/components/unauthApp";
 import Ichat from "@/components/ichat";
-
-//models
-import { User, UserContextType, AuthContextType } from "@/models";
-
-export const UserContext = React.createContext<UserContextType>(null);
-export const AuthContext = React.createContext<AuthContextType>(null);
+import { UserContext, AuthContext } from "@/contexts";
+import { ThemeProvider } from "@mui/material/styles";
+// hooks
+import useAppContext from "@/hooks/useAppContext";
+import ContextProvider from "@/components/ContextProvider";
+//styles
+import theme from "@/themes/ichat";
 
 export default function Home() {
-  const [user, setUser] = React.useState<User | undefined>();
-  const [auth, setAuth] = React.useState<boolean>(false);
+  const [auth] = useAppContext(AuthContext);
+
   return (
     <>
       <Head>
@@ -21,22 +22,21 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/chat.png" />
       </Head>
-      <AuthContext.Provider value={{ auth, setAuth }}>
-        <UserContext.Provider value={{ user, setUser }}>
-          <>
-            {auth ? (
-              <Ichat />
-            ) : (
-              <main className={styles.main}>
-                <div className={styles.header}>
-                  <h1>Ichat</h1>
-                </div>
-                <UnauthApp />
-              </main>
-            )}
-          </>
-        </UserContext.Provider>
-      </AuthContext.Provider>
+
+      <ThemeProvider theme={theme}>
+        {auth ? (
+          <ContextProvider context={UserContext}>
+            <Ichat />
+          </ContextProvider>
+        ) : (
+          <main className={styles.main}>
+            <div className={styles.header}>
+              <h1>Ichat</h1>
+            </div>
+            <UnauthApp />
+          </main>
+        )}
+      </ThemeProvider>
     </>
   );
 }

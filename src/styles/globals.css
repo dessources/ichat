@@ -3,8 +3,8 @@
     "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
   --accent-color: rgb(21 161 137 / 95%);
-  --light_gray: #191919;
-  --dark_gray: #111;
+  --light_gray: #272727;
+  --dark_gray: #202020;
 }
 
 * {

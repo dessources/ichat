@@ -1,4 +1,5 @@
 import React, { FormEvent } from "react";
+
 import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -8,9 +9,10 @@ import Button from "@mui/material/Button";
 import userService from "@/services/user";
 import * as styles from "@/styles/UnauthApp.style";
 
-//utils
+//utils & hooks
 import { findExistingUsername } from "@/utils/findExistingUsername";
-import { AuthContext } from "@/pages";
+import useAppContext from "@/hooks/useAppContext";
+import { AuthContext } from "@/contexts";
 
 interface FormLoginProps {
   create: boolean;
@@ -19,7 +21,7 @@ interface FormLoginProps {
 }
 
 function FormLogin({ create = false, setError, setStatus }: FormLoginProps) {
-  const authContext = React.useContext(AuthContext);
+  const [, setAuth] = useAppContext(AuthContext);
   const [checked, setChecked] = React.useState(false);
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -38,7 +40,7 @@ function FormLogin({ create = false, setError, setStatus }: FormLoginProps) {
         password,
       })
       .then(() => {
-        authContext?.setAuth(true);
+        setAuth?.(true);
         setError(null);
       })
       .catch((err) => {
@@ -52,7 +54,7 @@ function FormLogin({ create = false, setError, setStatus }: FormLoginProps) {
     userService
       .login({ username, password, rememberUser: checked })
       .then(() => {
-        authContext?.setAuth(true);
+        setAuth?.(true);
         setError(null);
       })
       .catch((err) => {

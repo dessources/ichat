@@ -1,6 +1,6 @@
 import * as React from "react";
-import { UserContext } from "@/pages";
-
+import useAppContext from "@/hooks/useAppContext";
+import { UserContext } from "@/contexts";
 // mui
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
@@ -12,6 +12,7 @@ import Image from "next/image";
 
 //styles
 import * as styles from "@/styles/Header.style";
+
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
 interface HeaderProps {
@@ -20,7 +21,7 @@ interface HeaderProps {
 
 export default function Header(props: HeaderProps) {
   const { onDrawerToggle } = props;
-  const userContext = React.useContext(UserContext);
+  const [user] = useAppContext(UserContext);
   return (
     <React.Fragment>
       <AppBar color="secondary" position="fixed" elevation={1} sx={styles.root}>
@@ -48,8 +49,8 @@ export default function Header(props: HeaderProps) {
 
             <Grid item>
               <IconButton color="inherit" sx={{ p: 0.5 }}>
-                <Avatar src={userContext?.user?.profilePicture} alt="My Avatar">
-                  {userContext?.user?.name.charAt(0)}
+                <Avatar src={user?.profilePicture} alt="My Avatar">
+                  {user?.name.charAt(0)}
                 </Avatar>
               </IconButton>
             </Grid>

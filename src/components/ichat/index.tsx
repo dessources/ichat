@@ -1,12 +1,12 @@
 import * as React from "react";
-import { UserContext } from "@/pages";
-
+import type { Chat } from "@/models";
 //utils && hooks
 import userService from "@/services/user";
-
+import useAppContext from "@/hooks/useAppContext";
+import { ChatContext, UserContext } from "@/contexts";
+import ContextProvider from "@/components/ContextProvider";
 //mui
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "@/themes/ichat";
+
 import useMediaQuery from "@mui/material/useMediaQuery";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
@@ -15,15 +15,16 @@ import AppBar from "@mui/material/AppBar";
 import Grid from "@mui/material/Grid";
 
 //My Components
-import ChatList from "./ChatList";
-import Content from "./Content";
+import ChatList from "./chatList";
+import Content from "./chat";
 import Header from "./Header";
 import Copyright from "./Copyright";
 
 //styles
+import theme from "@/themes/ichat";
 import * as styles from "@/styles/Ichat";
 import { paper } from "@/styles/ChatList.style";
-import { UserContextType } from "@/models";
+
 const drawerWidth = 288;
 
 export default function Ichat() {
@@ -33,32 +34,34 @@ export default function Ichat() {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const userContext = React.useContext(UserContext);
+  const [, setUser] = useAppContext(UserContext);
 
   React.useEffect(() => {
+    //get the user's info once he's logged in
     userService
       .getUser()
       .then((user) => {
-        userContext?.setUser(user);
+        setUser?.(user);
       })
       .catch((err) => console.error("user not found", err)); //set error state
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
-    <ThemeProvider theme={theme}>
+    <ContextProvider context={ChatContext}>
       <CssBaseline />
       <Header onDrawerToggle={handleDrawerToggle} />
-      <Box sx={{ display: "flex", minHeight: "100vh", overflow: "hidden" }}>
-        <AppBar color="secondary" sx={styles.sidebar}>
-          <Toolbar>
-            <Grid container spacing={1} alignItems="center">
-              xxx
-            </Grid>
-          </Toolbar>
-        </AppBar>
+      <AppBar color="secondary" sx={styles.sidebar}>
+        <Toolbar>
+          <Grid container spacing={1} alignItems="center">
+            xxx
+          </Grid>
+        </Toolbar>
+      </AppBar>
+      <Box sx={styles.main}>
         <Box
           component="nav"
-          sx={{ ...styles.chatContainer, width: { sm: drawerWidth } }}
+          sx={{ ...styles.chatList, width: { sm: drawerWidth } }}
         >
           {isSmUp ? null : (
             <ChatList
@@ -74,7 +77,7 @@ export default function Ichat() {
           />
         </Box>
         <Box sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          <Box component="main" sx={styles.main}>
+          <Box component="div" sx={styles.chat}>
             <Content />
           </Box>
           {/* <Box component="footer" sx={{ p: 2, bgcolor: "#eaeff1" }}>
@@ -82,6 +85,6 @@ export default function Ichat() {
           </Box> */}
         </Box>
       </Box>
-    </ThemeProvider>
+    </ContextProvider>
   );
 }

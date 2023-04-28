@@ -54,8 +54,8 @@ export default authorize(async function handler(
       return res.status(404).json({ message: "User not found" });
     }
 
-    const { name, profilePicture, _id } = user;
-    const result = { name, profilePicture, id: _id };
+    const { name, profilePicture, _id, username } = user;
+    const result = { name, profilePicture, id: _id, username };
     return res.status(200).json(result);
   } else {
     res.status(405).json({ message: "Bad request" });

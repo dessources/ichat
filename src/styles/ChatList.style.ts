@@ -1,6 +1,6 @@
 import React from "react";
 import { SxProps, Theme } from "@mui/material";
-import { ComponentStyle } from "@/models";
+
 export const paper: SxProps<Theme> = {
   left: "3rem",
   top: "3rem",
@@ -16,6 +16,9 @@ export const chat = {
   color: "rgba(255, 255, 255, 0.7)",
   "&:hover, &:focus": {
     bgcolor: "rgba(255, 255, 255, 0.08)",
+  },
+  "& span": {
+    color: "#fff",
   },
 };
 export const title: SxProps<Theme> = {
@@ -36,6 +39,7 @@ export const chatList: SxProps<Theme> = {
 
 export const avatar: SxProps<Theme> = {
   textTransform: "uppercase",
+  background: "#444",
 };
 
 export const chatListItem: SxProps<Theme> = {
