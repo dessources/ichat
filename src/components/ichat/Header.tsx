@@ -19,12 +19,7 @@ import { avatar } from "@/styles/Ichat.style";
 
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
-interface HeaderProps {
-  onDrawerToggle: () => void;
-}
-
-export default function Header(props: HeaderProps) {
-  const { onDrawerToggle } = props;
+export default function Header() {
   const [user] = useAppContext<User>(UserContext);
   return (
     <React.Fragment>

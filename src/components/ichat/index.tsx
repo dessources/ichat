@@ -23,17 +23,16 @@ import Copyright from "./Copyright";
 //styles
 import theme from "@/themes/ichat";
 import * as styles from "@/styles/Ichat.style";
-import { paper } from "@/styles/ChatList.style";
 
-const drawerWidth = 288;
+import Sidebar from "./Sidebar";
 
 export default function Ichat() {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
+  // const [mobileOpen, setMobileOpen] = React.useState(false);
+  // const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+  // const handleDrawerToggle = () => {
+  //   setMobileOpen(!mobileOpen);
+  // };
   const [, setUser] = useAppContext(UserContext);
 
   React.useEffect(() => {
@@ -48,42 +47,16 @@ export default function Ichat() {
   }, []);
 
   return (
-    <ContextProvider context={ChatContext}>
+    <>
       <CssBaseline />
-      <Header onDrawerToggle={handleDrawerToggle} />
-      <AppBar color="secondary" sx={styles.sidebar}>
-        <Toolbar>
-          <Grid container spacing={1} alignItems="center">
-            xxx
-          </Grid>
-        </Toolbar>
-      </AppBar>
+      <Header />
+      <Sidebar />
       <Box sx={styles.main}>
-        <Box
-          component="nav"
-          sx={{ ...styles.chatList, width: { sm: drawerWidth } }}
-        >
-          {isSmUp ? null : (
-            <ChatList
-              PaperProps={{ sx: { ...paper, width: drawerWidth } }}
-              variant="temporary"
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-            />
-          )}
-          <ChatList
-            PaperProps={{ sx: { ...paper, width: drawerWidth } }}
-            sx={{ display: { sm: "block", xs: "none" } }}
-          />
-        </Box>
-        <Box sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
+        <ContextProvider context={ChatContext}>
+          <ChatList />
           <ChatBox />
-
-          {/* <Box component="footer" sx={{ p: 2, bgcolor: "#eaeff1" }}>
-            <Copyright />
-          </Box> */}
-        </Box>
+        </ContextProvider>
       </Box>
-    </ContextProvider>
+    </>
   );
 }

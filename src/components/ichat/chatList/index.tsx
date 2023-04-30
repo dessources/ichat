@@ -8,21 +8,21 @@ import { UserContext } from "@/contexts";
 import { Chat, User } from "@/models";
 
 //mui
-import Drawer, { DrawerProps } from "@mui/material/Drawer";
+import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import { Typography } from "@mui/material";
 
 //my components
 import ChatListItem from "./ChatListItem";
 
-//styles
-import * as styles from "@/styles/ChatList.style";
 import { ObjectId } from "mongodb";
 import useFetchData from "@/hooks/useFetchData";
 import userService from "@/services/userService";
 
-export default function ChatList(props: DrawerProps) {
-  const { ...other } = props;
+//styles
+import * as styles from "@/styles/ChatList.style";
+
+export default function ChatList() {
   const [user] = useAppContext<User>(UserContext);
 
   const {
@@ -35,7 +35,7 @@ export default function ChatList(props: DrawerProps) {
   );
 
   return (
-    <Drawer variant="permanent" {...other}>
+    <Box sx={styles.paper}>
       {isError ? (
         <Typography sx={styles.title} component="p">
           Error !
@@ -49,6 +49,7 @@ export default function ChatList(props: DrawerProps) {
           <Typography sx={styles.title} variant="h5">
             Chats
           </Typography>
+
           <List disablePadding sx={styles.chatList}>
             {chats?.map((chat, i) => (
               <ChatListItem key={i} chat={chat} />
@@ -56,6 +57,6 @@ export default function ChatList(props: DrawerProps) {
           </List>
         </>
       )}
-    </Drawer>
+    </Box>
   );
 }

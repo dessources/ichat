@@ -1,12 +1,14 @@
 import React from "react";
 
+//mui
+import SendIcon from "@mui/icons-material/Send";
 import { Box, Typography } from "@mui/material";
 import Spinner from "@/components/Spinner";
 import { Message, Chat, User } from "@/models";
 import useFetchData from "@/hooks/useFetchData";
 import contentService from "@/services/contentService";
 import useAppContext from "@/hooks/useAppContext";
-import { ChatContext, UserContext } from "@/contexts";
+import { ChatContext } from "@/contexts";
 
 //styles
 import * as styles from "@/styles/Chat.style";
@@ -32,18 +34,10 @@ function ChatBody() {
       ) : messages?.length ? (
         <MessageList messages={messages} />
       ) : null}
-      <div
-        style={{
-          height: "50px",
-          width: "100%",
-          background: "var(--dark_gray)",
-          position: "fixed",
-          bottom: "0",
-          padding: "0.5rem",
-        }}
-      >
-        Type a message
-      </div>
+      <Box component="div" sx={styles.input}>
+        <textarea placeholder="Type a message..."></textarea>
+        <SendIcon sx={{ cursor: "pointer" }} />
+      </Box>
     </>
   );
 }

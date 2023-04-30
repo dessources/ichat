@@ -2,7 +2,7 @@
   --accent-color: rgb(21 161 137 / 95%);
   --light_gray: #272727;
   --dark_gray: #202020;
-  --sent_message_color: #035d4d;
+  --sent_message_color: #025c4c;
   --received_message_color: #373737;
 }
 
@@ -33,9 +33,14 @@ a {
   text-decoration: none;
 }
 
-#shit {
-  text-transform: lowercase;
-  text-transform: capitalize;
+ul::-webkit-scrollbar {
+  width: "3px" !important;
+}
+
+ul::-webkit-scrollbar-thumb {
+  background-color: "#9f9f9f" !important;
+  border-radius: "20px" !important;
+  border-color: "transparent" !important;
 }
 
 @media (prefers-color-scheme: dark) {

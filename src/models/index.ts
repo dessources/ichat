@@ -15,7 +15,7 @@ export interface Message {
   sender: ObjectId;
   chat: ObjectId;
   content: string;
-  timestamp: Timestamp;
+  timestamp: string;
 }
 
 export interface User {
