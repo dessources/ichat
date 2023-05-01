@@ -1,16 +1,18 @@
 import React, { FormEvent } from "react";
+
 import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import userService from "@/services/user";
+import userService from "@/services/userService";
 import * as styles from "@/styles/UnauthApp.style";
-import { UserContext } from "@/pages";
 
-//utils
+//utils & hooks
 import { findExistingUsername } from "@/utils/findExistingUsername";
+import useAppContext from "@/hooks/useAppContext";
+import { AuthContext } from "@/contexts";
 
 interface FormLoginProps {
   create: boolean;
@@ -18,14 +20,8 @@ interface FormLoginProps {
   setError: Function;
 }
 
-function FormLogin({
-  create = false,
-
-  setError,
-  setStatus,
-}: FormLoginProps) {
-  const userContext = React.useContext(UserContext);
-
+function FormLogin({ create = false, setError, setStatus }: FormLoginProps) {
+  const [, setAuth] = useAppContext(AuthContext);
   const [checked, setChecked] = React.useState(false);
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -43,8 +39,8 @@ function FormLogin({
         cPassword,
         password,
       })
-      .then((token) => {
-        userContext?.setUser(token);
+      .then(() => {
+        setAuth?.(true);
         setError(null);
       })
       .catch((err) => {
@@ -57,20 +53,19 @@ function FormLogin({
     setStatus("fetching");
     userService
       .login({ username, password, rememberUser: checked })
-      .then((token) => {
-        console.log("token", token);
-        userContext?.setUser(token);
+      .then(() => {
+        setAuth?.(true);
         setError(null);
       })
       .catch((err) => {
         setError(err);
       })
       .finally(() => {
-        console.log("done");
         setStatus("done");
       });
   };
 
+  //submit the form when user presses Enter
   const handleEnter = (e: React.KeyboardEvent<HTMLFormElement>) => {
     if (!/Enter|NumpadEnter/.test(e.key)) return;
     if (create) handleRegister();

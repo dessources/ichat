@@ -8,7 +8,7 @@ let theme = createTheme({
       dark: "rgba(21, 16, 104,  0.95)",
     },
     secondary: {
-      main: "#111",
+      main: "#202020",
     },
   },
   typography: {

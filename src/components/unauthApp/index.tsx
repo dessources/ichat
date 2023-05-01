@@ -1,18 +1,16 @@
 import React from "react";
 
-// context
-import { UserContext } from "@/pages/index";
-
+// hooks
+import useAppContext from "@/hooks/useAppContext";
+import { AuthContext } from "@/contexts";
 //material ui
-import { ThemeProvider } from "@mui/material/styles";
+
 import Button from "@mui/material/Button";
 import { Typography, Box } from "@mui/material";
 import Alert from "@mui/material/Alert";
-import CircularProgress from "@mui/material/CircularProgress";
 import FormLogin from "./FormLogin";
-
+import Spinner from "@/components/Spinner";
 //styles
-import theme from "@/themes/ichat";
 import * as styles from "@/styles/UnauthApp.style";
 
 // services  & utils
@@ -22,55 +20,49 @@ function UnauthApp() {
   const [create, setCreate] = React.useState(false);
   const [error, setError] = React.useState<Error>();
   const [status, setStatus] = React.useState<"fetching" | "done" | "idle">("idle");
-  const userContext = React.useContext(UserContext);
-
+  const [, setAuth] = useAppContext(AuthContext);
   //try login in directly with refresh token
   React.useEffect(() => {
-    autoLogin().then((accessToken) => userContext?.setUser(accessToken));
+    setStatus("fetching");
+    autoLogin()
+      .then(() => {
+        setAuth?.(true);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setStatus("done");
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleSignUp = () => {
-    setCreate(true);
-  };
-  const handleSignIn = () => {
-    setCreate(false);
-  };
   const label = create ? "Signup" : "Login";
 
-  const spinner =
-    status === "fetching" ? (
-      <CircularProgress color="primary" style={styles.progress} />
-    ) : (
-      <></>
-    );
   return (
-    <ThemeProvider theme={theme}>
-      <Box sx={styles.dialog}>
-        <Typography id="alert-dialog-title" variant="h5" color="primary">
-          {label}
-        </Typography>
-        <Box sx={styles.dialogContent}>
-          <FormLogin create={create} setError={setError} setStatus={setStatus} />
-          {error ? (
-            <Alert severity="error">
-              <>Error : {error.message}</>
-            </Alert>
-          ) : null}
-        </Box>
-        <Box sx={styles.dialogActions}>
-          {!create ? (
-            <Button onClick={handleSignUp} color="primary">
-              New on Ichat ? {spinner}
-            </Button>
-          ) : (
-            <Button onClick={handleSignIn} autoFocus color="primary">
-              Already have an account ? {spinner}
-            </Button>
-          )}
-        </Box>
+    <Box sx={styles.dialog}>
+      <Typography id="alert-dialog-title" variant="h5" color="primary">
+        {label}
+      </Typography>
+      <Box sx={styles.dialogContent}>
+        <FormLogin create={create} setError={setError} setStatus={setStatus} />
+        {error ? (
+          <Alert severity="error">
+            <>Error : {error.message}</>
+          </Alert>
+        ) : null}
       </Box>
-    </ThemeProvider>
+      <Box sx={styles.dialogActions}>
+        {!create ? (
+          <Button onClick={() => setCreate(true)} color="primary">
+            New on Ichat ? {<Spinner isLoading={status === "fetching"} />}
+          </Button>
+        ) : (
+          <Button onClick={() => setCreate(false)} autoFocus color="primary">
+            Already have an account ?{" "}
+            {<Spinner isLoading={status === "fetching"} />}
+          </Button>
+        )}
+      </Box>
+    </Box>
   );
 }
 export default UnauthApp;

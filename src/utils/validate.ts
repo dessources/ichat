@@ -8,7 +8,7 @@ import {
 
 export function validatePassword(password: string): boolean {
   // Check if password length is at least 8 characters
-  if (password.length < 8) {
+  if (password.length < MIN_PASSWORD_LENGTH) {
     return false;
   }
 
@@ -28,7 +28,10 @@ export function validatePassword(password: string): boolean {
 
 export function validateUsername(username: string): boolean {
   // Check if username length is between 3 and 20 characters
-  if (username.length < 3 || username.length > 20) {
+  if (
+    username.length < MIN_USERNAME_LENGTH ||
+    username.length > MAX_USERNAME_LENGTH
+  ) {
     return false;
   }
 
@@ -48,7 +51,7 @@ export function validateName(name: string): boolean {
   }
 
   // Check if name length is between 2 and 50 characters
-  if (name.length < 2 || name.length > 50) {
+  if (name.length < MIN_NAME_LENGTH || name.length > MAX_NAME_LENGTH) {
     return false;
   }
 

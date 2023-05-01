@@ -6,9 +6,9 @@ export function normalizeName(name: string): string {
 
   const normalized = name
     .normalize("NFC")
-    .replace(/[\u0300-\u036f]/g, "") // Remove diacritical marks (accents)
-    .replace(/[^\w\s\d\-_.,;:(){}\[\]<>@#$%^&*+=!?|~`'"\u00A1-\uFFFF]/g, "") // Remove non-word characters except for special characters in most written languages
-    .trim();
+    .replace(/[^a-zA-Z àâäèéêëîïôœùûüÿçÀÂÄÜÈÉÊËÎÏÔŒÙÛÜÑŸÍñíÇ]/g, "")
+    .trim()
+    .replace(/\s{2,}/, " ");
 
   return normalized;
 }

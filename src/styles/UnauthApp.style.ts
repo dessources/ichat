@@ -7,7 +7,7 @@ export const root: React.CSSProperties = {
   minWidth: "330px",
 };
 
-export const dialog: SxProps<Theme> | undefined = {
+export const dialog: SxProps<Theme> = {
   background: "#fff",
   padding: "1rem",
   borderRadius: "20px",
@@ -17,7 +17,7 @@ export const dialog: SxProps<Theme> | undefined = {
   },
 };
 
-export const dialogContent: SxProps<Theme> | undefined = {
+export const dialogContent: SxProps<Theme> = {
   width: "400px",
 };
 

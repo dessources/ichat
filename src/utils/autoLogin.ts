@@ -1,10 +1,4 @@
-import AuthResponse from "@/models/AuthResponse";
-import axios from "../../lib/axios";
+import axiosPrivate from "../../lib/axios";
 export default async function autoLogin() {
-  return axios
-    .post<AuthResponse>("/auth/login")
-    .then(({ data }) => data.accessToken)
-    .catch(() => {
-      message: "auto login failed";
-    });
+  return axiosPrivate.post("/auth/login");
 }

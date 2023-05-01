@@ -46,7 +46,7 @@ export default authorize(async (req, res) => {
 
       return await users
         .insertOne({ ...data, name, username, password })
-        .then(() => res.status(201).json({ accessToken }))
+        .then(() => res.status(201).end())
         .catch((err) => {
           console.log(err);
           res.status(500).json({ message: "Could not register user" });

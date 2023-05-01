@@ -40,7 +40,8 @@ export default authorize(async (req, res) => {
           path: "/",
           maxAge: 1 * 24 * 60 * 60,
         });
-        return res.status(200).json({ accessToken });
+
+        return res.status(200).end();
       } catch (err) {
         process.env.NODE_ENV !== "test" && console.log(err);
         // Refresh token is invalid or has expired
@@ -51,7 +52,11 @@ export default authorize(async (req, res) => {
       const users: mongoDB.Collection = client.db("ichat").collection("users");
       const data = req.body;
       const username = data?.username;
-      const user = await users.findOne({ username: username });
+      const user = await users
+        .find({ username: username })
+        .collation({ locale: "en", strength: 2 })
+        .toArray()
+        .then((arr) => arr?.[0]);
 
       const passwordsMatch = user
         ? await compare(data.password, user?.password)
@@ -91,7 +96,7 @@ export default authorize(async (req, res) => {
         });
 
         // Return the access token in the response
-        return res.status(200).json({ accessToken });
+        return res.status(200).end();
       } else {
         res.status(401).json({
           message: "Could not login user",
@@ -99,6 +104,6 @@ export default authorize(async (req, res) => {
       }
     }
   } else {
-    res.status(405).json({ message: "Bad Request, only POST accepted" });
+    return res.status(405).json({ message: "Bad Request, only POST accepted" });
   }
 });
