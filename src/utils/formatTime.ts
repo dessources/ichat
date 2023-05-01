@@ -1,4 +1,4 @@
-export default function formatTime(timestamp: string): string {
+export default function formatTime(timestamp: number | string): string {
   const date = new Date(timestamp);
   if (date.toString() === "Invalid Date") return "";
 
