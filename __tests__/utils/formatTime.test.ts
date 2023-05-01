@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import formatTime from "@/utils/formatTime";
 
 describe("formatTime", () => {
