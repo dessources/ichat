@@ -33,7 +33,7 @@ describe("Messages API route", () => {
     //request made with an invalid api access token
     reqRes = mockRequestResponse(
       "POST",
-      { userId: "" },
+      { chatId: "" },
       { authorization: `Bearer ${process.env.BAD_API_ACCESS_TOKEN}` }
     );
     const { req, res } = reqRes;
@@ -51,7 +51,7 @@ describe("Messages API route", () => {
 
   it("Should return a 401 code if request sent with bad auth", async () => {
     // request made without a user access token cookie
-    reqRes = mockRequestResponse("POST", { userId: process.env.TEST_USER_ID });
+    reqRes = mockRequestResponse("POST", { chatId: process.env.TEST_CHAT_ID });
 
     const { req, res } = reqRes;
     const resJsonSpy = jest.spyOn(res, "json");
@@ -64,7 +64,7 @@ describe("Messages API route", () => {
   });
 
   it("Should return a 200 code and an array of messages if request valid", async () => {
-    reqRes = mockRequestResponse("POST", { userId: process.env.TEST_USER_ID });
+    reqRes = mockRequestResponse("POST", { chatId: process.env.TEST_CHAT_ID });
     const { req, res } = reqRes;
     setCookie("accessToken", accessToken, { req, res });
     const resJsonSpy = jest.spyOn(res, "json");
@@ -75,12 +75,13 @@ describe("Messages API route", () => {
 
     const result = resJsonSpy.mock?.lastCall?.[0];
     expect(Array.isArray(result)).toBe(true);
+
     expect(result[0]).toMatchObject<Message>({
       _id: expect.any(ObjectId),
       content: expect.any(String),
       sender: expect.any(ObjectId),
       chat: expect.any(ObjectId),
-      timestamp: expect.any(String),
+      timestamp: expect.any(Date),
     });
   });
 });
