@@ -1,5 +1,7 @@
 export default function formatTime(timestamp: string): string {
   const date = new Date(timestamp);
+  if (date.toString() === "Invalid Date") return "";
+
   const hours = date.getHours();
   const minutes = date.getMinutes();
   const ampm = hours >= 12 ? "PM" : "AM";

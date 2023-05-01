@@ -5,8 +5,8 @@ import authenticate from "./middlewares/authenticate";
 import { Collection, ObjectId } from "mongodb";
 import { Message } from "@/models";
 
-export default authenticate(
-  authorize(async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default authorize(
+  authenticate(async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
       const client = await clientPromise;
       // const users: Collection<User> = client.db("ichat").collection("users");

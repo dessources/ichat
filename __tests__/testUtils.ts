@@ -3,7 +3,7 @@ import { createMocks, RequestMethod } from "node-mocks-http";
 import { faker } from "@faker-js/faker";
 import { User } from "@/models";
 
-export function createRandomUser(): Partial<User> {
+export function createRandomUser(): Partial<User> & { password: string } {
   return {
     name: faker.name.fullName(),
     username: faker.internet.userName(),
