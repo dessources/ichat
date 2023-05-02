@@ -98,7 +98,7 @@ export default authorize(async (req, res) => {
         // Return the access token in the response
         return res.status(200).end();
       } else {
-        res.status(401).json({
+        return res.status(401).json({
           message: "Could not login user",
         });
       }
