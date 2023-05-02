@@ -75,7 +75,7 @@ describe("Login API route", () => {
       refreshToken: string;
       accessToken: string;
     };
-    console.dir(res);
+
     expect(typeof refreshToken).toBe("string");
     expect(refreshToken.length).toBeGreaterThan(10);
     expect(typeof accessToken).toBe("string");
