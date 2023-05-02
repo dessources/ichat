@@ -1,31 +1,29 @@
-/**
- * @jest-environment node
- */
-
 import formatTime from "@/utils/formatTime";
+
+beforeAll(() => {
+  process.env.TZ = "America/New_York";
+});
 
 describe("formatTime", () => {
   test("formats a timestamp in the morning", () => {
-    const result = formatTime(1641115800000);
-    console.log(new Date(1641115800000).toString());
-    expect(result).toBe("4:30 AM");
+    const result = formatTime("2022-01-02T14:30:00.000Z");
+    const date = new Date("2022-01-02T14:30:00.000Z");
+    console.log(date.toUTCString());
+    expect(result).toBe("9:30 AM");
   });
 
   test("formats a timestamp in the afternoon", () => {
-    const result = formatTime(1641159000000);
-    console.log(new Date(1641159000000).toString());
+    const result = formatTime("2022-01-02T21:30:00.000Z");
     expect(result).toBe("4:30 PM");
   });
 
   test("formats a timestamp at midnight", () => {
-    const result = formatTime(1641186000000);
-    console.log(new Date(1641186000000).toString());
+    const result = formatTime("2022-01-02T05:00:00.000Z");
     expect(result).toBe("12:00 AM");
   });
 
   test("formats a timestamp at noon", () => {
-    const result = formatTime(1641142800000);
-    console.log(new Date(1641142800000).toString());
+    const result = formatTime("2022-01-01T17:00:00.000Z");
     expect(result).toBe("12:00 PM");
   });
   test("returns an empty string if a timestamp is invalid", () => {
