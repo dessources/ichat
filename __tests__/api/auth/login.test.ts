@@ -107,9 +107,7 @@ describe("Login API route", () => {
 
     expect(res.statusCode).toBe(401);
     expect(typeof ResJsonSpy.mock.calls[0][0]?.message).toBe("string");
-    expect(ResJsonSpy.mock.calls[0][0].message).toMatchInlineSnapshot(
-      `"Could not login user"`
-    );
+    expect(ResJsonSpy.mock.calls[0][0].message).toMatchInlineSnapshot(`"Could not login user"`);
   });
 
   it("should return a 401 error if refreshToken is incorrect", async () => {

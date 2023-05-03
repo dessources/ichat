@@ -13,43 +13,34 @@ import {
   LONG_REFRESH_TOKEN_DAYS_COUNT,
   SHORT_REFRESH_TOKEN_DAYS_COUNT,
 } from "@/utils/constants";
-import closeDbConnectionOnResolve from "../middlewares/closeDbConnectionOnResolve";
-
-export default //eslint-disable-next-line react-hooks/rules-of-hooks
-closeDbConnectionOnResolve(
-  authorize(async (req, res) => {
+export default authorize(async (req, res) => {
+  try {
     if (req.method === "POST") {
       const refreshToken = getCookie("refreshToken", { req, res });
 
       //Try login in with the refresh token
       if (refreshToken) {
         // Verify the refresh token
-        try {
-          const { username } = verifyRefreshToken(<string>refreshToken) as {
-            username: string;
-          };
 
-          // Generate a new access token
-          const accessToken = generateAccessToken({ username });
+        const { username } = verifyRefreshToken(<string>refreshToken) as {
+          username: string;
+        };
 
-          // Set a cookie with the new access token
+        // Generate a new access token
+        const accessToken = generateAccessToken({ username });
 
-          setCookie("accessToken", accessToken, {
-            req,
-            res,
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "development",
-            path: "/",
-            maxAge: 1 * 24 * 60 * 60,
-          });
+        // Set a cookie with the new access token
 
-          return res.status(200).end();
-        } catch (err) {
-          process.env.NODE_ENV !== "test" && console.log(err);
+        setCookie("accessToken", accessToken, {
+          req,
+          res,
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "development",
+          path: "/",
+          maxAge: 1 * 24 * 60 * 60,
+        });
 
-          // Refresh token is invalid or has expired
-          return res.status(401).json({ message: "Could not login user" });
-        }
+        return res.status(200).end();
       } else {
         const client = await clientPromise;
         const users: mongoDB.Collection = client.db("ichat").collection("users");
@@ -57,9 +48,14 @@ closeDbConnectionOnResolve(
         const username = data?.username;
         const user = await users
           .find({ username: username })
+
           .collation({ locale: "en", strength: 2 })
           .toArray()
-          .then((arr) => arr?.[0]);
+          .then((arr) => arr?.[0])
+          .catch((err) => {
+            console.log(err);
+            return res.status(500).json(err);
+          });
 
         const passwordsMatch = user
           ? await compare(data.password, user?.password)
@@ -100,14 +96,16 @@ closeDbConnectionOnResolve(
 
           // Return the access token in the response
           return res.status(200).end();
-        } else {
-          return res.status(401).json({
-            message: "Could not login user",
-          });
-        }
+        } else throw new Error();
       }
     } else {
       return res.status(405).json({ message: "Bad Request, only POST accepted" });
     }
-  })
-);
+  } catch (err) {
+    process.env.NODE_ENV === "test" && console.log(err);
+
+    return res.status(401).json({
+      message: "Could not login user",
+    });
+  }
+});
