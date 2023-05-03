@@ -9,7 +9,7 @@ import login from "@/pages/api/auth/login";
 import messages from "@/pages/api/messages";
 import { getCookie, setCookie } from "cookies-next";
 import { ObjectId } from "mongodb";
-
+import clientPromise from "@/lib/mongodb";
 let reqRes: { req: NextApiRequest; res: NextApiResponse };
 
 let accessToken: string;
@@ -26,6 +26,13 @@ afterEach(() => {
   // no matter what. We do that by checking
   // the writableEnded property of res
   expect(reqRes?.res.writableEnded).toBeTruthy();
+});
+
+afterAll(async () => {
+  //closing the mongoDB connection made
+  // in the api in order to
+  //prevent the tests from hanging
+  await (await clientPromise).close();
 });
 
 describe("Messages API route", () => {

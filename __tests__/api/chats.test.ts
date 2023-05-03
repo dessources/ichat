@@ -9,6 +9,7 @@ import chats from "@/pages/api/chats";
 import { getCookie, setCookie } from "cookies-next";
 import { Chat } from "@/models";
 import { ObjectId } from "mongodb";
+import clientPromise from "@/lib/mongodb";
 
 let reqRes: { req: NextApiRequest; res: NextApiResponse };
 
@@ -26,6 +27,12 @@ afterEach(() => {
   // no matter what. We do that by checking
   // the writableEnded property of res
   expect(reqRes?.res.writableEnded).toBeTruthy();
+});
+
+afterAll(async () => {
+  //closing the mongoDB connection in order to
+  //prevent the tests from hanging
+  await (await clientPromise).close();
 });
 
 describe("Chats API route", () => {

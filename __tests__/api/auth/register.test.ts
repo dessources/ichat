@@ -10,20 +10,20 @@ import {
   testUserWithWeakPassword,
 } from "../../testUtils";
 
-import clientPromise from "../../../lib/mongodb";
+import clientPromise from "@/lib/mongodb";
 import { getCookies } from "cookies-next";
 import * as mongoDb from "mongodb";
 import { User } from "@/models";
 import { NextApiRequest, NextApiResponse } from "next";
 
-let client: mongoDb.MongoClient;
 let users: mongoDb.Collection;
 let newUser: Partial<User>;
 let reqRes: { req: NextApiRequest; res: NextApiResponse };
+let testClient: mongoDb.MongoClient;
 
 beforeAll(async () => {
-  client = await clientPromise;
-  users = client.db("ichat").collection("users");
+  testClient = await clientPromise;
+  users = testClient.db("ichat").collection("users");
 });
 
 afterEach(async () => {
@@ -50,7 +50,7 @@ afterEach(async () => {
 });
 
 afterAll(async () => {
-  client.close();
+  await testClient.close();
 });
 
 describe("Register API route", () => {
@@ -77,9 +77,7 @@ describe("Register API route", () => {
 
     await register(req, res);
 
-    expect(ResJsonSpy.mock.calls[0][0].message).toMatchInlineSnapshot(
-      `"Could not register user"`
-    );
+    expect(ResJsonSpy.mock.calls[0][0].message).toMatchInlineSnapshot(`"Could not register user"`);
 
     expect(res.statusCode).toBe(500);
   });
@@ -92,9 +90,7 @@ describe("Register API route", () => {
 
     await register(req, res);
 
-    expect(ResJsonSpy.mock.calls[0][0].message).toMatchInlineSnapshot(
-      `"Could not register user"`
-    );
+    expect(ResJsonSpy.mock.calls[0][0].message).toMatchInlineSnapshot(`"Could not register user"`);
 
     expect(res.statusCode).toBe(500);
   });
