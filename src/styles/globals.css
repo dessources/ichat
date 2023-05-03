@@ -25,7 +25,7 @@ body {
 
 body {
   color: rgb(255, 255, 255);
-  background: linear-gradient(to bottom, transparent, rgb(0, 0, 0)) rgb(0, 0, 0);
+  background: black;
 }
 
 a {
@@ -43,8 +43,8 @@ ul::-webkit-scrollbar-thumb {
   border-color: "transparent" !important;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
-}
+} */

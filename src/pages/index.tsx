@@ -7,7 +7,7 @@ import { UserContext, AuthContext } from "@/contexts";
 import { ThemeProvider } from "@mui/material/styles";
 // hooks
 import useAppContext from "@/hooks/useAppContext";
-import ContextProvider from "@/components/ContextProvider";
+import ContextProvider from "@/components/providers/ContextProvider";
 //styles
 import theme from "@/themes/ichat";
 

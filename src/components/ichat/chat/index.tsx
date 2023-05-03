@@ -24,7 +24,7 @@ import ChatHeader from "./Header";
 
 //styles
 import { chat } from "@/styles/Ichat.style";
-import ChatBody from "./ChatBody";
+import ChatBody from "./chatBody/";
 export default function Chat() {
   const [currentChat] = useAppContext<ChatType>(ChatContext);
 

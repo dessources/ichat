@@ -3,8 +3,8 @@ import type { Chat } from "@/models";
 //utils && hooks
 import userService from "@/services/userService";
 import useAppContext from "@/hooks/useAppContext";
-import { ChatContext, UserContext } from "@/contexts";
-import ContextProvider from "@/components/ContextProvider";
+import { ChatContext, SocketIoContext, UserContext } from "@/contexts";
+import ContextProvider from "@/components/providers/ContextProvider";
 //mui
 
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -25,6 +25,7 @@ import theme from "@/themes/ichat";
 import * as styles from "@/styles/Ichat.style";
 
 import Sidebar from "./Sidebar";
+import SocketIoProvider from "../providers/SocketIoProvider";
 
 export default function Ichat() {
   // const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -53,8 +54,10 @@ export default function Ichat() {
       <Sidebar />
       <Box sx={styles.main}>
         <ContextProvider context={ChatContext}>
-          <ChatList />
-          <ChatBox />
+          <SocketIoProvider>
+            <ChatList />
+            <ChatBox />
+          </SocketIoProvider>
         </ContextProvider>
       </Box>
     </>

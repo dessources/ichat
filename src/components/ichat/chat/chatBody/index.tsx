@@ -1,20 +1,23 @@
 import React from "react";
 
 //mui
-import SendIcon from "@mui/icons-material/Send";
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Spinner from "@/components/Spinner";
 import { Message, Chat, User } from "@/models";
 import useFetchData from "@/hooks/useFetchData";
 import contentService from "@/services/contentService";
 import useAppContext from "@/hooks/useAppContext";
-import { ChatContext } from "@/contexts";
+import { ChatContext, SocketIoContext, UserContext } from "@/contexts";
 
 //styles
-import * as styles from "@/styles/Chat.style";
+
 import MessageList from "./MessageList";
+import MessageBox from "./MessageBox";
+import { Socket } from "socket.io";
 function ChatBody() {
   const [currentChat] = useAppContext<Chat>(ChatContext);
+  const [socket] = useAppContext<Socket>(SocketIoContext);
+  const [chatMessages, setChatMessages] = React.useState<Partial<Message>[]>([]);
 
   const {
     data: messages,
@@ -25,6 +28,14 @@ function ChatBody() {
     contentService.getMessages
   );
 
+  React.useEffect(() => {
+    setChatMessages(messages);
+  }, [messages]);
+
+  socket?.on("receive-message", (data: Message) => {
+    console.log("received message: ", data.content);
+    setChatMessages((chatMessages) => [...chatMessages, data]);
+  });
   return (
     <>
       {isLoading ? (
@@ -32,12 +43,9 @@ function ChatBody() {
       ) : isError ? (
         <Typography variant="h5">Error</Typography>
       ) : messages?.length ? (
-        <MessageList messages={messages} />
+        <MessageList messages={chatMessages} />
       ) : null}
-      <Box component="div" sx={styles.input}>
-        <textarea placeholder="Type a message..."></textarea>
-        <SendIcon sx={{ cursor: "pointer" }} />
-      </Box>
+      <MessageBox setChatMessages={setChatMessages} />
     </>
   );
 }

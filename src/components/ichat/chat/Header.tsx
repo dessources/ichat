@@ -44,6 +44,7 @@ export default function ChatHeader() {
           </Grid>
         </Toolbar>
       </AppBar>
+
       {/* <AppBar
         component="div"
         color="primary"
