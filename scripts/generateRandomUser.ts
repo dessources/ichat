@@ -1,9 +1,9 @@
 import { faker } from "@faker-js/faker";
 import { SALT_ROUNDS } from "../src/utils/constants";
 import { hash } from "bcrypt";
-import User from "../src/models/User";
+import { User } from "../src/models";
 
-async function createRandomUser(): Promise<Partial<User>> {
+async function createRandomUser(): Promise<Partial<User> & { password: string }> {
   return {
     name: faker.name.fullName(),
     username: faker.internet.userName(),
@@ -14,4 +14,3 @@ async function createRandomUser(): Promise<Partial<User>> {
 
 const user = createRandomUser().then((user) => console.log(user));
 // console.dir(user);
-export {};
