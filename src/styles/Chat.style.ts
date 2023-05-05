@@ -25,7 +25,7 @@ export const messageList: SxProps<Theme> = {
   padding: "1rem 10%",
   display: "flex",
   flexDirection: "column",
-  rowGap: "0.3rem",
+  rowGap: "0.2rem",
   overflowY: "auto",
 
   "&::-webkit-scrollbar": {
@@ -102,8 +102,8 @@ export const input: SxProps<Theme> = {
   height: "60px",
   width: "100%",
   background: "var(--dark_gray)",
-  position: "fixed",
-  bottom: "0",
+  position: "sticky",
+  top: "100%",
   padding: "0.5rem",
   outline: "none",
   alignItems: "center",
@@ -113,7 +113,7 @@ export const input: SxProps<Theme> = {
     background: "none",
     outline: "none",
     resize: "none",
-    width: "80%",
+    width: "90%",
     padding: "0 10px",
     color: "#d7d7d7",
     fontFamily: "Helvetica",

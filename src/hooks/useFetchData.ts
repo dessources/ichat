@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import useSWR from "swr";
 
 export default function useFetchData<T>(key: any, fetcher: (key: any) => any) {

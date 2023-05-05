@@ -4,7 +4,6 @@ import React from "react";
 import { Typography } from "@mui/material";
 import Spinner from "@/components/Spinner";
 import { Message, Chat, User } from "@/models";
-import useFetchData from "@/hooks/useFetchData";
 import contentService from "@/services/contentService";
 import useAppContext from "@/hooks/useAppContext";
 import { ChatContext, SocketIoContext, UserContext } from "@/contexts";
@@ -14,33 +13,42 @@ import { ChatContext, SocketIoContext, UserContext } from "@/contexts";
 import MessageList from "./MessageList";
 import MessageBox from "./MessageBox";
 import { Socket } from "socket.io";
+import useSWR from "swr";
 function ChatBody() {
   const [currentChat] = useAppContext<Chat>(ChatContext);
   const [socket] = useAppContext<Socket>(SocketIoContext);
   const [chatMessages, setChatMessages] = React.useState<Partial<Message>[]>([]);
+  const messagesFetchKey = { url: "/messages", chatId: currentChat?._id };
 
   const {
     data: messages,
-    isError,
+    error,
     isLoading,
-  } = useFetchData<Message[]>(
-    { url: "/messages", chatId: currentChat?._id },
-    contentService.getMessages
-  );
+  } = useSWR(messagesFetchKey, contentService.getMessages);
 
   React.useEffect(() => {
-    setChatMessages(messages);
+    console.log("setChatMessages ran");
+    setChatMessages(messages as Message[]);
   }, [messages]);
 
-  socket?.on("receive-message", (data: Message) => {
-    console.log("received message: ", data.content);
-    setChatMessages((chatMessages) => [...chatMessages, data]);
-  });
+  React.useEffect(() => {
+    const receiveMessageListener = (data: Message) => {
+      console.log(socket?.id);
+      setChatMessages((chatMessages) => [
+        ...chatMessages,
+        { ...data, content: data.content },
+      ]);
+    };
+    socket?.on("receive-message", receiveMessageListener);
+    return () => {
+      socket?.off("receive-message", receiveMessageListener);
+    };
+  }, [socket]);
   return (
     <>
       {isLoading ? (
         <Spinner isLoading={true} />
-      ) : isError ? (
+      ) : error ? (
         <Typography variant="h5">Error</Typography>
       ) : messages?.length ? (
         <MessageList messages={chatMessages} />

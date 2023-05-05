@@ -42,17 +42,16 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     //@ts-ignore
     res.socket.server.io = io;
     io.on("connection", (socket: Socket) => {
+      console.log("this socket", socket.id, "connected");
       socket.on("send-message", (data: Message) => {
-        console.log("Received message:", data.content);
+        console.log(socket.id, "Received message:", data.content);
         socket.broadcast.emit("receive-message", data);
       });
-
       setTimeout(() => {
-        console.log("Sending message");
         socket.emit("receive-message", {
-          sender: "notyourid",
-          content: "That does not make any sense",
-          timestamp: new Date().toISOString(),
+          content: "10 seconds ago you connected",
+          _id: "notyou",
+          timestamp: Date.now(),
         });
       }, 10000);
     });

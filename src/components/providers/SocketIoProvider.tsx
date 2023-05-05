@@ -27,7 +27,7 @@ function SocketIoProvider(props: any) {
       newSocket?.close();
       console.log("Disconnected from socket.io");
     };
-  }, [setSocket, currentChat]);
+  }, []);
 
   return <SocketIoContext.Provider value={[socket, setSocket]} {...props} />;
 }
