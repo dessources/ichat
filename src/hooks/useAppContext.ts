@@ -3,7 +3,7 @@ import { Context } from "@/models";
 
 //ensure that the context is being used inside it's provider
 export default function useAppContext<T>(context: React.Context<Context<any>>) {
-  const value: Context<T> = React.useContext(context);
+  const value: Context<T> | any = React.useContext(context);
 
   if (!value) {
     throw new Error(

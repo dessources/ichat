@@ -1,25 +1,29 @@
-import { ObjectId, Timestamp } from "mongodb";
 // export interface AuthResponse {
 //   accessToken: string;
 // }
 
 export interface Chat {
-  _id: ObjectId;
+  id: string;
   name?: string;
   chatPicture?: string;
-  users: ObjectId[];
+  users: string[];
   group: boolean;
+  lastFetchedOn: Date;
 }
 export interface Message {
-  _id: ObjectId;
-  sender: ObjectId;
-  chat: ObjectId;
+  id: string;
+  sender: string;
+  chat: string;
   content: string;
   timestamp: string;
 }
 
+export interface ChatMessages {
+  [chat: string]: { messages: Message[]; lastFetched?: Date };
+}
+
 export interface User {
-  _id: ObjectId;
+  id: string;
   name: string;
   username: string;
   profilePicture?: string;
@@ -33,7 +37,12 @@ export interface UserAuthInfo {
   rememberUser?: boolean;
 }
 
-export type Context<T> = [
-  T?,
-  React.Dispatch<React.SetStateAction<T | undefined>>?
-];
+export interface ChatMessagesContext {
+  chatMessages: ChatMessages;
+  setChatMessages: React.Dispatch<React.SetStateAction<ChatMessages | undefined>>;
+  isLoading: boolean;
+  error: any;
+}
+
+export type Context<T> =
+  | [T?, React.Dispatch<React.SetStateAction<T | undefined>>?];

@@ -2,7 +2,7 @@ import clientPromise from "../../../lib/mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 import authorize from "./middlewares/authorize";
 
-import { Collection, ObjectId } from "mongodb";
+import { Collection } from "mongodb";
 import { User } from "@/models";
 import { getCookie } from "cookies-next";
 import { verifyAccessToken } from "@/utils/jwt";
@@ -17,19 +17,18 @@ export default authorize(async function handler(
     const param = req.query.param;
     let user;
     try {
+      //try to get a user with param being a username or an id
+      // and query the database accordingly
       if (param && param !== "undefined") {
-        //check  whether param is a username or an ObjectId
-        // and query the database accordingly
-        try {
-          user = await users.findOne({ _id: new ObjectId(<string>param) });
-        } catch {
-          user = await users
+        user =
+          (await users.findOne({ id: <string>param })) ??
+          (await users
             .find({ username: param })
             .collation({ locale: "en", strength: 2 })
             .toArray()
-            .then((arr) => arr[0]);
-        }
+            .then((arr) => arr[0]));
       } else {
+        //if we didn't find a user then,
         //return the user whose access token is in the access token cookie
         const accessToken = getCookie("accessToken", { req, res });
 
@@ -54,8 +53,8 @@ export default authorize(async function handler(
       return res.status(404).json({ message: "User not found" });
     }
 
-    const { name, profilePicture, _id, username } = user;
-    const result = { name, profilePicture, _id, username };
+    const { name, profilePicture, id, username } = user;
+    const result = { name, profilePicture, id, username };
     return res.status(200).json(result);
   } else {
     res.status(405).json({ message: "Bad request" });

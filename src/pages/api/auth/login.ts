@@ -63,7 +63,7 @@ export default authorize(async (req, res) => {
 
         if (user && passwordsMatch) {
           users
-            .updateOne({ _id: user._id }, { $set: { online: true } })
+            .updateOne({ id: user.id }, { $set: { online: true } })
             .catch((err) => res.status(500).json(err));
 
           // Generate an access token and a refresh token

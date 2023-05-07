@@ -2,7 +2,6 @@ import { UserAuthInfo, User, Chat } from "@/models";
 import axios, { axiosPrivate } from "../../lib/axios";
 
 import { validateInputs } from "@/utils/validate";
-import type { ObjectId } from "mongodb";
 
 class UserService {
   async login(input: UserAuthInfo): Promise<any> {
@@ -41,7 +40,7 @@ class UserService {
     return data.accessToken;
   }
 
-  async getUser(param?: string | ObjectId): Promise<User> {
+  async getUser(param?: string): Promise<User> {
     const response = axiosPrivate.get(`/users?param=${param}`);
     return response
       .then(({ data }) => Promise.resolve(data))
@@ -53,7 +52,7 @@ class UserService {
     userId,
   }: {
     url: string;
-    userId: ObjectId;
+    userId: string;
   }): Promise<Chat[]> {
     // Get the chats
     const chats = await axiosPrivate

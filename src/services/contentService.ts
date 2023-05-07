@@ -1,41 +1,17 @@
-import type { ObjectId } from "mongodb";
 import { axiosPrivate } from "../../lib/axios";
 import { Message } from "@/models";
 
+interface key {
+  url: string;
+  chatId: string;
+}
+
 class ContentService {
-  async getMessages({
-    url,
-    chatId,
-  }: {
-    url: string;
-    chatId: ObjectId;
-  }): Promise<Message[]> {
+  async getMessages({ url, chatId }: key, sentAfter = 0): Promise<Message[]> {
     // Get the messages
     const messages = await axiosPrivate
-      .post<Message[]>(url, { chatId })
+      .post<Message[]>(url, { chatId, sentAfter })
       .then((res) => res.data);
-
-    // if (messages) {
-    //   // if the isn't a group chat set the name and the chatPicture
-    //   // properties of this chat to the name and profile picture
-    //   // respectively of the user that is in the chat with the
-    //   // app's current user
-    //   const normalizedmessages = messages.map(async (chat) => {
-    //     if (!chat.group) {
-    //       const otherchatId = chat.users.find((id) => id !== chatId);
-    //       const result = await userService
-    //         .getUser(otherchatId)
-    //         .then((otherUser) => ({
-    //           ...chat,
-    //           name: otherUser.name,
-    //           chatPicture: otherUser.profilePicture,
-    //         }))
-    //         .catch((err) => console.log(err));
-    //       return result as Chat;
-    //     } else return chat;
-    //   });
-    //   return await Promise.all(normalizedmessages);
-    // }
 
     return messages;
   }

@@ -1,12 +1,23 @@
 import React from "react";
 //contexts & hooks
 import useAppContext from "@/hooks/useAppContext";
-import { SocketIoContext, UserContext } from "@/contexts";
+import {
+  ChatContext,
+  ChatMessagesContext,
+  SocketIoContext,
+  UserContext,
+} from "@/contexts";
 //utils
 import formatTime from "@/utils/formatTime";
 
 //models
-import { Message, User } from "@/models";
+import {
+  ChatMessages,
+  Message,
+  Chat,
+  User,
+  ChatMessagesContext as ChatMessagesContextType,
+} from "@/models";
 import { Socket } from "socket.io";
 //mui
 import List from "@mui/material/List";
@@ -15,14 +26,16 @@ import { SxProps, Theme } from "@mui/material";
 
 //styles
 import * as styles from "@/styles/Chat.style";
+import Spinner from "@/components/Spinner";
 
-interface MessageListProps {
-  messages: Partial<Message>[];
-}
-
-function MessageList({ messages }: MessageListProps) {
+function MessageList() {
   const [user] = useAppContext<User>(UserContext);
+  const [currentChat] = useAppContext<Chat>(ChatContext);
+  const currentChatId = currentChat?.id;
   const [socket] = useAppContext<Socket>(SocketIoContext);
+  const { chatMessages, setChatMessages, isLoading, error } = useAppContext(
+    ChatMessagesContext
+  ) as ChatMessagesContextType;
   const listRef = React.useRef<HTMLUListElement>(null);
 
   React.useEffect(() => {
@@ -32,12 +45,35 @@ function MessageList({ messages }: MessageListProps) {
     if (list) list.scrollTop = list.scrollHeight;
   });
 
+  React.useEffect(() => {
+    const receiveMessageListener = (data: Message) => {
+      console.log(socket?.id);
+
+      const newMessages = chatMessages[data.chat]
+        ? {
+            ...chatMessages[data.chat],
+            messages: [...chatMessages[data.chat].messages, data],
+          }
+        : { messages: [data] };
+
+      setChatMessages?.((chatMessages) => ({
+        ...chatMessages,
+        [data.chat]: newMessages,
+      }));
+    };
+    socket?.on("receive-message", receiveMessageListener);
+    return () => {
+      socket?.off("receive-message", receiveMessageListener);
+    };
+  }, [socket, currentChatId, chatMessages, setChatMessages]);
+
+  const messages = chatMessages[currentChatId]?.messages;
   return (
     <>
       {messages?.length ? (
         <List sx={styles.messageList} ref={listRef}>
           {messages.map((message, i) => {
-            const type = user?._id === message.sender ? "sent" : "received";
+            const type = user?.id === message.sender ? "sent" : "received";
 
             return (
               <ListItem
@@ -54,6 +90,10 @@ function MessageList({ messages }: MessageListProps) {
             );
           })}
         </List>
+      ) : isLoading ? (
+        <Spinner loading={isLoading} />
+      ) : error ? (
+        <p>Error</p>
       ) : null}
     </>
   );

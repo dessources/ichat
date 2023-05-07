@@ -3,8 +3,10 @@ import React from "react";
 
 //utils && hooks && context
 import useAppContext from "@/hooks/useAppContext";
+import useFetchData from "@/hooks/useFetchData";
 import { UserContext } from "@/contexts";
 
+//models
 import { Chat, User } from "@/models";
 
 //mui
@@ -14,9 +16,7 @@ import { Typography } from "@mui/material";
 
 //my components
 import ChatListItem from "./ChatListItem";
-
-import { ObjectId } from "mongodb";
-import useFetchData from "@/hooks/useFetchData";
+//utils
 import userService from "@/services/userService";
 
 //styles
@@ -30,7 +30,7 @@ export default function ChatList() {
     isError,
     isLoading,
   } = useFetchData<Chat[]>(
-    { url: "/chats", userId: user?._id as ObjectId },
+    { url: "/chats", userId: user?.id as string },
     userService.getChats
   );
 

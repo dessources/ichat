@@ -15,7 +15,7 @@ export default authenticate(
       const username = data?.username;
       const user = await users.findOne({ username: username });
 
-      users.updateOne({ _id: user?._id }, { $set: { online: false } });
+      users.updateOne({ id: user?.id }, { $set: { online: false } });
 
       // Set the access token to null
       setCookie(`accessToken`, "", { req, res });

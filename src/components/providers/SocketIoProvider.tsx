@@ -10,16 +10,16 @@ function SocketIoProvider(props: any) {
   const [socket, setSocket] = React.useState<Socket | undefined>();
 
   React.useEffect(() => {
-    let newSocket: Socket;
+    let newSocket: Socket | null = null;
 
     //Complete the handshake with the socket.io server
     (async function () {
       await fetch("/api/socket.io");
-      newSocket = io();
+      newSocket = io("/", { query: { chatId: currentChat?.id } });
 
       newSocket.on("connect", () => {
         console.log("connected to socket.Io server id: ", newSocket?.id);
-        setSocket?.(newSocket);
+        setSocket?.(newSocket as Socket);
       });
     })();
 

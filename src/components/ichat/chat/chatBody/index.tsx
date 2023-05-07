@@ -13,48 +13,35 @@ import { ChatContext, SocketIoContext, UserContext } from "@/contexts";
 import MessageList from "./MessageList";
 import MessageBox from "./MessageBox";
 import { Socket } from "socket.io";
-import useSWR from "swr";
+import ChatMessagesProvider from "@/components/providers/ChatMessagesProvider";
+
 function ChatBody() {
   const [currentChat] = useAppContext<Chat>(ChatContext);
   const [socket] = useAppContext<Socket>(SocketIoContext);
-  const [chatMessages, setChatMessages] = React.useState<Partial<Message>[]>([]);
-  const messagesFetchKey = { url: "/messages", chatId: currentChat?._id };
+  // const [messages, setMessages] = React.useState<Message[]>([]);
 
-  const {
-    data: messages,
-    error,
-    isLoading,
-  } = useSWR(messagesFetchKey, contentService.getMessages);
+  // const messagesFetchKey = {
+  //   url: "/messages",
+  //   chatId: currentChat?.id,
+  // };
 
-  React.useEffect(() => {
-    console.log("setChatMessages ran");
-    setChatMessages(messages as Message[]);
-  }, [messages]);
+  // const {
+  //   data: fetchedMessages,
+  //   error,
+  //   isLoading,
+  // } = useSWR(messagesFetchKey, contentService.getMessages);
 
-  React.useEffect(() => {
-    const receiveMessageListener = (data: Message) => {
-      console.log(socket?.id);
-      setChatMessages((chatMessages) => [
-        ...chatMessages,
-        { ...data, content: data.content },
-      ]);
-    };
-    socket?.on("receive-message", receiveMessageListener);
-    return () => {
-      socket?.off("receive-message", receiveMessageListener);
-    };
-  }, [socket]);
+  // React.useEffect(() => {
+  //   setMessages(fetchedMessages as Message[]);
+  //   //eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
   return (
-    <>
-      {isLoading ? (
-        <Spinner isLoading={true} />
-      ) : error ? (
-        <Typography variant="h5">Error</Typography>
-      ) : messages?.length ? (
-        <MessageList messages={chatMessages} />
-      ) : null}
-      <MessageBox setChatMessages={setChatMessages} />
-    </>
+    <ChatMessagesProvider>
+      <MessageList />
+
+      <MessageBox />
+    </ChatMessagesProvider>
   );
 }
 

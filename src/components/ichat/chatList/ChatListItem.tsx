@@ -10,7 +10,7 @@ import { ChatContext } from "@/contexts";
 import useAppContext from "@/hooks/useAppContext";
 
 function ChatListItem({ chat }: { chat: Chat }) {
-  const [currentChat, setCurrentChat] = useAppContext(ChatContext);
+  const [, setCurrentChat] = useAppContext(ChatContext);
   return (
     <ListItem
       disablePadding
