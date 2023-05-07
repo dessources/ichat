@@ -15,8 +15,7 @@ function ChatMessagesProvider(props: any) {
     { messages: Message[]; lastFetched: Date } | undefined
   >();
   const [chatMessages, setChatMessages] = React.useState<ChatMessages>({});
-  const sentAfter =
-    chatMessages[currentChatId]?.lastFetched?.getTime() ?? new Date().getTime();
+  const sentAfter = chatMessages[currentChatId]?.lastFetched?.getTime() ?? 0;
   // const firstFetch = React.useRef(true);
   // const messagesFetchKey = {
   //   url: "/messages",
@@ -37,11 +36,6 @@ function ChatMessagesProvider(props: any) {
         )
         .then((messages) => {
           if (messages?.length) {
-            console.log(
-              "🚀 ~ file: ChatMessagesProvider.tsx:38 ~ .then ~ messages:",
-              messages
-            );
-
             const lastFetched = new Date();
             setNewMessages(
               chatMessages[currentChatId]
@@ -78,13 +72,22 @@ function ChatMessagesProvider(props: any) {
 
   React.useEffect(() => {
     if (new Date().getTime() - sentAfter > 60000) {
-      chatMessages[currentChatId].lastFetched = new Date();
+      const lastFetched = new Date();
       contentService
         .getMessages(
           { url: "/messages", chatId: currentChatId },
-          chatMessages[currentChatId].lastFetched?.getTime()
+          chatMessages[currentChatId]?.lastFetched?.getTime()
         )
-        .then((messages) => setNewMessages({ messages, lastFetched: new Date() }));
+        .then((messages) =>
+          setNewMessages(
+            chatMessages[currentChatId]
+              ? {
+                  messages: [...chatMessages[currentChatId].messages, ...messages],
+                  lastFetched,
+                }
+              : { messages, lastFetched }
+          )
+        );
     }
 
     //eslint-disable-next-line react-hooks/exhaustive-deps

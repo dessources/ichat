@@ -19,19 +19,30 @@ import { ChatContext } from "@/contexts";
 
 //models
 import { Chat as ChatType } from "@/models";
-
+//my components
 import ChatHeader from "./Header";
-
+import MessageList from "./MessageList";
+import MessageBox from "./MessageBox";
 //styles
 import { chat } from "@/styles/Ichat.style";
-import ChatBody from "./chatBody/";
+
+function ChatBodyWrapper() {
+  const [bottom, setBottom] = React.useState("50px");
+
+  return (
+    <>
+      <MessageList bottom={bottom} />
+      <MessageBox setBottom={setBottom} />
+    </>
+  );
+}
 export default function Chat() {
   const [currentChat] = useAppContext<ChatType>(ChatContext);
 
   return currentChat ? (
     <Box sx={chat}>
       <ChatHeader />
-      <ChatBody />
+      <ChatBodyWrapper />
     </Box>
   ) : (
     <div></div>

@@ -23,7 +23,6 @@
 // }
 
 import { Message } from "@/models";
-import { message } from "@/styles/Chat.style";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Server, Socket } from "socket.io";
 
@@ -43,11 +42,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     //@ts-ignore
     res.socket.server.io = io;
     io.on("connection", (socket: Socket) => {
-      const chatId = socket.handshake.query.chatId;
-      socket.join(chatId as string);
-      socket.on("send-message", (data: Message) => {
-        //each room represents a chat in the app
-        socket.to(chatId as string).emit("receive-message", data);
+      const roomId = socket.handshake.query.roomId;
+      console.log("joinged room ", roomId);
+      //each room contains all the clients where
+      //one user is connected
+      socket.join(roomId as string);
+      socket.on("send-message", (data: Message & { recipients: string[] }) => {
+        //for each recipients send the message to their room
+        console.log(data.recipients);
+        data.recipients.forEach((id) =>
+          socket.to(id).emit("receive-message", { ...data, recipients: [] })
+        );
       });
     });
   }

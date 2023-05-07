@@ -3,6 +3,7 @@ import { v4 as uuid4 } from "uuid";
 //mui
 import SendIcon from "@mui/icons-material/Send";
 import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 //models
 import {
   Message,
@@ -13,7 +14,7 @@ import {
 } from "@/models";
 import { Socket } from "socket.io-client";
 //styles
-import { input } from "@/styles/Chat.style";
+import { messageBox, textField } from "@/styles/Chat.style";
 //hooks & contexts
 import useAppContext from "@/hooks/useAppContext";
 import {
@@ -23,18 +24,16 @@ import {
   UserContext,
 } from "@/contexts";
 
-// interface MessageBoxProps {
-//   setChatMessages: React.Dispatch<React.SetStateAction<Message[]>>;
-// }
-
-function MessageBox() {
-  const [currentChat] = useAppContext<Chat>(ChatContext);
+function MessageBox({ setBottom }: any) {
+  const [currentChat] = useAppContext(ChatContext) as [Chat];
   const currentChatId = currentChat?.id;
-  const [user] = useAppContext<User>(UserContext);
+  const [user] = useAppContext(UserContext) as [User];
   const [socket] = useAppContext<Socket>(SocketIoContext);
+
   const { chatMessages, setChatMessages } = useAppContext(
     ChatMessagesContext
   ) as ChatMessagesContextType;
+
   const [message, setMessage] = React.useState("");
 
   const handleSendMessage = () => {
@@ -56,17 +55,48 @@ function MessageBox() {
       ...chatMessages,
       [currentChatId]: newMessages,
     }));
+    socket?.emit("send-message", { ...data, recipients: currentChat?.users });
     setMessage("");
-    socket?.emit("send-message", data);
+    setBottom("50px");
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(e.target.value);
+  };
+  const handleEnter = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    //prevent a new line to be created and
+    //Send the message when the Enter key is pressed
+    if (!/Enter|NumpadEnter/.test(e.key)) return;
+    else {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
+  /**
+   * UI Effects
+   */
+  //when the value of message changes, update the "bottom" state
+  const messageBoxRef = React.useRef<HTMLDivElement>();
+
+  React.useEffect(() => {
+    if (message !== "")
+      setBottom(getComputedStyle(messageBoxRef?.current as Element).height);
+  }, [message, setBottom]);
+
   return (
-    <Box component="div" sx={input}>
-      <textarea
-        placeholder="Type a message..."
+    <Box component="div" sx={messageBox} ref={messageBoxRef}>
+      <TextField
+        id="textField"
+        multiline
+        maxRows={4}
         value={message}
-        onChange={(e) => setMessage(e.target.value)}
-      ></textarea>
+        onChange={handleChange}
+        onKeyDown={handleEnter}
+        placeholder="Type something..."
+        variant="standard"
+        sx={textField}
+      />
       <SendIcon sx={{ cursor: "pointer" }} onClick={handleSendMessage} />
     </Box>
   );

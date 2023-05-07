@@ -14,9 +14,9 @@ export const toolbar: SxProps<Theme> = {
   margin: "auto 0",
 };
 
-export const messageList: SxProps<Theme> = {
+export const messageList = (bottom?: string): SxProps<Theme> => ({
   position: "absolute",
-  bottom: "60px",
+  bottom: bottom ?? "60px",
   left: "50%",
   transform: "translateX(-50%)",
   maxHeight: "calc(100% - 7rem)",
@@ -36,9 +36,10 @@ export const messageList: SxProps<Theme> = {
     borderRadius: "20px",
     borderColor: "transparent",
   },
-};
+});
 
 export const message: SxProps<Theme> = {
+  display: "flex",
   flexDirection: "column",
   color: "#d7d7d7",
   listStyleType: "none",
@@ -98,34 +99,38 @@ export const time: React.CSSProperties = {
   opacity: 0.6,
 };
 
-export const input: SxProps<Theme> = {
-  height: "60px",
+export const messageBox: SxProps<Theme> = {
+  height: "fit-content",
   width: "100%",
   background: "var(--dark_gray)",
   position: "sticky",
   top: "100%",
   padding: "0.5rem",
   outline: "none",
+  display: "flex",
   alignItems: "center",
-  "& textarea": {
-    border: "none",
-    appearance: "none",
-    background: "none",
-    outline: "none",
-    resize: "none",
-    width: "90%",
-    padding: "0 10px",
+};
+
+export const textField: SxProps<Theme> = {
+  border: "none",
+  width: "90%",
+  padding: "0 10px",
+  color: "#d7d7d7",
+  fontFamily: "Helvetica",
+  fontSize: "15px",
+  marginRight: "15px",
+  "& textarea::-webkit-scrollbar": {
+    width: "3px",
+  },
+  "& textarea::-webkit-scrollbar-thumb": {
+    backgroundColor: "#9f9f9f",
+    borderRadius: "20px",
+    borderColor: "transparent",
+  },
+  "& div": {
     color: "#d7d7d7",
-    fontFamily: "Helvetica",
-    fontSize: "16px",
-    marginRight: "15px",
-    "&::-webkit-scrollbar": {
-      width: "3px",
-    },
-    "&::-webkit-scrollbar-thumb": {
-      backgroundColor: "#9f9f9f",
-      borderRadius: "20px",
-      borderColor: "transparent",
-    },
+  },
+  "& div:before, & div:after": {
+    border: "none!important",
   },
 };

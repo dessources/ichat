@@ -28,7 +28,7 @@ export const chat = {
   px: 3,
   gap: "1rem",
   color: "rgba(255, 255, 255, 0.7)",
-  "&:hover, &:focus": {
+  "&:hover": {
     bgcolor: "rgba(255, 255, 255, 0.08)",
   },
   "& span": {

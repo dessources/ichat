@@ -1,12 +1,13 @@
 import * as React from "react";
-import type { Chat } from "@/models";
+import type { Chat as ChatType, User } from "@/models";
 //utils && hooks
 import userService from "@/services/userService";
 import useAppContext from "@/hooks/useAppContext";
 import { ChatContext, SocketIoContext, UserContext } from "@/contexts";
 import ContextProvider from "@/components/providers/ContextProvider";
-//mui
+import ChatMessagesProvider from "@/components/providers/ChatMessagesProvider";
 
+//mui
 import useMediaQuery from "@mui/material/useMediaQuery";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
@@ -16,7 +17,7 @@ import Grid from "@mui/material/Grid";
 
 //My Components
 import ChatList from "./chatList";
-import ChatBox from "./chat";
+import Chat from "./chat";
 import Header from "./Header";
 import Copyright from "./Copyright";
 
@@ -34,7 +35,10 @@ export default function Ichat() {
   // const handleDrawerToggle = () => {
   //   setMobileOpen(!mobileOpen);
   // };
-  const [, setUser] = useAppContext(UserContext);
+  const [, setUser] = useAppContext(UserContext) as [
+    null,
+    React.Dispatch<React.SetStateAction<User>>
+  ];
 
   React.useEffect(() => {
     //get the user's info once he's logged in
@@ -54,10 +58,12 @@ export default function Ichat() {
       <Sidebar />
       <Box sx={styles.main}>
         <ContextProvider context={ChatContext}>
-          <SocketIoProvider>
-            <ChatList />
-            <ChatBox />
-          </SocketIoProvider>
+          <ChatMessagesProvider>
+            <SocketIoProvider>
+              <ChatList />
+              <Chat />
+            </SocketIoProvider>
+          </ChatMessagesProvider>
         </ContextProvider>
       </Box>
     </>
