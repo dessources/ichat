@@ -42,7 +42,7 @@ function MessageBox({ setBottom }: any) {
       sender: user?.id as string,
       content: message,
       chat: currentChat?.id as string,
-      timestamp: new Date().toISOString(),
+      timestamp: new Date(),
     };
 
     const newMessages = chatMessages[currentChatId]

@@ -1,27 +1,3 @@
-// import { Message } from "@/models";
-// import { NextApiRequest, NextApiResponse } from "next";
-// import { Server } from "socket.io";
-
-// export default function handler(req: NextApiRequest, res: NextApiResponse) {
-//   const res.socket = res.socket;
-//   if (res.socket?.server?.io) {
-//     console.log("Socket is already running");
-//   } else {
-//     console.log("initializing Socket");
-
-//     const io = new Server(res.socket?.server);
-//     res.socket.server.io = io;
-//     io.on("connection", (socket) => {
-//       socket.on("send-message", (data: Message) => {
-//         console.log("Received message:", data.content);
-//         socket.broadcast.emit("receive-message", data);
-//       });
-//     });
-//   }
-
-//   res.end();
-// }
-
 import { Message } from "@/models";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Server, Socket } from "socket.io";
