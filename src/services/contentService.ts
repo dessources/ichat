@@ -7,7 +7,10 @@ interface key {
 }
 
 class ContentService {
-  async getMessages({ url, chatId }: key, sentAfter = 0): Promise<Message[]> {
+  async getMessages(
+    { url, chatId }: key,
+    sentAfter = new Date(0)
+  ): Promise<Message[]> {
     // Get the messages
     const messages = await axiosPrivate
       .post<Message[]>(url, { chatId, sentAfter })

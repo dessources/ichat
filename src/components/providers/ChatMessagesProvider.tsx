@@ -32,7 +32,7 @@ function ChatMessagesProvider(props: any) {
       contentService
         .getMessages(
           { url: "/messages", chatId: currentChatId },
-          chatMessages[currentChatId]?.lastFetched?.getTime()
+          chatMessages[currentChatId]?.lastFetched
         )
         .then((messages) => {
           if (messages?.length) {
@@ -76,7 +76,7 @@ function ChatMessagesProvider(props: any) {
       contentService
         .getMessages(
           { url: "/messages", chatId: currentChatId },
-          chatMessages[currentChatId]?.lastFetched?.getTime()
+          chatMessages[currentChatId]?.lastFetched
         )
         .then((messages) =>
           setNewMessages(
