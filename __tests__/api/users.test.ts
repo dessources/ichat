@@ -8,13 +8,13 @@ import { mockRequestResponse } from "../testUtils";
 import login from "@/pages/api/auth/login";
 import users from "@/pages/api/users";
 import { getCookie, setCookie } from "cookies-next";
-import { ObjectId } from "mongodb";
+// import { ObjectId } from "mongodb";
 import clientPromise from "@/lib/mongodb";
 let reqRes: { req: NextApiRequest; res: NextApiResponse };
 
 let accessToken: string;
 let userObj = {
-  _id: expect.any(ObjectId),
+  id: expect.any(String),
   username: expect.any(String),
   name: expect.any(String),
 };

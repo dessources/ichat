@@ -84,10 +84,10 @@ describe("Messages API route", () => {
     expect(Array.isArray(result)).toBe(true);
 
     expect(result[0]).toMatchObject<Message>({
-      _id: expect.any(ObjectId),
+      id: expect.any(String),
       content: expect.any(String),
-      sender: expect.any(ObjectId),
-      chat: expect.any(ObjectId),
+      sender: expect.any(String),
+      chat: expect.any(String),
       timestamp: expect.any(Date),
     });
   });

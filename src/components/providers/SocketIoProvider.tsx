@@ -30,14 +30,16 @@ function SocketIoProvider(props: any) {
       newSocket = io("/", { query: { roomId: user?.id } });
 
       newSocket.on("connect", () => {
-        console.log("connected to socket.Io server id: ", newSocket?.id);
+        process.env.NODE_ENV !== "production" &&
+          console.log("connected to socket.Io server id: ", newSocket?.id);
         setSocket?.(newSocket as Socket);
       });
     })();
 
     return () => {
       newSocket?.close();
-      console.log("Disconnected from socket.io");
+      process.env.NODE_ENV !== "production" &&
+        console.log("Disconnected from socket.io");
     };
   }, [user]);
 

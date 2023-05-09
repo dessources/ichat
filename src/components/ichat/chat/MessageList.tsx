@@ -56,9 +56,7 @@ function MessageList({ bottom }: any) {
               >
                 <span>{message.content}</span>
                 <span style={styles.time}>
-                  {message.timestamp
-                    ? formatTime(message.timestamp as string)
-                    : null}
+                  {message.timestamp ? formatTime(message.timestamp) : null}
                 </span>
               </Box>
             );

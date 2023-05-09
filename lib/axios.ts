@@ -19,7 +19,8 @@ const axiosPrivate = axios.create({
 axiosPrivate.interceptors.response.use(
   (response) => response,
   async (error) => {
-    console.log("An error happened: ", error.response.data.message);
+    process.env.NODE_ENV !== "production" &&
+      console.log("An error happened: ", error.response.data.message);
 
     const prevRequest = error?.config;
 

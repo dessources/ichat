@@ -8,14 +8,13 @@ export interface Chat {
   chatPicture?: string;
   users: string[];
   group: boolean;
-  lastFetchedOn: Date;
 }
 export interface Message {
   id: string;
   sender: string;
   chat: string;
   content: string;
-  timestamp: string;
+  timestamp: Date;
 }
 
 export interface ChatMessages {

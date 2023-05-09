@@ -45,7 +45,9 @@ afterEach(async () => {
         expect(value.acknowledged).toBe(true);
         expect(value.deletedCount).toBeGreaterThan(0);
       })
-      .catch((reason) => process.env.NODE_ENV === "test" && console.log(reason));
+      .catch(
+        (reason) => process.env.NODE_ENV === "test" && console.dir(reason.errInfo)
+      );
   }
 });
 
@@ -77,7 +79,9 @@ describe("Register API route", () => {
 
     await register(req, res);
 
-    expect(ResJsonSpy.mock.calls[0][0].message).toMatchInlineSnapshot(`"Could not register user"`);
+    expect(ResJsonSpy.mock.calls[0][0].message).toMatchInlineSnapshot(
+      `"Could not register user"`
+    );
 
     expect(res.statusCode).toBe(500);
   });
@@ -90,7 +94,9 @@ describe("Register API route", () => {
 
     await register(req, res);
 
-    expect(ResJsonSpy.mock.calls[0][0].message).toMatchInlineSnapshot(`"Could not register user"`);
+    expect(ResJsonSpy.mock.calls[0][0].message).toMatchInlineSnapshot(
+      `"Could not register user"`
+    );
 
     expect(res.statusCode).toBe(500);
   });

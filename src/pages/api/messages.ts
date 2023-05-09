@@ -17,12 +17,11 @@ export default authenticate(
       let result: Message[];
 
       try {
-        const { chatId, sentAfter } = req.body;
+        const { chatId, sentAfter = new Date(0) } = req.body;
 
-        result = await messages.find({ chat: chatId }).toArray();
-        result = result.filter(
-          (message) => new Date(message.timestamp).getTime() > sentAfter
-        );
+        result = await messages
+          .find({ chat: chatId, timestamp: { $gte: sentAfter } })
+          .toArray();
 
         return res.status(200).json(result);
       } catch (err) {

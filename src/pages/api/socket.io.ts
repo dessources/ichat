@@ -33,23 +33,21 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // we need to. Hence the ts-ignore directives
 
   //@ts-ignore
-  if (res.socket?.server?.io) {
-    console.log("Socket is already running");
-  } else {
-    console.log("initializing Socket");
+  if (!res.socket?.server?.io) {
     //@ts-ignore
     const io = new Server(res.socket?.server);
     //@ts-ignore
     res.socket.server.io = io;
     io.on("connection", (socket: Socket) => {
       const roomId = socket.handshake.query.roomId;
-      console.log("joinged room ", roomId);
+      process.env.NODE_ENV !== "production" &&
+        console.log("joinged room ", roomId);
       //each room contains all the clients where
       //one user is connected
       socket.join(roomId as string);
       socket.on("send-message", (data: Message & { recipients: string[] }) => {
         //for each recipients send the message to their room
-        console.log(data.recipients);
+        process.env.NODE_ENV !== "production" && console.log(data.recipients);
         data.recipients.forEach((id) =>
           socket.to(id).emit("receive-message", { ...data, recipients: [] })
         );
