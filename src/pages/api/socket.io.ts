@@ -11,9 +11,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   //@ts-ignore
   if (!res.socket?.server?.io) {
     //@ts-ignore
-    const io = new Server(res.socket?.server);
+    const io = new Server(res.socket?.server, { cors: { origin: "*" } });
+
     //@ts-ignore
     res.socket.server.io = io;
+
     io.on("connection", (socket: Socket) => {
       const roomId = socket.handshake.query.roomId;
       process.env.NODE_ENV !== "production" &&
