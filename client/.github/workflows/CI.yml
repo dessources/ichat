@@ -1,0 +1,93 @@
+name: Development pipeline
+env:
+  NEXT_PUBLIC_READONLY_CONTENT_API_URL: ${{ secrets.NEXT_PUBLIC_READONLY_CONTENT_API_URL }}
+  NEXT_PUBLIC_CONTENT_API_URL: ${{ secrets.NEXT_PUBLIC_CONTENT_API_URL }}
+  NEXT_PUBLIC_CONTENT_API_TOKEN: ${{ secrets.NEXT_PUBLIC_CONTENT_API_TOKEN }}
+  NEXT_PUBLIC_API_ACCESS_TOKEN: ${{ secrets.NEXT_PUBLIC_API_ACCESS_TOKEN }}
+  BAD_API_ACCESS_TOKEN: ${{secrets.BAD_API_ACCESS_TOKEN}}
+  MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  JWT_ACCESS_TOKEN_SECRET: ${{ secrets.JWT_ACCESS_TOKEN_SECRET }}
+  JWT_REFRESH_TOKEN_SECRET: ${{ secrets.JWT_REFRESH_TOKEN_SECRET }}
+  CI: true
+  TEST_USER_USERNAME: ${{secrets.TEST_USER_USERNAME}}
+  TEST_USER_PASSWORD: ${{secrets.TEST_USER_PASSWORD}}
+  TEST_USER_REFRESH_TOKEN: ${{secrets.TEST_USER_REFRESH_TOKEN}}
+  TEST_USER_ID: ${{secrets.TEST_USER_ID}}
+  TEST_CHAT_ID: ${{secrets.TEST_CHAT_ID}}
+  CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+
+on:
+  push:
+    branches: [dev]
+
+jobs:
+  securityCheck:
+    name: security check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking Security
+        run: |
+          echo "Runing Security Checks"
+
+  unit_tests_and_lint:
+    needs: [securityCheck]
+    name: Unit Testing and linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - name: Clone Repository
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          echo "Installing Dependencies ..."
+          npm i
+      - name: Run linting
+        run: |
+          echo "Running Linting"
+          npm run lint
+      - name: Run Unit Tests
+        run: |
+          echo "Running  unit tests..."
+          npm run test:ci
+          echo $?
+  #
+  #
+
+  # cypress_e2e_tests:
+  #   name: Cypress E2E tests
+  #   runs-on: ubuntu-latest
+  #   needs: [unit_tests_and_lint, securityCheck]
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       browsers: ["chrome", "firefox", "edge"]
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #     - run: |
+  #         echo "Installing dependencies"
+  #         npm install
+  #     - name: Cypress run
+  #       uses: cypress-io/github-action@v5
+  #       with:
+  #         build: npm run build
+  #         start: npm run start
+  #         browser: ${{matrix.browsers}}
+  #         # record: true
+  #
+
+  Deploy-Preview:
+    name: Deploy to Preview on vercel
+    needs: [securityCheck, unit_tests_and_lint] #, cypress_e2e_tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }} #required
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}} #Required
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}} #Required
