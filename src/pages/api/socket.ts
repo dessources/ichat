@@ -7,7 +7,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // But we are nonetheless setting that property
   // on res.socket in the following lines because
   // we need to. Hence the ts-ignore directives
-
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
   //@ts-ignore
   if (!res.socket?.server?.io) {
     //@ts-ignore
