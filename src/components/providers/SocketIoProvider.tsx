@@ -26,14 +26,16 @@ function SocketIoProvider(props: any) {
 
     //Complete the handshake with the socket.io server
     (async function () {
-      await fetch("/api/socket.io");
-      newSocket = io("/", { query: { roomId: user?.id } });
+      if (user?.id) {
+        await fetch("/api/socket.io");
+        newSocket = io("/", { query: { roomId: user?.id } });
 
-      newSocket.on("connect", () => {
-        process.env.NODE_ENV !== "production" &&
-          console.log("connected to socket.Io server id: ", newSocket?.id);
-        setSocket?.(newSocket as Socket);
-      });
+        newSocket.on("connect", () => {
+          process.env.NODE_ENV !== "production" &&
+            console.log("connected to socket.Io server id: ", newSocket?.id);
+          setSocket?.(newSocket as Socket);
+        });
+      }
     })();
 
     return () => {
