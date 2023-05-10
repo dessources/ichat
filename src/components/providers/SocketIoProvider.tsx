@@ -30,7 +30,6 @@ function SocketIoProvider(props: any) {
         await fetch("/api/socket.io");
         newSocket = io("", {
           query: { roomId: user?.id },
-          transports: ["websocket"],
         });
 
         newSocket.on("connect", () => {
