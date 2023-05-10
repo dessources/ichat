@@ -27,8 +27,8 @@ function SocketIoProvider(props: any) {
     //Complete the handshake with the socket.io server
     (async function () {
       if (user?.id) {
-        await fetch("/api/socket.io/");
-        newSocket = io("/", {
+        await fetch("/api/socket.io");
+        newSocket = io("", {
           query: { roomId: user?.id },
           transports: ["websocket"],
         });
