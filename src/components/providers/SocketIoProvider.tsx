@@ -28,7 +28,10 @@ function SocketIoProvider(props: any) {
     (async function () {
       if (user?.id) {
         await fetch("/api/socket.io");
-        newSocket = io("/", { query: { roomId: user?.id } });
+        newSocket = io("", {
+          query: { roomId: user?.id },
+          transports: ["websocket"],
+        });
 
         newSocket.on("connect", () => {
           process.env.NODE_ENV !== "production" &&
