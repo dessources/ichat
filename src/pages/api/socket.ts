@@ -2,7 +2,7 @@ import { Message } from "@/models";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Server, Socket } from "socket.io";
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+function handler(req: NextApiRequest, res: NextApiResponse) {
   // property 'server' does not exists in type Socket
   // But we are nonetheless setting that property
   // on res.socket in the following lines because
@@ -20,7 +20,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     res.socket.server.io = io;
 
     io.on("connection", (socket: Socket) => {
-      const roomId = socket.handshake.query.roomId;
+      const roomId = "roomid" || socket.handshake.query.roomId;
       process.env.NODE_ENV !== "production" &&
         console.log("joinged room ", roomId);
       //each room contains all the clients where
@@ -38,3 +38,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   res.end();
 }
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
+export default handler;
