@@ -28,7 +28,7 @@ function SocketIoProvider(props: any) {
     (async function () {
       if (user?.id) {
         await fetch("/api/socket").catch((err) => console.log(err));
-        // newSocket = io("", {
+        // newSocket =  io("", {
         //   query: { roomId: user?.id },
         //   transports: ["websocket"],
         // });
