@@ -28,7 +28,7 @@ function SocketIoProvider(props: any) {
     (async function () {
       if (user?.id) {
         await fetch("/api/socket.io");
-        newSocket = io("/", {
+        newSocket = io("", {
           query: { roomId: user?.id },
         });
 
