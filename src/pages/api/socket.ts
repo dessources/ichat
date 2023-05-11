@@ -32,7 +32,7 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
       });
     });
   }
-  // res.send("this is socket.io");
+  res.send("this is socket.io");
   res.end();
 }
 
