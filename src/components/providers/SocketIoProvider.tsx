@@ -27,12 +27,11 @@ function SocketIoProvider(props: any) {
     //Complete the handshake with the socket.io server
     (async function () {
       if (user?.id) {
-        await fetch("/api/socket").catch((err) => console.log(err));
-        // newSocket =  io("", {
-        //   query: { roomId: user?.id },
-        //   transports: ["websocket"],
-        // });
-        newSocket = io();
+        await fetch("/api/socket");
+        newSocket = io("/", {
+          query: { roomId: user?.id },
+        });
+        // newSocket = io("http://localhost:3001");
         newSocket.on("connect", () => {
           process.env.NODE_ENV !== "production" &&
             console.log("connected to socket.Io server id: ", newSocket?.id);

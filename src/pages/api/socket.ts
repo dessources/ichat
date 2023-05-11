@@ -7,10 +7,7 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
   // But we are nonetheless setting that property
   // on res.socket in the following lines because
   // we need to. Hence the ts-ignore directives
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
+
   //@ts-ignore
   if (!res.socket?.server?.io) {
     //@ts-ignore
@@ -20,7 +17,7 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
     res.socket.server.io = io;
 
     io.on("connection", (socket: Socket) => {
-      const roomId = "roomid" || socket.handshake.query.roomId;
+      const roomId = socket.handshake.query.roomId;
       process.env.NODE_ENV !== "production" &&
         console.log("joinged room ", roomId);
       //each room contains all the clients where
@@ -35,7 +32,7 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
       });
     });
   }
-
+  // res.send("this is socket.io");
   res.end();
 }
 
