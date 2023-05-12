@@ -39,7 +39,7 @@ function MessageList({ bottom }: any) {
     if (list) list.scrollTop = list.scrollHeight;
   });
 
-  const messages = chatMessages[currentChatId]?.messages.sort(
+  const messages = chatMessages[currentChatId]?.messages?.sort(
     (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
   );
   return (

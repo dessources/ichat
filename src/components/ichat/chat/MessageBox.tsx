@@ -9,7 +9,6 @@ import {
   Message,
   Chat,
   User,
-  ChatMessages,
   ChatMessagesContext as ChatMessagesContextType,
 } from "@/models";
 import { Socket } from "socket.io-client";
@@ -37,7 +36,7 @@ function MessageBox({ setBottom }: any) {
   const [message, setMessage] = React.useState("");
 
   const handleSendMessage = () => {
-    const data = {
+    const data: Message = {
       id: uuid4(),
       sender: user?.id as string,
       content: message,

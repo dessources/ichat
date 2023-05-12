@@ -18,6 +18,7 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
 
     io.on("connection", (socket: Socket) => {
       const roomId = socket.handshake.query.roomId;
+      fetch(`{orib}`);
       process.env.NODE_ENV !== "production" &&
         console.log("joinged room ", roomId);
       //each room contains all the clients where
@@ -33,7 +34,6 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
     });
   }
   res.send("this is socket.io");
-  res.end();
 }
 
 export const config = {

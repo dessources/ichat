@@ -28,8 +28,12 @@ function SocketIoProvider(props: any) {
     (async function () {
       if (user?.id) {
         // await fetch("/api/socket/");
-        newSocket = io("https://ichat-socket.onrender.com", {
+        newSocket = io("http://localhost:3001", {
           query: { roomId: user?.id },
+          auth: { token: process.env.NEXT_PUBLIC_API_ACCESS_TOKEN },
+          extraHeaders: {
+            authorization: "session=abc123",
+          },
         });
         // newSocket = io("http://localhost:3001");
         newSocket.on("connect", () => {

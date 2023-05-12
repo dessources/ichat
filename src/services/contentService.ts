@@ -13,7 +13,9 @@ class ContentService {
   ): Promise<Message[]> {
     // Get the messages
     const messages = await axiosPrivate
-      .post<Message[]>(url, { chatId, sentAfter })
+      .get<Message[]>(
+        `${url}?chatId=${chatId}&sentAfter=${sentAfter.toISOString()}`
+      )
       .then((res) => res.data);
 
     return messages;
