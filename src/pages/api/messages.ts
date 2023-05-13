@@ -5,7 +5,6 @@ import authenticate from "./middlewares/authenticate";
 import allowMethods from "./middlewares/allowMethods";
 import { Collection } from "mongodb";
 import { Message } from "@/models";
-import { getCookies } from "cookies-next";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const client = await clientPromise;
@@ -36,11 +35,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         process.env.NODE_ENV !== "production" && console.log(err);
         res.status(500).json({ message: "Something went wrong", error: err });
       }
-
       break;
+
     // Saving a message
     case "POST":
       const { message } = req.body;
+      console.log(message);
       //set the timestamp back to a date object
       message.timestamp = new Date(message.timestamp);
       try {
