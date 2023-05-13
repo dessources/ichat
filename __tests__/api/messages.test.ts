@@ -8,7 +8,7 @@ import { mockRequestResponse } from "../testUtils";
 import login from "@/pages/api/auth/login";
 import messages from "@/pages/api/messages";
 import { getCookie, setCookie } from "cookies-next";
-import { ObjectId } from "mongodb";
+
 import clientPromise from "@/lib/mongodb";
 let reqRes: { req: NextApiRequest; res: NextApiResponse };
 
@@ -71,8 +71,9 @@ describe("Messages API route", () => {
   });
 
   it("Should return a 200 code and an array of messages if request valid", async () => {
-    reqRes = mockRequestResponse("POST", { chatId: process.env.TEST_CHAT_ID });
+    reqRes = mockRequestResponse("GET");
     const { req, res } = reqRes;
+    req.query = { chatId: process.env.TEST_CHAT_ID };
     setCookie("accessToken", accessToken, { req, res });
     const resJsonSpy = jest.spyOn(res, "json");
 
