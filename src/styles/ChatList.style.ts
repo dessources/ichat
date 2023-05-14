@@ -1,5 +1,6 @@
 import React from "react";
 import { SxProps, Theme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import theme from "@/themes/ichat";
 
 // export const root: SxProps<Theme> = {};
@@ -20,6 +21,49 @@ export const paper: SxProps<Theme> = {
     top: 0,
     bgcolor: theme.palette.secondary.main,
     left: 0,
+  },
+};
+
+export const search: SxProps<Theme> = {
+  marginRight: "10px",
+  marginLeft: "10px",
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    /*marginLeft: theme.spacing(1),*/
+    width: "auto",
+  },
+};
+
+export const searchIconWrapper: SxProps<Theme> = {
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+};
+
+export const inputBase: SxProps<Theme> = {
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
   },
 };
 

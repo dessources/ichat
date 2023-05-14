@@ -19,7 +19,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
       try {
         const { chatId, sentAfter } = req.query;
-        console.log("🚀 ~ file: messages.ts:22 ~ handler ~ chatId:", chatId);
+
         //Get all messages sent in the corresponding chat after the sentAfter
         //Date
         result = await messages

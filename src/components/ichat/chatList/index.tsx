@@ -12,8 +12,8 @@ import { Chat, User } from "@/models";
 //mui
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
-import { Typography } from "@mui/material";
-
+import { Typography, InputBase } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 //my components
 import ChatListItem from "./ChatListItem";
 //utils
@@ -49,6 +49,19 @@ export default function ChatList() {
           <Typography sx={styles.title} variant="h5">
             Chats
           </Typography>
+          <Box sx={styles.search}>
+            <Box sx={styles.searchIconWrapper}>
+              <SearchIcon />
+            </Box>
+            <InputBase
+              sx={styles.inputBase}
+              // onKeyDown={handleKeyPress}
+              // onChange={(e) => setQuery(e.target.value)}
+              // value={query}
+              placeholder="Rechercher"
+              inputProps={{ "aria-label": "search" }}
+            />
+          </Box>
 
           <List disablePadding sx={styles.chatList}>
             {chats?.map((chat, i) => (

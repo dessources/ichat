@@ -27,7 +27,12 @@ function SocketIoProvider(props: any) {
     //Complete the handshake with the socket.io server
     (async function () {
       if (user?.id) {
-        newSocket = io("https://ichat-socket.onrender.com", {
+        const socketURL =
+          process.env.NODE_ENV === "production"
+            ? "https://ichat-socket.onrender.com"
+            : "http://localhost:3000";
+
+        newSocket = io(socketURL, {
           query: { roomId: user?.id },
           auth: { token: process.env.NEXT_PUBLIC_API_ACCESS_TOKEN },
         });
@@ -47,6 +52,7 @@ function SocketIoProvider(props: any) {
     };
   }, [user]);
 
+  //receive message event listener
   React.useEffect(() => {
     const receiveMessageListener = (data: Message) => {
       const newMessages = chatMessages[data.chat]
