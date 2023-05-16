@@ -43,6 +43,9 @@ ul::-webkit-scrollbar-thumb {
   border-color: "transparent" !important;
 }
 
+svg {
+  cursor: pointer;
+}
 /* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

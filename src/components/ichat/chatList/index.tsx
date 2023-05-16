@@ -34,6 +34,20 @@ export default function ChatList() {
     userService.getChats
   );
 
+  const [searchRegExp, setSearchRegExp] = React.useState(/$/);
+
+  //Filter the chats by the search term inputted
+  // by the user
+  const chatList = chats
+    ?.filter((chat) => searchRegExp.test(chat.name as string))
+    .map((chat, i) => <ChatListItem key={i} chat={chat} />);
+
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  };
+
   return (
     <Box sx={styles.paper}>
       {isError ? (
@@ -50,23 +64,25 @@ export default function ChatList() {
             Chats
           </Typography>
           <Box sx={styles.search}>
+            <InputBase
+              sx={styles.inputBase}
+              onKeyDown={handleEnter}
+              onChange={(e) => setSearchRegExp(new RegExp(e.target.value, "i"))}
+              // value={searchRegExp}
+              placeholder="Search chat"
+              inputProps={{ "aria-label": "search" }}
+            />
             <Box sx={styles.searchIconWrapper}>
               <SearchIcon />
             </Box>
-            <InputBase
-              sx={styles.inputBase}
-              // onKeyDown={handleKeyPress}
-              // onChange={(e) => setQuery(e.target.value)}
-              // value={query}
-              placeholder="Rechercher"
-              inputProps={{ "aria-label": "search" }}
-            />
           </Box>
 
           <List disablePadding sx={styles.chatList}>
-            {chats?.map((chat, i) => (
-              <ChatListItem key={i} chat={chat} />
-            ))}
+            {chatList.length ? (
+              chatList
+            ) : (
+              <Typography sx={styles.noResult}>No results</Typography>
+            )}
           </List>
         </>
       )}

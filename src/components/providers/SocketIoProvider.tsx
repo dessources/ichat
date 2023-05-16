@@ -30,7 +30,7 @@ function SocketIoProvider(props: any) {
         const socketURL =
           process.env.NODE_ENV === "production"
             ? "https://ichat-socket.onrender.com"
-            : "http://localhost:3000";
+            : "http://localhost:3001";
 
         newSocket = io(socketURL, {
           query: { roomId: user?.id },
@@ -38,8 +38,6 @@ function SocketIoProvider(props: any) {
         });
 
         newSocket.on("connect", () => {
-          process.env.NODE_ENV !== "production" &&
-            console.log("connected to socket.Io server id: ", newSocket?.id);
           setSocket?.(newSocket as Socket);
         });
       }
@@ -47,8 +45,6 @@ function SocketIoProvider(props: any) {
 
     return () => {
       newSocket?.close();
-      process.env.NODE_ENV !== "production" &&
-        console.log("Disconnected from socket.io");
     };
   }, [user]);
 

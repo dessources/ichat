@@ -6,14 +6,12 @@ import { Collection } from "mongodb";
 import { User } from "@/models";
 import { getCookie } from "cookies-next";
 import { verifyAccessToken } from "@/utils/jwt";
+import allowMethods from "./middlewares/allowMethods";
 
-export default authorize(async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const client = await clientPromise;
+  const users: Collection<User> = client.db("ichat").collection("users");
   if (req.method === "GET") {
-    const client = await clientPromise;
-    const users: Collection<User> = client.db("ichat").collection("users");
     const param = req.query.param;
     let user;
     try {
@@ -57,6 +55,21 @@ export default authorize(async function handler(
     const result = { name, profilePicture, id, username };
     return res.status(200).json(result);
   } else {
-    res.status(405).json({ message: "Bad request" });
+    const { updatedProfile } = req.body;
+    delete updatedProfile.updated;
+    const { id } = updatedProfile;
+
+    return await users
+      .findOneAndReplace(
+        { id: id },
+        { ...updatedProfile, password: "$$ROOT.password" }
+      )
+      .then(() => res.status(200).json({ message: "user updated" }))
+      .catch((err) => {
+        console.dir(err, { depth: null });
+        return res.status(500).json({ message: "Could not update user" });
+      });
   }
-});
+}
+
+export default allowMethods(["GET", "POST"], authorize(handler));

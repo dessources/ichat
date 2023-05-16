@@ -3,7 +3,7 @@ import type { Chat as ChatType, User } from "@/models";
 //utils && hooks
 import userService from "@/services/userService";
 import useAppContext from "@/hooks/useAppContext";
-import { ChatContext, SocketIoContext, UserContext } from "@/contexts";
+import { ChatContext, UserContext } from "@/contexts";
 import ContextProvider from "@/components/providers/ContextProvider";
 import ChatMessagesProvider from "@/components/providers/ChatMessagesProvider";
 
@@ -11,14 +11,11 @@ import ChatMessagesProvider from "@/components/providers/ChatMessagesProvider";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import AppBar from "@mui/material/AppBar";
-import Grid from "@mui/material/Grid";
 
 //My Components
 import ChatList from "./chatList";
 import Chat from "./chat";
-import Header from "./Header";
+import Header from "./header";
 import Copyright from "./Copyright";
 
 //styles

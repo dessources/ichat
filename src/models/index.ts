@@ -27,6 +27,7 @@ export interface User {
   username: string;
   profilePicture?: string;
   online: boolean;
+  about: string;
 }
 export interface UserAuthInfo {
   username: string;

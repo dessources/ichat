@@ -8,6 +8,8 @@ import theme from "@/themes/ichat";
 export const paper: SxProps<Theme> = {
   width: 288,
   height: "100vh",
+  display: "flex",
+  flexDirection: "column",
   position: "relative",
   background: "var(--light_gray)",
   borderTopLeftRadius: "20px",
@@ -44,18 +46,22 @@ export const searchIconWrapper: SxProps<Theme> = {
   padding: theme.spacing(0, 2),
   height: "100%",
   position: "absolute",
-  pointerEvents: "none",
+  top: "0",
+  right: "5%",
+  transform: "rotateY(180deg)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  pointerEvents: "none",
+  opacity: "0.5",
 };
 
 export const inputBase: SxProps<Theme> = {
   color: "inherit",
   "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
+    padding: theme.spacing(1, 1, 1, 1),
     // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    paddingLeft: `24px`,
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("sm")]: {
@@ -92,6 +98,9 @@ export const chatList: SxProps<Theme> = {
   flexShrink: { sm: 0 },
   bgcolor: "var(--light_gray)",
   position: "relative",
+  flex: "1",
+  overflowY: "auto",
+  height: "90%",
 };
 // const itemCategory = {
 //   boxShadow: "0 -1px 0 rgb(255,255,255,0.1) inset",
@@ -101,4 +110,12 @@ export const chatList: SxProps<Theme> = {
 
 export const chatListItem: SxProps<Theme> = {
   textTransform: "capitalize",
+};
+
+export const noResult: SxProps<Theme> = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "100%",
+  opacity: "0.5",
 };
