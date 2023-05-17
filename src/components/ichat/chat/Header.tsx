@@ -11,20 +11,22 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
+import { Typography } from "@mui/material";
 
 //styles
 import * as styles from "@/styles/Chat.style";
 import { avatar } from "@/styles/Ichat.style";
-import { Button, Tab, Tabs, Tooltip, Typography } from "@mui/material";
+import ChatProfile from "./chatProfile";
 
 export default function ChatHeader() {
   const [currentChat] = useAppContext<Chat>(ChatContext);
+  const [chatProfileOpen, setChatProfileOpen] = React.useState(false);
   return (
     <React.Fragment>
       <AppBar elevation={1} sx={styles.header}>
         <Toolbar sx={styles.toolbar}>
           <Grid container spacing={1} alignItems="center">
-            <Grid item>
+            <Grid item onClick={() => setChatProfileOpen(true)}>
               <IconButton color="inherit" sx={{ p: 0.5 }}>
                 <Avatar
                   src={currentChat?.chatPicture}
@@ -44,47 +46,7 @@ export default function ChatHeader() {
           </Grid>
         </Toolbar>
       </AppBar>
-
-      {/* <AppBar
-        component="div"
-        color="primary"
-        position="static"
-        elevation={0}
-        sx={{ zIndex: 0 }}
-      >
-        <Toolbar>
-          <Grid container alignItems="center" spacing={1}>
-            <Grid item xs>
-              <Typography color="secondary" variant="h5" component="h1">
-                Authentication
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Button
-                sx={{ borderColor: lightColor }}
-                variant="outlined"
-                color="inherit"
-                size="small"
-              >
-                Web setup
-              </Button>
-            </Grid>
-            <Grid item>
-              <Tooltip title="Help">
-                <IconButton color="inherit"></IconButton>
-              </Tooltip>
-            </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar>
-      <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>
-        <Tabs value={0} textColor="inherit">
-          <Tab label="Users" />
-          <Tab label="Sign-in method" />
-          <Tab label="Templates" />
-          <Tab label="Usage" />
-        </Tabs>
-      </AppBar> */}
+      <ChatProfile open={chatProfileOpen} setOpen={setChatProfileOpen} />
     </React.Fragment>
   );
 }

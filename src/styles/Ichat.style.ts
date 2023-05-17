@@ -29,3 +29,18 @@ export const avatar: SxProps<Theme> = {
   textTransform: "uppercase",
   background: "#444",
 };
+
+export const noChatSelected: SxProps<Theme> = {
+  width: "100%",
+  display: "flex",
+  flexDirection: "column",
+  gap: "10px",
+  justifyContent: "center",
+  alignItems: "center",
+  color: "#d7d7d7",
+  background: "var(--light_gray)",
+  "& h3": {
+    color: "white",
+    fontFamily: "Montserrat",
+  },
+};

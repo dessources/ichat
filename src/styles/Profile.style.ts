@@ -2,10 +2,19 @@ import React from "react";
 import { SxProps, Theme } from "@mui/material";
 // import theme from "@/themes/ichat";
 
-export const profileModal: SxProps<Theme> = {
+export const userProfileModal: SxProps<Theme> = {
   display: "flex",
   justifyContent: "flex-end",
   margin: "2.5rem 2.5rem 0 0",
+};
+
+export const chatProfileModal: SxProps<Theme> = {
+  margin: "2.5rem 2.5rem 0 0",
+  "& .profileBox": {
+    position: "absolute",
+    top: "3.5rem",
+    left: "24rem",
+  },
 };
 
 export const profileBox: SxProps<Theme> = {

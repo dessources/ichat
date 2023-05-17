@@ -59,16 +59,23 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     delete updatedProfile.updated;
     const { id } = updatedProfile;
 
-    return await users
-      .findOneAndReplace(
-        { id: id },
-        { ...updatedProfile, password: "$$ROOT.password" }
-      )
-      .then(() => res.status(200).json({ message: "user updated" }))
-      .catch((err) => {
-        console.dir(err, { depth: null });
-        return res.status(500).json({ message: "Could not update user" });
-      });
+    try {
+      //find the corresponding user
+      const matchedUser = await users.findOne({ id: id });
+      if (!matchedUser) throw new Error();
+
+      //updated it
+      await users
+        .findOneAndReplace({ id: id }, { ...matchedUser, ...updatedProfile })
+        .catch((err) => {
+          console.dir(err, { depth: null });
+          throw new Error();
+        });
+
+      res.status(200).json({ message: "user updated" });
+    } catch {
+      return res.status(500).json({ message: "Could not update user" });
+    }
   }
 }
 

@@ -53,7 +53,7 @@ function Profile({ open, setOpen }: any) {
   return (
     <Modal
       open={open}
-      sx={styles.profileModal}
+      sx={styles.userProfileModal}
       onClose={handleClose}
       slots={{ backdrop: Backdrop }}
     >
