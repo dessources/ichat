@@ -48,6 +48,7 @@ export const avatar: SxProps<Theme> = {
   cursor: "pointer",
   alignSelf: "center",
   marginBottom: "5px",
+  textTransform: "capitalize",
 };
 
 export const info: SxProps<Theme> = {
@@ -108,4 +109,9 @@ export const textField: SxProps<Theme> = {
   "& div:before, & div:after": {
     border: "none!important",
   },
+};
+
+export const name: SxProps<Theme> = {
+  fontSize: "20px",
+  textTransform: "capitalize",
 };

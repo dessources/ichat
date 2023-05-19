@@ -14,6 +14,7 @@ import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import { Typography, InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import AddChatIcon from "@mui/icons-material/AddComment";
 //my components
 import ChatListItem from "./ChatListItem";
 //utils
@@ -60,9 +61,14 @@ export default function ChatList() {
         </Typography>
       ) : (
         <>
-          <Typography sx={styles.title} variant="h5">
-            Chats
-          </Typography>
+          <Box sx={styles.header}>
+            <Typography sx={styles.title} variant="h5">
+              Chats
+            </Typography>
+            <Box title="Start a new chat" sx={styles.addChatIcon}>
+              <AddChatIcon />
+            </Box>
+          </Box>
           <Box sx={styles.search}>
             <InputBase
               sx={styles.inputBase}

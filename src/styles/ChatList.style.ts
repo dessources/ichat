@@ -6,7 +6,7 @@ import theme from "@/themes/ichat";
 // export const root: SxProps<Theme> = {};
 
 export const paper: SxProps<Theme> = {
-  width: 288,
+  width: 350,
   height: "100vh",
   display: "flex",
   flexDirection: "column",
@@ -23,6 +23,29 @@ export const paper: SxProps<Theme> = {
     top: 0,
     bgcolor: theme.palette.secondary.main,
     left: 0,
+  },
+};
+
+export const header: SxProps<Theme> = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  marginRight: "1rem",
+};
+
+export const title: SxProps<Theme> = {
+  py: "0.5rem",
+  px: 3,
+  gap: "1rem",
+  color: "rgba(255, 255, 255, 0.7)",
+};
+
+export const addChatIcon: SxProps<Theme> = {
+  display: "flex",
+  alignItems: "center",
+  "& svg": {
+    fill: "rgba(255, 255, 255, 0.7)",
+    transform: "rotateY(180deg)",
   },
 };
 
@@ -84,13 +107,6 @@ export const chat = {
   "& span": {
     color: "#fff",
   },
-};
-
-export const title: SxProps<Theme> = {
-  py: "0.5rem",
-  px: 3,
-  gap: "1rem",
-  color: "rgba(255, 255, 255, 0.7)",
 };
 
 export const chatList: SxProps<Theme> = {
