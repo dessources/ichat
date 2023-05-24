@@ -3,7 +3,7 @@ import type { Chat as ChatType, User } from "@/models";
 //utils && hooks
 import userService from "@/services/userService";
 import useAppContext from "@/hooks/useAppContext";
-import { ChatContext, UserContext } from "@/contexts";
+import { ChatContext, ChatUsersContext, UserContext } from "@/contexts";
 import ContextProvider from "@/components/providers/ContextProvider";
 import ChatMessagesProvider from "@/components/providers/ChatMessagesProvider";
 
@@ -58,7 +58,9 @@ export default function Ichat() {
           <ChatMessagesProvider>
             <SocketIoProvider>
               <ChatList />
-              <Chat />
+              <ContextProvider context={ChatUsersContext}>
+                <Chat />{" "}
+              </ContextProvider>
             </SocketIoProvider>
           </ChatMessagesProvider>
         </ContextProvider>

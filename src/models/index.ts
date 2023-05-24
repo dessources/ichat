@@ -9,6 +9,7 @@ export interface Chat {
   users: string[];
   group: boolean;
 }
+
 export interface Message {
   id: string;
   sender: string;
@@ -28,6 +29,10 @@ export interface User {
   profilePicture?: string;
   online: boolean;
   about: string;
+}
+
+export interface ChatUsers {
+  [user: string]: User[];
 }
 export interface UserAuthInfo {
   username: string;

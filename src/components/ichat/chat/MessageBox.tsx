@@ -24,7 +24,7 @@ import {
 } from "@/contexts";
 
 function MessageBox({ setBottom }: any) {
-  const [currentChat] = useAppContext(ChatContext) as [Chat];
+  const [currentChat] = useAppContext<Chat>(ChatContext);
   const currentChatId = currentChat?.id;
   const [user] = useAppContext(UserContext) as [User];
   const [socket] = useAppContext<Socket>(SocketIoContext);
