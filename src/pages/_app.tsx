@@ -1,10 +1,10 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import ContextProvider from "@/components/providers/ContextProvider";
-import { AuthContext } from "@/contexts";
+import { ChatContext } from "@/contexts";
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ContextProvider context={AuthContext}>
+    <ContextProvider context={ChatContext}>
       <Component {...pageProps} />
     </ContextProvider>
   );
