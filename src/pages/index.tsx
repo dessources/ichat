@@ -32,6 +32,7 @@ export default function Home() {
           <main className={styles.main}>
             <div className={styles.header}>
               <h1>Ichat</h1>
+              <p>MONGO DB URI: {process.env.MONGODB_URI}; API ACCESS TOKEN{process.env.NEXT_PUBLIC_API_ACCESS_TOKEN}</p>
             </div>
             <UnauthApp />
           </main>

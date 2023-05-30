@@ -52,7 +52,7 @@ jobs:
       - name: Run Unit Tests
         run: |
           echo "Running  unit tests..."
-          npm run test:ci
+          npm run test:ci -u
           echo $?
   #
   #
