@@ -1,7 +1,7 @@
 import React from "react";
 import { User, Context, Chat, ChatMessages, ChatUsers } from "@/models";
 import { Socket } from "socket.io-client";
-export const AuthContext = React.createContext<Context<boolean>>(null);
+export const AuthContext = React.createContext<Context<boolean>>();
 export const ChatContext = React.createContext<Context<Chat>>(null);
 export const ChatMessagesContext =
   React.createContext<Context<ChatMessages>>(null);
