@@ -9,7 +9,7 @@ export default function useAppContext<T = any>(
   const value = React.useContext(context);
 
   if (!value) {
-    console.log(text);
+    console.log(value);
     throw new Error(
       `${context?.displayName} must be used within ${context?.displayName}Provider`
     );
