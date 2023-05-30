@@ -44,7 +44,7 @@ export default function Ichat() {
       .then((user) => {
         setUser?.(user);
       })
-      .catch((err) => console.error("user not found", err)); //set error state
+      .catch((err) => console.error("user not found", err)); //TODO set error state
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -59,7 +59,7 @@ export default function Ichat() {
             <SocketIoProvider>
               <ChatList />
               <ContextProvider context={ChatUsersContext}>
-                <Chat />{" "}
+                <Chat />
               </ContextProvider>
             </SocketIoProvider>
           </ChatMessagesProvider>

@@ -41,13 +41,13 @@ function ChatProfile({ open, setOpen }: any) {
         </Box>
 
         {/*
- // TODO: display the username of the chat corespondent(s)
+  // TODO: display the username of the chat corespondent(s)
  // TODO: And the about text if there is only one other corespondent */}
         {/*About section */}
         {!currentChat.group && (
           <Box sx={styles.info}>
             <Typography component={"span"}>About</Typography>
-            <Box sx={styles.textEditable}>{currentChatUsers?.[0].username}</Box>
+            <Box sx={styles.textEditable}>{currentChatUsers?.[0].about}</Box>
           </Box>
         )}
 

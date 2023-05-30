@@ -50,4 +50,5 @@ export interface ChatMessagesContext {
 }
 
 export type Context<T> =
-  | [T?, React.Dispatch<React.SetStateAction<T | undefined>>?];
+  | [T?, React.Dispatch<React.SetStateAction<T | undefined>>?]
+  | null;

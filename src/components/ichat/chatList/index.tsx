@@ -12,7 +12,7 @@ import { Chat, User } from "@/models";
 //mui
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
-import { Typography, InputBase } from "@mui/material";
+import { Typography, InputBase, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AddChatIcon from "@mui/icons-material/AddComment";
 //my components
@@ -22,16 +22,17 @@ import userService from "@/services/userService";
 
 //styles
 import * as styles from "@/styles/ChatList.style";
+import NewChat from "./NewChat";
 
 export default function ChatList() {
   const [user] = useAppContext<User>(UserContext);
-
+  const userId = user?.id as string;
   const {
     data: chats,
     isError,
     isLoading,
   } = useFetchData<Chat[]>(
-    { url: "/chats", userId: user?.id as string },
+    { url: `/chats?userId=${userId}`, userId },
     userService.getChats
   );
 
@@ -48,6 +49,8 @@ export default function ChatList() {
       e.preventDefault();
     }
   };
+
+  const [newChatOpen, setNewChatOpen] = React.useState(false);
 
   return (
     <Box sx={styles.paper}>
@@ -66,9 +69,16 @@ export default function ChatList() {
               Chats
             </Typography>
             <Box title="Start a new chat" sx={styles.addChatIcon}>
-              <AddChatIcon />
+              <Button>
+                <AddChatIcon
+                  sx={{ fill: "var(--accent_color)" }}
+                  onClick={() => setNewChatOpen(true)}
+                />
+              </Button>
+              <NewChat open={newChatOpen} setOpen={setNewChatOpen}></NewChat>
             </Box>
           </Box>
+
           <Box sx={styles.search}>
             <InputBase
               sx={styles.inputBase}
@@ -78,6 +88,7 @@ export default function ChatList() {
               placeholder="Search chat"
               inputProps={{ "aria-label": "search" }}
             />
+
             <Box sx={styles.searchIconWrapper}>
               <SearchIcon />
             </Box>

@@ -12,6 +12,7 @@ export const header: SxProps<Theme> = {
 
 export const toolbar: SxProps<Theme> = {
   margin: "auto 0",
+  color: "white",
   "& span": {
     cursor: "default",
   },

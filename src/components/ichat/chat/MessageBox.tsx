@@ -50,8 +50,8 @@ function MessageBox({ setBottom }: any) {
           lastFetched: chatMessages[currentChatId].lastFetched,
         }
       : { messages: [data] };
-    setChatMessages?.((chatMessages) => ({
-      ...chatMessages,
+    setChatMessages?.((prev) => ({
+      ...prev,
       [currentChatId]: newMessages,
     }));
     socket?.emit("send-message", { ...data, recipients: currentChat?.users });

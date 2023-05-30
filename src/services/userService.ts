@@ -63,9 +63,7 @@ class UserService {
     userId: string;
   }): Promise<Chat[]> {
     // Get the chats
-    const chats = await axiosPrivate
-      .post<Chat[]>(url, { userId })
-      .then((res) => res.data);
+    const chats = await axiosPrivate.get<Chat[]>(url).then((res) => res.data);
 
     if (chats) {
       // if the isn't a group chat set the name and the chatPicture
@@ -90,6 +88,13 @@ class UserService {
     }
 
     return Promise.resolve([]);
+  }
+
+  async setChat(chat: Chat): Promise<string> {
+    const id = await axiosPrivate
+      .post<{ id: string }>("/chats", { chat })
+      .then(({ data }) => data.id);
+    return Promise.resolve(id);
   }
 }
 

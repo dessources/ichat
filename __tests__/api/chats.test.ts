@@ -39,7 +39,7 @@ describe("Chats API route", () => {
   it("Should return a 403 code if request sent without/with bad API access token", async () => {
     //request made with an invalid api access token
     reqRes = mockRequestResponse(
-      "POST",
+      "GET",
       { userId: "" },
       { authorization: `Bearer ${process.env.BAD_API_ACCESS_TOKEN}` }
     );
@@ -58,9 +58,11 @@ describe("Chats API route", () => {
 
   it("Should return a 401 code if request sent with bad auth", async () => {
     // request made without a user access token cookie
-    reqRes = mockRequestResponse("POST", { userId: process.env.TEST_USER_ID });
+    reqRes = mockRequestResponse("GET");
 
     const { req, res } = reqRes;
+    req.query.userId = process.env.TEST_USER_ID;
+
     const resJsonSpy = jest.spyOn(res, "json");
     await chats(req, res);
 
@@ -70,8 +72,9 @@ describe("Chats API route", () => {
     );
   });
   it("Should return a 200 code and an array of chats if request valid", async () => {
-    reqRes = mockRequestResponse("POST", { userId: process.env.TEST_USER_ID });
+    reqRes = mockRequestResponse("GET");
     const { req, res } = reqRes;
+    req.query.userId = process.env.TEST_USER_ID;
     setCookie("accessToken", accessToken, { req, res });
     const resJsonSpy = jest.spyOn(res, "json");
 

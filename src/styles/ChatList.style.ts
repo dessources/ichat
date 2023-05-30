@@ -42,7 +42,7 @@ export const title: SxProps<Theme> = {
 
 export const addChatIcon: SxProps<Theme> = {
   display: "flex",
-  alignItems: "center",
+  alignItems: "flex-end",
   "& svg": {
     fill: "rgba(255, 255, 255, 0.7)",
     transform: "rotateY(180deg)",

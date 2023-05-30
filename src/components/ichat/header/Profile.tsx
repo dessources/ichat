@@ -23,7 +23,7 @@ function Profile({ open, setOpen }: any) {
   React.useEffect(() => {
     setUpdatedInfo({
       name: user?.name,
-      about: user?.about || "Hey there! I'm using Ichat",
+      about: user?.about,
     });
   }, [user]);
 

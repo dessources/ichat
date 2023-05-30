@@ -51,8 +51,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const { name, profilePicture, id, username } = user;
-    const result = { name, profilePicture, id, username };
+    const { name, profilePicture, id, username, about } = user;
+    const result = { name, profilePicture, id, username, about };
     return res.status(200).json(result);
   } else {
     const { updatedProfile } = req.body;
