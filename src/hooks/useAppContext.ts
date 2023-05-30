@@ -8,7 +8,7 @@ export default function useAppContext<T = any>(
 ): Context<T> | any {
   const value = React.useContext(context);
 
-  if (!value) {
+  if (value === undefined) {
     console.log(value);
     throw new Error(
       `${context?.displayName} must be used within ${context?.displayName}Provider`
