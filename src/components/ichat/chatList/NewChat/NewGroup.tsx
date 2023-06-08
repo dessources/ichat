@@ -1,21 +1,13 @@
 import React from "react";
 
-import {
-  Box,
-  Avatar,
-  Typography,
-  ListItemButton,
-  List,
-  IconButton,
-  Button,
-  TextField,
-  Checkbox,
-} from "@mui/material";
-
+//mui
+import { Box, Typography, List, Button, TextField } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 //styles
 import * as styles from "@/styles/NewChat.style";
 
+//my components
+import UserListItem from "./UserListItem";
 function NewGroup({
   username,
   setUsername,
@@ -56,27 +48,10 @@ function NewGroup({
       )}
 
       {/* user results list */}
-      <List>
-        <ListItemButton sx={styles.userListItem}>
-          <IconButton color="inherit" sx={{ p: 0.5 }}>
-            <Avatar alt={""}>{"P"}</Avatar>
-          </IconButton>
-          <Typography component="span">
-            {"Peter"} <Checkbox sx={styles.userListItemCheckBox} />
-          </Typography>
-        </ListItemButton>
-        <ListItemButton sx={styles.userListItem}>
-          <IconButton color="inherit" sx={{ p: 0.5 }}>
-            <Avatar alt={""}>{"P"}</Avatar>
-          </IconButton>
-          <Typography component="span">{"Peter"}</Typography>
-        </ListItemButton>
-        <ListItemButton>
-          <IconButton color="inherit" sx={{ p: 0.5 }}>
-            <Avatar alt={""}>{"P"}</Avatar>
-          </IconButton>
-          <Typography component="span">{"Peter"}</Typography>
-        </ListItemButton>
+      <List sx={styles.userList}>
+        {Array.from("this").map((x, i) => (
+          <UserListItem key={i} user={{ name: "peter" }} />
+        ))}
       </List>
     </>
   );

@@ -1,18 +1,8 @@
 import React from "react";
 
-import {
-  Modal,
-  Box,
-  TextField,
-  Avatar,
-  Typography,
-  ListItemButton,
-  List,
-  IconButton,
-  Button,
-} from "@mui/material";
-import GroupIcon from "@mui/icons-material/Group";
-import { alpha } from "@mui/material/styles";
+//mui
+import { Modal, Box } from "@mui/material";
+
 //styles
 import * as styles from "@/styles/NewChat.style";
 

@@ -69,11 +69,8 @@ export default function ChatList() {
               Chats
             </Typography>
             <Box title="Start a new chat" sx={styles.addChatIcon}>
-              <Button>
-                <AddChatIcon
-                  sx={{ fill: "var(--accent_color)" }}
-                  onClick={() => setNewChatOpen(true)}
-                />
+              <Button onClick={() => setNewChatOpen(true)}>
+                <AddChatIcon sx={{ fill: "var(--accent_color)" }} />
               </Button>
               <NewChat open={newChatOpen} setOpen={setNewChatOpen}></NewChat>
             </Box>

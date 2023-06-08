@@ -1,19 +1,10 @@
 import React from "react";
-import {
-  Modal,
-  Box,
-  TextField,
-  Avatar,
-  Typography,
-  ListItemButton,
-  List,
-  IconButton,
-  Button,
-} from "@mui/material";
+import { Box, TextField, Avatar, Typography, List } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 
 //styles
 import * as styles from "@/styles/NewChat.style";
+import UserListItem from "./UserListItem";
 
 function NewChat({ username, setUsername, setIsGroup }: any) {
   return (
@@ -40,27 +31,10 @@ function NewChat({ username, setUsername, setIsGroup }: any) {
         <Typography> New group chat</Typography>
       </Box>
       {/* user results list */}
-      <List>
-        <ListItemButton
-          sx={{ "&:hover": { background: "rgba(255, 255, 255, 0.08)" } }}
-        >
-          <IconButton color="inherit" sx={{ p: 0.5 }}>
-            <Avatar alt={""}>{"P"}</Avatar>
-          </IconButton>
-          <Typography component="span">{"Peter"}</Typography>
-        </ListItemButton>
-        <ListItemButton>
-          <IconButton color="inherit" sx={{ p: 0.5 }}>
-            <Avatar alt={""}>{"P"}</Avatar>
-          </IconButton>
-          <Typography component="span">{"Peter"}</Typography>
-        </ListItemButton>
-        <ListItemButton>
-          <IconButton color="inherit" sx={{ p: 0.5 }}>
-            <Avatar alt={""}>{"P"}</Avatar>
-          </IconButton>
-          <Typography component="span">{"Peter"}</Typography>
-        </ListItemButton>
+      <List sx={styles.userList} id="ok">
+        {[1, 1, , 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 31].map((x, i) => (
+          <UserListItem user={{ name: "peter" }} key={i} />
+        ))}
       </List>
     </>
   );

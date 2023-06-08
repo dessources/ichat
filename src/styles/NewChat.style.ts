@@ -17,7 +17,7 @@ export const newChatBox = {
   borderRadius: "20px",
   background: "var(--light_gray)",
   width: "20rem",
-  minHeight: "25rem",
+  maxHeight: "30rem",
   height: "fit-content",
   padding: "10px 10px",
   boxShadow: "-1px 1px 10px #000",
@@ -84,8 +84,23 @@ export const selectedUser = {
   },
 };
 
+export const userList = {
+  overflowY: "auto",
+  paddingRight: "3px",
+  "&::-webkit-scrollbar": {
+    width: "3px",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    backgroundColor: "#9f9f9f",
+    borderRadius: "20px",
+    borderColor: "transparent",
+  },
+};
+
 export const userListItem = {
   gap: "8px",
+  paddingLeft: 0.5,
+
   "&:hover": { background: "rgba(255, 255, 255, 0.08)" },
   "& span.MuiTypography-root": {
     width: "100%",
