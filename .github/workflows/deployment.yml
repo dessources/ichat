@@ -46,7 +46,7 @@ jobs:
   #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
 
   Deploy-Production:
-    needs: [cypress_e2e_tests]
+    needs: [Test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
