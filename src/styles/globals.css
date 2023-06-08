@@ -1,9 +1,14 @@
 :root {
-  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono",
-    "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace",
-    "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New",
-    monospace;
-  --accent-color: rgb(21 16 104 / 95%);
+  --accent_color: #82e9b4;
+  --light_gray: #272727;
+  --dark_gray: #202020;
+  --sent_message_color: #025c4c;
+  --received_message_color: #373737;
+}
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("/fonts/Helvetica.ttf");
 }
 
 * {
@@ -20,8 +25,7 @@ body {
 
 body {
   color: rgb(255, 255, 255);
-  background: linear-gradient(to bottom, transparent, rgb(0, 0, 0))
-    rgb(0, 0, 0);
+  background: black;
 }
 
 a {
@@ -29,8 +33,21 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
+#ok::-webkit-scrollbar {
+  width: "3px" !important;
+}
+
+#ok::-webkit-scrollbar-thumb {
+  background-color: "#9f9f9f" !important;
+  border-radius: "20px" !important;
+  border-color: "transparent" !important;
+}
+
+svg {
+  cursor: pointer;
+}
+/* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
-}
+} */

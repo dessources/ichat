@@ -15,9 +15,18 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
+      "@/hooks/*": ["./src/hooks/*"],
+      "@/lib/*": ["./lib/*"],
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "lib/mongodb.ts",
+    "__tests__/pages/index.tsx",
+    "scripts/*.ts"
+  ],
+  "exclude": ["node_modules", "./cypress.config.ts", "cypress", "**/*.cy.tsx"]
 }

@@ -1,7 +1,7 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   padding: 2rem 5rem;
   min-height: 100vh;
@@ -21,7 +21,7 @@
     to left,
     rgba(1, 65, 255, 0),
     rgba(1, 65, 255, 0),
-    rgba(1, 65, 255, 0.3)
+    rgb(21 161 137 / 30%)
   );
   border-radius: 50%;
   width: 795px;
@@ -60,9 +60,6 @@
   .card:hover span {
     transform: translateX(4px);
   }
-}
-
-@media (prefers-reduced-motion) {
 }
 
 /* Mobile */

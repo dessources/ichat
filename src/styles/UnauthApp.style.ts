@@ -1,36 +1,44 @@
 import React from "react";
-
-import ComponentStyle from "@/models/ComponentStyle";
 import { SxProps, Theme } from "@mui/material";
+
 export const root: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
   minWidth: "330px",
 };
 
-export const dialog: SxProps<Theme> | undefined = {
-  "&  h2": {
-    color: "var(--accent-color)",
+export const dialog: SxProps<Theme> = {
+  background: "#fff",
+  padding: "1rem",
+  borderRadius: "20px",
+
+  "& h5": {
+    marginBottom: "1rem",
   },
-  opacity: "0.9",
 };
-export const dialogContent: SxProps<Theme> | undefined = {
-  width: "378px",
+
+export const dialogContent: SxProps<Theme> = {
+  width: "400px",
 };
 
 export const submit: React.CSSProperties = {
   margin: "20px 0 5px 0",
-  background: "var(--accent-color)",
 };
 
 export const checkBoxText: React.CSSProperties = {
   fontSize: "0.8rem",
 };
 
-export const actionText: SxProps<Theme> | undefined = {
-  color: "var(--accent-color)",
-};
-
 export const progress: React.CSSProperties = {
   marginLeft: "1rem",
+};
+
+export const small: React.CSSProperties = {
+  margin: "0.5rem 0 0.5rem",
+  color: "var(--dark_gray)",
+};
+export const dialogActions: SxProps<Theme> = {
+  "& button": {
+    padding: "0.5rem 0",
+  },
 };

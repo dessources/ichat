@@ -1,40 +1,42 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import React from "react";
-import UnauthApp from "@/components/UnauthApp";
-import User from "@/models/User";
-
-export const UserContext = React.createContext<
-  { user: User | undefined; setUser: Function } | undefined
->(undefined);
+import UnauthApp from "@/components/unauthApp";
+import Ichat from "@/components/ichat";
+import { UserContext, AuthContext } from "@/contexts";
+import { ThemeProvider } from "@mui/material/styles";
+// hooks
+import useAppContext from "@/hooks/useAppContext";
+import ContextProvider from "@/components/providers/ContextProvider";
+//styles
+import theme from "@/themes/ichat";
 
 export default function Home() {
-  const [user, setUser] = React.useState<User>();
+  const [auth] = useAppContext(AuthContext);
+
   return (
     <>
       <Head>
         <title> Ichat </title>
         <meta name="description" content="Chat app" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/chat.png" />
       </Head>
-      <UserContext.Provider value={{ user, setUser }}>
-        <>
-          {user ? (
-            <div>Chat away !</div>
-          ) : (
-            <main className={styles.main}>
-              <div className={styles.header}>
-                <h1>Ichat</h1>
-              </div>
-              <UnauthApp />
-            </main>
-          )}
-        </>
-      </UserContext.Provider>
+
+      <ThemeProvider theme={theme}>
+        {auth ? (
+          <ContextProvider context={UserContext}>
+            <Ichat />
+          </ContextProvider>
+        ) : (
+          <main className={styles.main}>
+            <div className={styles.header}>
+              <h1>Ichat</h1>
+            </div>
+            <UnauthApp />
+          </main>
+        )}
+      </ThemeProvider>
     </>
   );
 }
