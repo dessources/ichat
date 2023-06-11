@@ -10,14 +10,25 @@ import {
 
 //styles
 import * as styles from "@/styles/NewChat.style";
-function UserListItem({ user }: any) {
+function UserListItem({ user, addUser, removeUser, isGroup }: any) {
+  const [checked, setChecked] = React.useState(false);
+
+  const handleChange = () => {
+    setChecked(!checked);
+    if (checked) {
+      removeUser(user);
+    } else addUser(user);
+  };
   return (
-    <ListItemButton sx={styles.userListItem}>
+    <ListItemButton sx={styles.userListItem} onClick={handleChange}>
       <IconButton color="inherit" sx={{ p: 0.5 }}>
         <Avatar alt={""}>{user.name[0]}</Avatar>
       </IconButton>
       <Typography component="span">
-        {user.name} <Checkbox sx={styles.userListItemCheckBox} />
+        {user.name}{" "}
+        {isGroup && (
+          <Checkbox sx={styles.userListItemCheckBox} checked={checked} />
+        )}
       </Typography>
     </ListItemButton>
   );

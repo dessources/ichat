@@ -1,5 +1,7 @@
 import React from "react";
 
+//models
+import { User } from "@/models";
 //mui
 import { Box, Typography, List, Button, TextField } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -8,17 +10,31 @@ import * as styles from "@/styles/NewChat.style";
 
 //my components
 import UserListItem from "./UserListItem";
+
+interface NewGroupProps {
+  username: string;
+  setUsername: React.Dispatch<React.SetStateAction<string>>;
+  setSlide: React.Dispatch<React.SetStateAction<0 | 1 | 2>>;
+  selectedUsers: User[];
+  setSelectedUsers: React.Dispatch<React.SetStateAction<User[]>>;
+}
+
 function NewGroup({
   username,
   setUsername,
-  setIsGroup,
+  setSlide,
   selectedUsers,
   setSelectedUsers,
-}: any) {
+}: NewGroupProps) {
+  const addUser = (user: User) => setSelectedUsers((prev) => [...prev, user]);
+
+  const removeUser = (user: User) =>
+    setSelectedUsers((prev) => prev.filter((item) => item.id !== user.id));
+
   return (
     <>
       <Box sx={styles.groupChatHeader}>
-        <Button onClick={() => setIsGroup(false)}>
+        <Button onClick={() => setSlide(0)}>
           <ArrowBackIcon />
         </Button>
         <Typography component={"h4"}>New group</Typography>
@@ -34,23 +50,37 @@ function NewGroup({
 
       {/* Next and Cancel buttons */}
       {/*Selected users list*/}
-      {selectedUsers.length >= 0 && (
+      {selectedUsers.length > 0 && (
         <>
           <Box sx={styles.nextCancelButtons}>
-            <Button>Next</Button>
-            <Button>Cancel</Button>
+            <Button className="next" onClick={() => setSlide(2)}>
+              Next
+            </Button>
+            <Button className="cancel" onClick={() => setSlide(0)}>
+              Cancel
+            </Button>
           </Box>
+
           <Box sx={styles.selectedUsers}>
-            <Button sx={styles.selectedUser}>Peter</Button>
-            <Button sx={styles.selectedUser}>Norie</Button>
+            {selectedUsers.map((user, i) => (
+              <Button sx={styles.selectedUser} key={i}>
+                {user.name}
+              </Button>
+            ))}
           </Box>
         </>
       )}
 
       {/* user results list */}
       <List sx={styles.userList}>
-        {Array.from("this").map((x, i) => (
-          <UserListItem key={i} user={{ name: "peter" }} />
+        {Array.from("thiis not funny mother focuers").map((x, i) => (
+          <UserListItem
+            key={i}
+            isGroup={true}
+            user={{ name: "peter", id: i }}
+            addUser={addUser}
+            removeUser={removeUser}
+          />
         ))}
       </List>
     </>

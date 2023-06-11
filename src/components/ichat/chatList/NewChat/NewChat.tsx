@@ -6,7 +6,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import * as styles from "@/styles/NewChat.style";
 import UserListItem from "./UserListItem";
 
-function NewChat({ username, setUsername, setIsGroup }: any) {
+function NewChat({ username, setUsername, setSlide }: any) {
   return (
     <>
       <Typography component="h4" sx={styles.newChatHeader}>
@@ -24,7 +24,7 @@ function NewChat({ username, setUsername, setIsGroup }: any) {
 
       {/*New group chat button*/}
 
-      <Box sx={styles.groupChatButton} onClick={() => setIsGroup(true)}>
+      <Box sx={styles.groupChatButton} onClick={() => setSlide(1)}>
         <Avatar sx={styles.groupChatIcon}>
           <GroupIcon />
         </Avatar>
@@ -33,7 +33,7 @@ function NewChat({ username, setUsername, setIsGroup }: any) {
       {/* user results list */}
       <List sx={styles.userList} id="ok">
         {[1, 1, , 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 31].map((x, i) => (
-          <UserListItem user={{ name: "peter" }} key={i} />
+          <UserListItem user={{ name: "peter" }} isGroup={false} key={i} />
         ))}
       </List>
     </>
