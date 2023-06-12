@@ -1,4 +1,5 @@
 import React from "react";
+import useSearch from "@/hooks/useSearch";
 
 //models
 import { User } from "@/models";
@@ -13,6 +14,7 @@ import UserListItem from "./UserListItem";
 
 interface NewGroupProps {
   username: string;
+
   setUsername: React.Dispatch<React.SetStateAction<string>>;
   setSlide: React.Dispatch<React.SetStateAction<0 | 1 | 2>>;
   selectedUsers: User[];
@@ -27,10 +29,10 @@ function NewGroup({
   setSelectedUsers,
 }: NewGroupProps) {
   const addUser = (user: User) => setSelectedUsers((prev) => [...prev, user]);
-
   const removeUser = (user: User) =>
     setSelectedUsers((prev) => prev.filter((item) => item.id !== user.id));
 
+  const { searchResults } = useSearch(username);
   return (
     <>
       <Box sx={styles.groupChatHeader}>
@@ -72,16 +74,20 @@ function NewGroup({
       )}
 
       {/* user results list */}
-      <List sx={styles.userList}>
-        {Array.from("thiis not funny mother focuers").map((x, i) => (
-          <UserListItem
-            key={i}
-            isGroup={true}
-            user={{ name: "peter", id: i }}
-            addUser={addUser}
-            removeUser={removeUser}
-          />
-        ))}
+      <List sx={styles.userList} id="ok">
+        {searchResults.length > 0 ? (
+          searchResults.map((user) => (
+            <UserListItem
+              user={user}
+              isGroup={true}
+              addUser={addUser}
+              removeUser={removeUser}
+              key={user.id}
+            />
+          ))
+        ) : (
+          <Typography component={"span"}>No results</Typography>
+        )}
       </List>
     </>
   );

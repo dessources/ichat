@@ -45,7 +45,7 @@ export const groupChatHeader = {
 };
 
 export const usernameTextField = {
-  padding: "0px 10px",
+  paddingRight: "10px",
   marginBottom: "0.25rem",
   "& .MuiOutlinedInput-notchedOutline": {
     borderColor: "#d7d7d7 !important",
@@ -72,7 +72,6 @@ export const groupChatIcon = {
 export const selectedUsers = {
   display: "flex",
 
-  marginLeft: "10px",
   alignItems: "center",
   gap: "5px",
   padding: "2px 2px 1px 2px",
@@ -121,11 +120,18 @@ export const userListItem = {
   paddingLeft: 0.5,
 
   "&:hover": { background: "rgba(255, 255, 255, 0.08)" },
-  "& span.MuiTypography-root": {
-    width: "100%",
+};
+
+export const userDetails = {
+  width: "100%",
+  display: "flex",
+  gap: "1rem",
+  alignItems: "center",
+  justifyContent: "space-between",
+
+  "& .text": {
     display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: "column",
   },
 };
 
@@ -149,5 +155,15 @@ export const nextCancelButtons = {
   "& .next": {
     background: alpha(theme.palette.primary.main, 0.7),
     color: "white",
+  },
+};
+
+export const addGroupChatIcon = {
+  margin: "1rem 0 1rem 0.5rem",
+
+  "& button": {
+    padding: "6px",
+    minWidth: "32px",
+    marginRight: "0.5rem",
   },
 };

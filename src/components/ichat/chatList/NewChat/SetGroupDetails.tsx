@@ -1,18 +1,60 @@
 import React from "react";
+
+import useAppContext from "@/hooks/useAppContext";
+import { ChatContext, UserContext } from "@/contexts";
+
+//utils
+import contentService from "@/services/contentService";
 //mui
 import { List, Button, Typography, Box, TextField, Avatar } from "@mui/material";
-import { ArrowBack as ArrowBackIcon } from "@mui/icons-material";
+import {
+  ArrowBack as ArrowBackIcon,
+  CameraAlt as CameraIcon,
+} from "@mui/icons-material";
+import red from "@mui/material/colors/red";
 
 //models
 import { User } from "@/models";
+
 //styles
 import * as styles from "@/styles/NewChat.style";
 
 interface SetGroupDetailsProps {
   selectedUsers: User[];
-  setSlide: React.Dispatch<React.SetStateAction<number>>;
+  setSlide: React.Dispatch<React.SetStateAction<0 | 1 | 2>>;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-function SetGroupDetails({ setSlide, selectedUsers }: SetGroupDetailsProps) {
+
+function SetGroupDetails({
+  setSlide,
+  selectedUsers,
+  setOpen,
+}: SetGroupDetailsProps) {
+  const [groupName, setGroupName] = React.useState("");
+  const [, setCurrentChat] = useAppContext(ChatContext);
+  const currentUserId = useAppContext(UserContext)[0].id;
+
+  //todo: Save new chats to database
+  async function createChatHandler() {
+    if (groupName) {
+      let chatData = {
+        name: groupName,
+        users: selectedUsers,
+        currentUserId,
+        chatPicture: "",
+      };
+
+      contentService
+        .createNewChat(chatData, true)
+        .then((chat) => {
+          setCurrentChat?.(chat);
+          setOpen(false);
+        })
+        .catch(() => {
+          //todo handle create chat errors
+        });
+    }
+  }
   return (
     <>
       <Box sx={styles.groupChatHeader}>
@@ -22,28 +64,53 @@ function SetGroupDetails({ setSlide, selectedUsers }: SetGroupDetailsProps) {
         <Typography component={"h4"}>New group</Typography>
       </Box>
 
-      {/* Next and Cancel buttons */}
       {/*Selected users list*/}
-      {selectedUsers.length > 0 && (
-        <>
-          <Box sx={styles.nextCancelButtons}>
-            <Button className="next" onClick={() => setSlide(2)}>
-              Next
-            </Button>
-            <Button className="cancel" onClick={() => setSlide(0)}>
-              Cancel
-            </Button>
-          </Box>
+      <Box sx={styles.selectedUsers}>
+        {selectedUsers.map((user, i) => (
+          <Button sx={styles.selectedUser} key={i}>
+            {user.name}
+          </Button>
+        ))}
+      </Box>
 
-          <Box sx={styles.selectedUsers}>
-            {selectedUsers.map((user, i) => (
-              <Button sx={styles.selectedUser} key={i}>
-                {user.name}
-              </Button>
-            ))}
-          </Box>
-        </>
-      )}
+      {/* Add group chat icon */}
+      <Box sx={styles.addGroupChatIcon}>
+        <Button>
+          <CameraIcon />
+        </Button>
+        <Typography component="span">
+          Add group icon{" "}
+          <Typography component={"span"} sx={{ opacity: "0.7" }}>
+            (optional)
+          </Typography>
+        </Typography>
+      </Box>
+
+      {/* Group name */}
+      <Typography>Provide a group name</Typography>
+      <TextField
+        required
+        value={groupName}
+        onChange={(e) => setGroupName(e.target.value)}
+        placeholder="Enter a group name"
+        sx={styles.usernameTextField}
+      ></TextField>
+
+      {/* {!groupName && false && (
+        <Typography color={red[400]} sx={{display: submitted}}>
+          Please provide a name for your group
+        </Typography>
+      )} */}
+
+      {/* cancel or create group chat */}
+      <Box sx={{ ...styles.nextCancelButtons, marginTop: "1rem" }}>
+        <Button className="next" onClick={createChatHandler}>
+          Create
+        </Button>
+        <Button className="cancel" onClick={() => setSlide(0)}>
+          Cancel
+        </Button>
+      </Box>
     </>
   );
 }

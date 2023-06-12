@@ -1,4 +1,7 @@
 import React from "react";
+import useSearch from "@/hooks/useSearch";
+
+//mui
 import { Box, TextField, Avatar, Typography, List } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 
@@ -7,6 +10,8 @@ import * as styles from "@/styles/NewChat.style";
 import UserListItem from "./UserListItem";
 
 function NewChat({ username, setUsername, setSlide }: any) {
+  const { searchResults } = useSearch(username);
+
   return (
     <>
       <Typography component="h4" sx={styles.newChatHeader}>
@@ -32,9 +37,13 @@ function NewChat({ username, setUsername, setSlide }: any) {
       </Box>
       {/* user results list */}
       <List sx={styles.userList} id="ok">
-        {[1, 1, , 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 31].map((x, i) => (
-          <UserListItem user={{ name: "peter" }} isGroup={false} key={i} />
-        ))}
+        {searchResults.length > 0 ? (
+          searchResults.map((user) => (
+            <UserListItem user={user} isGroup={false} key={user.id} />
+          ))
+        ) : (
+          <Typography component={"span"}>No results</Typography>
+        )}
       </List>
     </>
   );
