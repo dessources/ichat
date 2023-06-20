@@ -33,11 +33,11 @@ a {
   text-decoration: none;
 }
 
-ul::-webkit-scrollbar {
+#ok::-webkit-scrollbar {
   width: "3px" !important;
 }
 
-ul::-webkit-scrollbar-thumb {
+#ok::-webkit-scrollbar-thumb {
   background-color: "#9f9f9f" !important;
   border-radius: "20px" !important;
   border-color: "transparent" !important;

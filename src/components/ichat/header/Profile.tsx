@@ -41,7 +41,7 @@ function Profile({ open, setOpen }: any) {
 
   const handleEdit = React.useCallback(
     (ref: React.RefObject<HTMLElement>) => () => {
-      //set the corresponding field's content editable
+      //set the corresponding field's disabled attribute
       //and focus that field.
       setUpdatedInfo((prev) => ({ ...prev, updated: true }));
       ref.current?.removeAttribute("disabled");

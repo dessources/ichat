@@ -1,21 +1,17 @@
 import React from "react";
-import {
-  Modal,
-  Box,
-  TextField,
-  Avatar,
-  Typography,
-  ListItemButton,
-  List,
-  IconButton,
-  Button,
-} from "@mui/material";
+import useSearch from "@/hooks/useSearch";
+
+//mui
+import { Box, TextField, Avatar, Typography, List } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 
 //styles
 import * as styles from "@/styles/NewChat.style";
+import UserListItem from "./UserListItem";
 
-function NewChat({ username, setUsername, setIsGroup }: any) {
+function NewChat({ username, setUsername, setSlide }: any) {
+  const { searchResults } = useSearch(username);
+
   return (
     <>
       <Typography component="h4" sx={styles.newChatHeader}>
@@ -33,34 +29,21 @@ function NewChat({ username, setUsername, setIsGroup }: any) {
 
       {/*New group chat button*/}
 
-      <Box sx={styles.groupChatButton} onClick={() => setIsGroup(true)}>
+      <Box sx={styles.groupChatButton} onClick={() => setSlide(1)}>
         <Avatar sx={styles.groupChatIcon}>
           <GroupIcon />
         </Avatar>
         <Typography> New group chat</Typography>
       </Box>
       {/* user results list */}
-      <List>
-        <ListItemButton
-          sx={{ "&:hover": { background: "rgba(255, 255, 255, 0.08)" } }}
-        >
-          <IconButton color="inherit" sx={{ p: 0.5 }}>
-            <Avatar alt={""}>{"P"}</Avatar>
-          </IconButton>
-          <Typography component="span">{"Peter"}</Typography>
-        </ListItemButton>
-        <ListItemButton>
-          <IconButton color="inherit" sx={{ p: 0.5 }}>
-            <Avatar alt={""}>{"P"}</Avatar>
-          </IconButton>
-          <Typography component="span">{"Peter"}</Typography>
-        </ListItemButton>
-        <ListItemButton>
-          <IconButton color="inherit" sx={{ p: 0.5 }}>
-            <Avatar alt={""}>{"P"}</Avatar>
-          </IconButton>
-          <Typography component="span">{"Peter"}</Typography>
-        </ListItemButton>
+      <List sx={styles.userList} id="ok">
+        {searchResults.length > 0 ? (
+          searchResults.map((user) => (
+            <UserListItem user={user} isGroup={false} key={user.id} />
+          ))
+        ) : (
+          <Typography component={"span"}>No results</Typography>
+        )}
       </List>
     </>
   );

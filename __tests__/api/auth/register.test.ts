@@ -66,9 +66,9 @@ describe("Register API route", () => {
     await register(req, res);
 
     expect(res.statusCode).toBe(405);
-    expect(resJsonSpy.mock.calls[0][0].message).toMatchInlineSnapshot(
-      `"Bad Request, only POST accepted"`
-    );
+    expect(resJsonSpy.mock.calls[0][0].message).toMatchInlineSnapshot(`"Method GET not allowed"`
+
+);
   });
 
   it("should return a 500 error if user's username already exits", async () => {

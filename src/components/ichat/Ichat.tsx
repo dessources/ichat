@@ -13,9 +13,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 
 //My Components
-import ChatList from "./chatList";
-import Chat from "./chat";
-import Header from "./header";
+import ChatList from "./chatList/ChatList";
+import Chat from "./chat/Chat";
+import Header from "./header/Header";
 import Copyright from "./Copyright";
 
 //styles

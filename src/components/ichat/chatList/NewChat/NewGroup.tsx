@@ -1,32 +1,42 @@
 import React from "react";
+import useSearch from "@/hooks/useSearch";
 
-import {
-  Box,
-  Avatar,
-  Typography,
-  ListItemButton,
-  List,
-  IconButton,
-  Button,
-  TextField,
-  Checkbox,
-} from "@mui/material";
-
+//models
+import { User } from "@/models";
+//mui
+import { Box, Typography, List, Button, TextField } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 //styles
 import * as styles from "@/styles/NewChat.style";
 
+//my components
+import UserListItem from "./UserListItem";
+
+interface NewGroupProps {
+  username: string;
+
+  setUsername: React.Dispatch<React.SetStateAction<string>>;
+  setSlide: React.Dispatch<React.SetStateAction<0 | 1 | 2>>;
+  selectedUsers: User[];
+  setSelectedUsers: React.Dispatch<React.SetStateAction<User[]>>;
+}
+
 function NewGroup({
   username,
   setUsername,
-  setIsGroup,
+  setSlide,
   selectedUsers,
   setSelectedUsers,
-}: any) {
+}: NewGroupProps) {
+  const addUser = (user: User) => setSelectedUsers((prev) => [...prev, user]);
+  const removeUser = (user: User) =>
+    setSelectedUsers((prev) => prev.filter((item) => item.id !== user.id));
+
+  const { searchResults } = useSearch(username);
   return (
     <>
       <Box sx={styles.groupChatHeader}>
-        <Button onClick={() => setIsGroup(false)}>
+        <Button onClick={() => setSlide(0)}>
           <ArrowBackIcon />
         </Button>
         <Typography component={"h4"}>New group</Typography>
@@ -42,41 +52,42 @@ function NewGroup({
 
       {/* Next and Cancel buttons */}
       {/*Selected users list*/}
-      {selectedUsers.length >= 0 && (
+      {selectedUsers.length > 0 && (
         <>
           <Box sx={styles.nextCancelButtons}>
-            <Button>Next</Button>
-            <Button>Cancel</Button>
+            <Button className="next" onClick={() => setSlide(2)}>
+              Next
+            </Button>
+            <Button className="cancel" onClick={() => setSlide(0)}>
+              Cancel
+            </Button>
           </Box>
+
           <Box sx={styles.selectedUsers}>
-            <Button sx={styles.selectedUser}>Peter</Button>
-            <Button sx={styles.selectedUser}>Norie</Button>
+            {selectedUsers.map((user, i) => (
+              <Button sx={styles.selectedUser} key={i}>
+                {user.name}
+              </Button>
+            ))}
           </Box>
         </>
       )}
 
       {/* user results list */}
-      <List>
-        <ListItemButton sx={styles.userListItem}>
-          <IconButton color="inherit" sx={{ p: 0.5 }}>
-            <Avatar alt={""}>{"P"}</Avatar>
-          </IconButton>
-          <Typography component="span">
-            {"Peter"} <Checkbox sx={styles.userListItemCheckBox} />
-          </Typography>
-        </ListItemButton>
-        <ListItemButton sx={styles.userListItem}>
-          <IconButton color="inherit" sx={{ p: 0.5 }}>
-            <Avatar alt={""}>{"P"}</Avatar>
-          </IconButton>
-          <Typography component="span">{"Peter"}</Typography>
-        </ListItemButton>
-        <ListItemButton>
-          <IconButton color="inherit" sx={{ p: 0.5 }}>
-            <Avatar alt={""}>{"P"}</Avatar>
-          </IconButton>
-          <Typography component="span">{"Peter"}</Typography>
-        </ListItemButton>
+      <List sx={styles.userList} id="ok">
+        {searchResults.length > 0 ? (
+          searchResults.map((user) => (
+            <UserListItem
+              user={user}
+              isGroup={true}
+              addUser={addUser}
+              removeUser={removeUser}
+              key={user.id}
+            />
+          ))
+        ) : (
+          <Typography component={"span"}>No results</Typography>
+        )}
       </List>
     </>
   );

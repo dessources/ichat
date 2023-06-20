@@ -10,9 +10,7 @@ function Sidebar() {
   return (
     <AppBar color="secondary" sx={sidebar}>
       <Toolbar>
-        <Grid container spacing={1} alignItems="center">
-          xxx
-        </Grid>
+        <Grid container spacing={1} alignItems="center"></Grid>
       </Toolbar>
     </AppBar>
   );

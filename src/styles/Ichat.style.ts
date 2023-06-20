@@ -7,13 +7,15 @@ export const sidebar: SxProps<Theme> = {
   left: 0,
   zIndex: 1,
   boxShadow: "none",
+  justifyContent: "space-around",
+  alignItems: "center",
 };
 
 export const chat: SxProps<Theme> = {
   flex: 1,
 
   position: "relative",
-  background: "url(background.png) fixed",
+  background: "url(chat_background.png) fixed",
 };
 
 export const main: SxProps = {
@@ -30,7 +32,7 @@ export const avatar: SxProps<Theme> = {
   background: "#444",
 };
 
-export const noChatSelected: SxProps<Theme> = {
+export const emptyChatArea: SxProps<Theme> = {
   width: "100%",
   display: "flex",
   flexDirection: "column",
@@ -43,4 +45,5 @@ export const noChatSelected: SxProps<Theme> = {
     color: "white",
     fontFamily: "Montserrat",
   },
+  userSelect: "none",
 };

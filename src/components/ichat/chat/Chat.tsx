@@ -51,7 +51,7 @@ export default function Chat() {
       <ChatBodyWrapper />
     </Box>
   ) : (
-    <Box sx={styles.noChatSelected}>
+    <Box sx={styles.emptyChatArea}>
       <Image src="/chat.png" width="80" height="80" alt="" />
       <Typography variant="h3">Ichat</Typography>
       <Typography>Send and receive messages. Chat, your way...</Typography>

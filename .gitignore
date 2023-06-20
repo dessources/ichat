@@ -42,3 +42,7 @@ next-env.d.ts
 
 *.rest
 *.mongodb.js
+
+# misc
+
+src/utils/secretsManager.ts

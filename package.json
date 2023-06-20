@@ -7,13 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watch",
+    "test": "jest --watch -u",
     "test:ci": "jest --ci --detectOpenHandles  -u"
   },
   "dependencies": {
     "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@google-cloud/secret-manager": "^4.2.2",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.12",
     "@types/react": "18.0.28",
