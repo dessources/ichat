@@ -42,13 +42,23 @@ export interface UserAuthInfo {
   rememberUser?: boolean;
 }
 
-export interface ChatMessagesContext {
+export type ChatContext = {
+  chats: Chat[];
+  setChats: React.Dispatch<React.SetStateAction<Chat[] | undefined>>;
+  currentChat: Chat;
+  setCurrentChat: React.Dispatch<React.SetStateAction<Chat | undefined>>;
+  isLoading: boolean;
+  isError: boolean;
+};
+
+export type ChatMessagesContext = {
   chatMessages: ChatMessages;
-  setChatMessages: React.Dispatch<React.SetStateAction<ChatMessages | undefined>>;
+  setChatMessages: React.Dispatch<
+    React.SetStateAction<ChatMessages | undefined>
+  >;
   isLoading: boolean;
   error: any;
-}
+};
 
 export type Context<T> =
-  | [T?, React.Dispatch<React.SetStateAction<T | undefined>>?]
-  | null;
+  | [T?, React.Dispatch<React.SetStateAction<T | undefined>>?];

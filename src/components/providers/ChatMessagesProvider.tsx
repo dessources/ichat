@@ -1,13 +1,13 @@
 import React from "react";
-import useSWR from "swr";
+
 //models
-import { ChatMessages, Message, Chat } from "@/models";
+import { ChatMessages, Message, Chat, ChatContext as ChatContextType } from "@/models";
 import useAppContext from "@/hooks/useAppContext";
 import { ChatContext, ChatMessagesContext } from "@/contexts";
 import contentService from "@/services/contentService";
 
 function ChatMessagesProvider(props: any) {
-  const [currentChat] = useAppContext<Chat>(ChatContext);
+  const {currentChat} = useAppContext(ChatContext) as ChatContextType;
   const currentChatId: string = currentChat?.id;
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState();
