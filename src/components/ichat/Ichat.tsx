@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { Chat as ChatType, User } from "@/models";
+import type { Chat as ChatType, User, Context } from "@/models";
 //utils && hooks
 import userService from "@/services/userService";
 import useAppContext from "@/hooks/useAppContext";
@@ -19,11 +19,11 @@ import Header from "./header/Header";
 import Copyright from "./Copyright";
 
 //styles
-import theme from "@/themes/ichat";
 import * as styles from "@/styles/Ichat.style";
 
 import Sidebar from "./Sidebar";
 import SocketIoProvider from "../providers/SocketIoProvider";
+import ChatProvider from "../providers/ChatProvider";
 
 export default function Ichat() {
   // const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -32,10 +32,7 @@ export default function Ichat() {
   // const handleDrawerToggle = () => {
   //   setMobileOpen(!mobileOpen);
   // };
-  const [, setUser] = useAppContext(UserContext) as [
-    null,
-    React.Dispatch<React.SetStateAction<User>>
-  ];
+  const [, setUser] = useAppContext(UserContext) as Context<User>;
 
   React.useEffect(() => {
     //get the user's info once he's logged in
@@ -53,18 +50,26 @@ export default function Ichat() {
       <CssBaseline />
       <Header />
       <Sidebar />
-      <Box sx={styles.main}>
-        <ContextProvider context={ChatContext}>
-          <ChatMessagesProvider>
-            <SocketIoProvider>
+      <Main />
+    </>
+  );
+}
+
+function Main() {
+  return (
+    <>
+      <ChatProvider>
+        <ChatMessagesProvider>
+          <SocketIoProvider>
+            <Box sx={styles.main}>
               <ChatList />
               <ContextProvider context={ChatUsersContext}>
                 <Chat />
               </ContextProvider>
-            </SocketIoProvider>
-          </ChatMessagesProvider>
-        </ContextProvider>
-      </Box>
+            </Box>
+          </SocketIoProvider>
+        </ChatMessagesProvider>
+      </ChatProvider>
     </>
   );
 }

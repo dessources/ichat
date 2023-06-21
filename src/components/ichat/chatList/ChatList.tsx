@@ -3,11 +3,10 @@ import React from "react";
 
 //utils && hooks && context
 import useAppContext from "@/hooks/useAppContext";
-import useFetchData from "@/hooks/useFetchData";
 import { ChatContext, UserContext } from "@/contexts";
 
 //models
-import { Chat, User ,Context, ChatContext as ChatContextType} from "@/models";
+import { Chat, User, Context, ChatContext as ChatContextType } from "@/models";
 
 //mui
 import Box from "@mui/material/Box";
@@ -23,7 +22,9 @@ import NewChat from "./NewChat/NewChatBox";
 import * as styles from "@/styles/ChatList.style";
 
 export default function ChatList() {
-  const {chats, isLoading, isError} = useAppContext(ChatContext) as ChatContextType
+  const { chats, isLoading, isError } = useAppContext(
+    ChatContext
+  ) as ChatContextType;
 
   const [searchRegExp, setSearchRegExp] = React.useState(/$/);
 

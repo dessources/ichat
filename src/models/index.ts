@@ -44,8 +44,8 @@ export interface UserAuthInfo {
 
 export type ChatContext = {
   chats: Chat[];
-  setChats: React.Dispatch<React.SetStateAction<Chat[] | undefined>>;
-  currentChat: Chat;
+  setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
+  currentChat: Chat | undefined;
   setCurrentChat: React.Dispatch<React.SetStateAction<Chat | undefined>>;
   isLoading: boolean;
   isError: boolean;

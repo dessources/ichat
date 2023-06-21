@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { UserContext, AuthContext } from "@/contexts";
+import { Context } from "@/models";
 import React from "react";
 
 //components
@@ -16,7 +17,7 @@ import theme from "@/themes/ichat";
 import styles from "@/styles/Home.module.css";
 
 export default function Home() {
-  const [auth] = useAppContext(AuthContext);
+  const [auth] = useAppContext(AuthContext) as Context<boolean>;
 
   return (
     <>
