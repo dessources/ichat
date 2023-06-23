@@ -77,6 +77,7 @@ class UserService {
             .getUser(otherUserId)
             .then((otherUser) => ({
               ...chat,
+              interlocutor: otherUserId,
               name: otherUser.name,
               chatPicture: otherUser.profilePicture,
             }))

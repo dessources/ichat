@@ -1,5 +1,7 @@
-import React from "react";
+import React, { use } from "react";
+//models
 
+import { ChatContext as ChatContextType, Context, User } from "@/models";
 import {
   ListItemButton,
   IconButton,
@@ -14,10 +16,22 @@ import contentService from "@/services/contentService";
 
 //styles
 import * as styles from "@/styles/NewChat.style";
+import useAppContext from "@/hooks/useAppContext";
+import { ChatContext, UserContext } from "@/contexts";
 
-function UserListItem({ user, addUser, removeUser, isGroup, selected }: any) {
+function UserListItem({
+  user,
+  addUser,
+  removeUser,
+  isGroup,
+  selected,
+  setOpen,
+}: any) {
   const [checked, setChecked] = React.useState(selected);
-
+  const [currentUser] = useAppContext(UserContext) as Context<User>;
+  const { setChats, setCurrentChat } = useAppContext(
+    ChatContext
+  ) as ChatContextType;
   const handleClick = () => {
     if (isGroup) {
       setChecked(!checked);
@@ -25,7 +39,19 @@ function UserListItem({ user, addUser, removeUser, isGroup, selected }: any) {
         removeUser(user);
       } else addUser(user);
     } else {
-      //  contentService. createNewChat(user, false);
+      contentService
+        .createNewChat(
+          {
+            users: [user],
+            currentUserId: currentUser?.id as string,
+          },
+          false
+        )
+        .then((chat) => {
+          setChats((prev) => [chat, ...prev]);
+          setCurrentChat(chat);
+          setOpen(false);
+        });
     }
   };
   return (

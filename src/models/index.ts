@@ -42,8 +42,11 @@ export interface UserAuthInfo {
   rememberUser?: boolean;
 }
 
+//an interlocutor is whichever user in a non-chat group
+//that isn't the logged in user or current User
+
 export type ChatContext = {
-  chats: Chat[];
+  chats: (Chat & { interlocutor: string })[];
   setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
   currentChat: Chat | undefined;
   setCurrentChat: React.Dispatch<React.SetStateAction<Chat | undefined>>;

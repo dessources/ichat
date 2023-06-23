@@ -18,11 +18,10 @@ function NewChatBase({ open, setOpen }: any) {
   const [selectedUsers, setSelectedUsers] = React.useState<User[]>([]);
 
   const handleClose = () => {
-    setSlide(0);
-    setOpen(false);
     setSelectedUsers([]);
     setUsername("");
     setSlide(0);
+    setOpen(false);
   };
 
   const slides = [
@@ -31,6 +30,7 @@ function NewChatBase({ open, setOpen }: any) {
       username={username}
       setUsername={setUsername}
       setSlide={setSlide}
+      setOpen={setOpen}
     />,
     <NewGroup
       key={1}

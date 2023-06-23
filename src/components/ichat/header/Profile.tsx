@@ -1,6 +1,6 @@
 import React from "react";
 //models
-import { User } from "@/models";
+import { Context, User } from "@/models";
 //mui
 import { Modal, Box, Avatar, Typography, TextField } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
@@ -13,7 +13,7 @@ import userService from "@/services/userService";
 type UpdatedInfo = Partial<User & { updated: boolean }>;
 
 function Profile({ open, setOpen }: any) {
-  const [user, setUser] = useAppContext(UserContext);
+  const [user, setUser] = useAppContext(UserContext) as Context<User>;
   const [updatedInfo, setUpdatedInfo] = React.useState<UpdatedInfo>({
     name: "",
     about: "",
@@ -33,8 +33,8 @@ function Profile({ open, setOpen }: any) {
   const handleClose = React.useCallback(async () => {
     if (updatedInfo.updated) {
       console.log("profile has changed we proceed");
-      userService.setUser({ ...user, ...updatedInfo });
-      setUser((user: User) => ({ ...user, ...updatedInfo }));
+      userService.setUser({ ...(user as User), ...updatedInfo });
+      setUser?.((user) => ({ ...(user as User), ...updatedInfo }));
     }
     setOpen(false);
   }, [user, updatedInfo, setUser, setOpen]);

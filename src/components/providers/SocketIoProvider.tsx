@@ -1,10 +1,11 @@
-import React, { use } from "react";
+import React from "react";
 import {
   ChatContext,
   ChatMessagesContext,
   SocketIoContext,
   UserContext,
 } from "@/contexts";
+
 import {
   User,
   Chat,

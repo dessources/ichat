@@ -9,7 +9,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import * as styles from "@/styles/NewChat.style";
 import UserListItem from "./UserListItem";
 
-function NewChat({ username, setUsername, setSlide }: any) {
+function NewChat({ username, setUsername, setSlide, setOpen }: any) {
   const { searchResults } = useSearch(username);
 
   return (
@@ -39,7 +39,12 @@ function NewChat({ username, setUsername, setSlide }: any) {
       <List sx={styles.userList} id="ok">
         {searchResults.length > 0 ? (
           searchResults.map((user) => (
-            <UserListItem user={user} isGroup={false} key={user.id} />
+            <UserListItem
+              user={user}
+              isGroup={false}
+              key={user.id}
+              setOpen={setOpen}
+            />
           ))
         ) : (
           <Typography component={"span"}>No results</Typography>

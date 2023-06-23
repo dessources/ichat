@@ -8,8 +8,8 @@ interface key {
 
 interface CreateChatData {
   users: User[];
-  name: string;
-  chatPicture: string;
+  name?: string;
+  chatPicture?: string;
   currentUserId: string;
 }
 class ContentService {
@@ -37,7 +37,7 @@ class ContentService {
       users: [...users, data.currentUserId],
       group: isGroup,
       chatPicture: data.chatPicture || "",
-      name: data.name || data.users[0].name,
+      name: data.name || "",
     };
     console.log("about to post");
     const result = axiosPrivate.post("/chats", { data: chat });

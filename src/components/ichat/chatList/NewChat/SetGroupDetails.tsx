@@ -56,7 +56,7 @@ function SetGroupDetails({
       contentService
         .createNewChat(chatData, true)
         .then((chat) => {
-          setCurrentChat?.(chat);
+          setCurrentChat(chat);
           setChats((prev) => [chat, ...prev]);
           setOpen(false);
         })

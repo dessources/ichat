@@ -27,8 +27,6 @@ function ChatProfile({ open, setOpen }: any) {
     setOpen(false);
   }, [setOpen]);
 
-  console.log(currentChatUsers);
-
   return (
     <Modal
       open={open}
