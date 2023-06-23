@@ -10,6 +10,8 @@ import {
   Chat,
   User,
   ChatMessagesContext as ChatMessagesContextType,
+  ChatContext as ChatContexType,
+  Context,
 } from "@/models";
 import { Socket } from "socket.io-client";
 //styles
@@ -24,10 +26,12 @@ import {
 } from "@/contexts";
 
 function MessageBox({ setBottom }: any) {
-  const [currentChat] = useAppContext<Chat>(ChatContext);
-  const currentChatId = currentChat?.id;
-  const [user] = useAppContext(UserContext) as [User];
-  const [socket] = useAppContext<Socket>(SocketIoContext);
+  const { currentChat, setChats } = useAppContext(
+    ChatContext
+  ) as ChatContexType;
+  const currentChatId = currentChat?.id as string;
+  const [user] = useAppContext(UserContext) as Context<User>;
+  const [socket] = useAppContext(SocketIoContext) as Context<Socket>;
 
   const { chatMessages, setChatMessages } = useAppContext(
     ChatMessagesContext
@@ -57,6 +61,10 @@ function MessageBox({ setBottom }: any) {
     socket?.emit("send-message", { ...data, recipients: currentChat?.users });
     setMessage("");
     setBottom("50px");
+    setChats((prev) => {
+      const others = prev.filter((item) => item.id !== currentChat?.id);
+      return [currentChat as Chat, ...others];
+    });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

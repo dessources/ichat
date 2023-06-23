@@ -82,7 +82,7 @@ export default function ChatList() {
           </Box>
 
           <List disablePadding sx={styles.chatList}>
-            {chatList.length ? (
+            {chatList?.length ? (
               chatList
             ) : (
               <Typography sx={styles.noResult}>No results</Typography>

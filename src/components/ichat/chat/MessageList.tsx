@@ -11,6 +11,8 @@ import {
   Chat,
   User,
   ChatMessagesContext as ChatMessagesContextType,
+  Context,
+  ChatContext as ChatContextType,
 } from "@/models";
 
 //mui
@@ -24,9 +26,9 @@ import * as styles from "@/styles/Chat.style";
 import Spinner from "@/components/Spinner";
 
 function MessageList({ bottom }: any) {
-  const [user] = useAppContext<User>(UserContext);
-  const [currentChat] = useAppContext<Chat>(ChatContext);
-  const currentChatId = currentChat?.id;
+  const [user] = useAppContext(UserContext) as Context<User>;
+  const { currentChat } = useAppContext(ChatContext) as ChatContextType;
+  const currentChatId = currentChat?.id as string;
   const { chatMessages, isLoading, error } = useAppContext(
     ChatMessagesContext
   ) as ChatMessagesContextType;

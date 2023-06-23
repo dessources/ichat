@@ -26,7 +26,7 @@ import ContextProvider from "@/components/providers/ContextProvider";
 export default function Chat() {
   const { currentChat } = useAppContext(ChatContext) as ChatContextType;
   const currentChatId = currentChat?.id;
-  const [user] = useAppContext(UserContext) as [User];
+  const [currentUser] = useAppContext(UserContext) as [User];
   const [chatUsers, setChatUsers] = useAppContext(
     ChatUsersContext
   ) as Context<ChatUsers>;
@@ -36,11 +36,10 @@ export default function Chat() {
     //for the current chat, fetch'em
     if (currentChatId && !chatUsers?.[currentChatId]?.length) {
       const chatUsersPromise = currentChat?.users
-        .filter((id) => id !== user?.id)
+        .filter((id) => id !== currentUser?.id)
         .map((id) => userService.getUser(id));
 
       Promise.all(chatUsersPromise).then((result) => {
-        console.log(result);
         setChatUsers?.((prev) => ({
           ...prev,
           [currentChatId]: result,
@@ -48,7 +47,7 @@ export default function Chat() {
       });
     }
     ////eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chatUsers, currentChat, currentChatId, setChatUsers, user?.id]);
+  }, [chatUsers, currentChat, currentChatId, setChatUsers, currentUser]);
 
   return currentChat ? (
     <Box sx={styles.chat}>

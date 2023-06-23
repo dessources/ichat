@@ -15,8 +15,8 @@ import contentService from "@/services/contentService";
 //styles
 import * as styles from "@/styles/NewChat.style";
 
-function UserListItem({ user, addUser, removeUser, isGroup }: any) {
-  const [checked, setChecked] = React.useState(false);
+function UserListItem({ user, addUser, removeUser, isGroup, selected }: any) {
+  const [checked, setChecked] = React.useState(selected);
 
   const handleClick = () => {
     if (isGroup) {

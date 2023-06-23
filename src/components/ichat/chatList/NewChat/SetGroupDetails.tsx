@@ -6,15 +6,22 @@ import { ChatContext, UserContext } from "@/contexts";
 //utils
 import contentService from "@/services/contentService";
 //mui
-import { List, Button, Typography, Box, TextField, Avatar } from "@mui/material";
+import {
+  List,
+  Button,
+  Typography,
+  Box,
+  TextField,
+  Avatar,
+} from "@mui/material";
 import {
   ArrowBack as ArrowBackIcon,
   CameraAlt as CameraIcon,
 } from "@mui/icons-material";
-import red from "@mui/material/colors/red";
+// import red from "@mui/material/colors/red";
 
 //models
-import { User } from "@/models";
+import { ChatContext as ChatContextType, User } from "@/models";
 
 //styles
 import * as styles from "@/styles/NewChat.style";
@@ -31,8 +38,10 @@ function SetGroupDetails({
   setOpen,
 }: SetGroupDetailsProps) {
   const [groupName, setGroupName] = React.useState("");
-  const [, setCurrentChat] = useAppContext(ChatContext);
-  const currentUserId = useAppContext(UserContext)[0].id;
+  const { setChats, setCurrentChat } = useAppContext(
+    ChatContext
+  ) as ChatContextType;
+  const currentUserId = useAppContext(UserContext)?.[0]?.id as string;
 
   //todo: Save new chats to database
   async function createChatHandler() {
@@ -48,6 +57,7 @@ function SetGroupDetails({
         .createNewChat(chatData, true)
         .then((chat) => {
           setCurrentChat?.(chat);
+          setChats((prev) => [chat, ...prev]);
           setOpen(false);
         })
         .catch(() => {

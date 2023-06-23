@@ -83,6 +83,7 @@ function NewGroup({
               addUser={addUser}
               removeUser={removeUser}
               key={user.id}
+              selected={selectedUsers.some((item) => item.id === user.id)}
             />
           ))
         ) : (

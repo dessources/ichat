@@ -21,6 +21,8 @@ function NewChatBase({ open, setOpen }: any) {
     setSlide(0);
     setOpen(false);
     setSelectedUsers([]);
+    setUsername("");
+    setSlide(0);
   };
 
   const slides = [

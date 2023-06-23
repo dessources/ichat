@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use } from "react";
 import {
   ChatContext,
   ChatMessagesContext,
@@ -10,12 +10,16 @@ import {
   Chat,
   Message,
   ChatMessagesContext as ChatMessagesContextType,
+  ChatContext as ChatContextType,
 } from "@/models";
 import useAppContext from "@/hooks/useAppContext";
 import { Socket, io } from "socket.io-client";
 
 function SocketIoProvider(props: any) {
   const [user] = useAppContext(UserContext) as [User];
+  const { setChats, currentChat } = useAppContext(
+    ChatContext
+  ) as ChatContextType;
   const { chatMessages, setChatMessages } = useAppContext(
     ChatMessagesContext
   ) as ChatMessagesContextType;
@@ -62,12 +66,17 @@ function SocketIoProvider(props: any) {
         ...chatMessages,
         [data.chat]: newMessages,
       }));
+
+      setChats((prev) => {
+        const others = prev.filter((c) => c.id !== currentChat?.id);
+        return [currentChat as Chat, ...others];
+      });
     };
     socket?.on("receive-message", receiveMessageListener);
     return () => {
       socket?.off("receive-message", receiveMessageListener);
     };
-  }, [chatMessages, setChatMessages, socket]);
+  }, [chatMessages, setChatMessages, socket, currentChat, setChats]);
 
   return <SocketIoContext.Provider value={[socket, setSocket]} {...props} />;
 }
