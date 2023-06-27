@@ -1,11 +1,7 @@
 import React from "react";
-import { Context } from "@/models";
 
 //ensure that the context is being used inside it's provider
-export default function useAppContext<T = any>(
-  context: React.Context<Context<any>>,
-  text?: string
-): Context<T> | any {
+export default function useAppContext<T = any>(context: React.Context<T>): T {
   const value = React.useContext(context);
 
   if (!value) {

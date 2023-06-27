@@ -1,14 +1,19 @@
 import React from "react";
-import useSWR from "swr";
+
 //models
-import { ChatMessages, Message, Chat } from "@/models";
+import {
+  ChatMessages,
+  Message,
+  Chat,
+  ChatContext as ChatContextType,
+} from "@/models";
 import useAppContext from "@/hooks/useAppContext";
 import { ChatContext, ChatMessagesContext } from "@/contexts";
 import contentService from "@/services/contentService";
 
 function ChatMessagesProvider(props: any) {
-  const [currentChat] = useAppContext<Chat>(ChatContext);
-  const currentChatId: string = currentChat?.id;
+  const { currentChat } = useAppContext(ChatContext) as ChatContextType;
+  const currentChatId = currentChat?.id as string;
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState();
   const [newMessages, setNewMessages] = React.useState<
@@ -63,7 +68,10 @@ function ChatMessagesProvider(props: any) {
     if (newMessages?.messages?.length) {
       setChatMessages((chatMessages) => ({
         ...chatMessages,
-        [currentChatId]: newMessages as { messages: Message[]; lastFetched: Date },
+        [currentChatId]: newMessages as {
+          messages: Message[];
+          lastFetched: Date;
+        },
       }));
     }
 
@@ -82,7 +90,10 @@ function ChatMessagesProvider(props: any) {
           setNewMessages(
             chatMessages[currentChatId]
               ? {
-                  messages: [...chatMessages[currentChatId].messages, ...messages],
+                  messages: [
+                    ...chatMessages[currentChatId].messages,
+                    ...messages,
+                  ],
                   lastFetched,
                 }
               : { messages, lastFetched }

@@ -77,6 +77,7 @@ class UserService {
             .getUser(otherUserId)
             .then((otherUser) => ({
               ...chat,
+              interlocutor: otherUserId,
               name: otherUser.name,
               chatPicture: otherUser.profilePicture,
             }))
@@ -92,7 +93,7 @@ class UserService {
 
   async setChat(chat: Chat): Promise<string> {
     const id = await axiosPrivate
-      .post<{ id: string }>("/chats", { chat })
+      .put<{ id: string }>("/chats", { chat })
       .then(({ data }) => data.id);
     return Promise.resolve(id);
   }

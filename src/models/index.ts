@@ -42,13 +42,26 @@ export interface UserAuthInfo {
   rememberUser?: boolean;
 }
 
-export interface ChatMessagesContext {
+//an interlocutor is whichever user in a non-chat group
+//that isn't the logged in user or current User
+
+export type ChatContext = {
+  chats: (Chat & { interlocutor: string })[];
+  setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
+  currentChat: Chat | undefined;
+  setCurrentChat: React.Dispatch<React.SetStateAction<Chat | undefined>>;
+  isLoading: boolean;
+  isError: boolean;
+};
+
+export type ChatMessagesContext = {
   chatMessages: ChatMessages;
-  setChatMessages: React.Dispatch<React.SetStateAction<ChatMessages | undefined>>;
+  setChatMessages: React.Dispatch<
+    React.SetStateAction<ChatMessages | undefined>
+  >;
   isLoading: boolean;
   error: any;
-}
+};
 
 export type Context<T> =
-  | [T?, React.Dispatch<React.SetStateAction<T | undefined>>?]
-  | null;
+  | [T?, React.Dispatch<React.SetStateAction<T | undefined>>?];

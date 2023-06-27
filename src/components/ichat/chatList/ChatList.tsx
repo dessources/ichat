@@ -3,11 +3,10 @@ import React from "react";
 
 //utils && hooks && context
 import useAppContext from "@/hooks/useAppContext";
-import useFetchData from "@/hooks/useFetchData";
-import { UserContext } from "@/contexts";
+import { ChatContext, UserContext } from "@/contexts";
 
 //models
-import { Chat, User } from "@/models";
+import { Chat, User, Context, ChatContext as ChatContextType } from "@/models";
 
 //mui
 import Box from "@mui/material/Box";
@@ -17,24 +16,15 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddChatIcon from "@mui/icons-material/AddComment";
 //my components
 import ChatListItem from "./ChatListItem";
-//utils
-import userService from "@/services/userService";
+import NewChat from "./NewChat/NewChatBox";
 
 //styles
 import * as styles from "@/styles/ChatList.style";
-import NewChat from "./NewChat";
 
 export default function ChatList() {
-  const [user] = useAppContext<User>(UserContext);
-  const userId = user?.id as string;
-  const {
-    data: chats,
-    isError,
-    isLoading,
-  } = useFetchData<Chat[]>(
-    { url: `/chats?userId=${userId}`, userId },
-    userService.getChats
-  );
+  const { chats, isLoading, isError } = useAppContext(
+    ChatContext
+  ) as ChatContextType;
 
   const [searchRegExp, setSearchRegExp] = React.useState(/$/);
 
@@ -92,7 +82,7 @@ export default function ChatList() {
           </Box>
 
           <List disablePadding sx={styles.chatList}>
-            {chatList.length ? (
+            {chatList?.length ? (
               chatList
             ) : (
               <Typography sx={styles.noResult}>No results</Typography>

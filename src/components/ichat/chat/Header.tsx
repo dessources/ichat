@@ -3,7 +3,7 @@ import useAppContext from "@/hooks/useAppContext";
 import { ChatContext } from "@/contexts";
 
 //models
-import { Chat } from "@/models";
+import { Chat, ChatContext as ChatContextType } from "@/models";
 // mui
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
@@ -12,6 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
+import GroupIcon from "@mui/icons-material/Group";
 
 //styles
 import * as styles from "@/styles/Chat.style";
@@ -19,7 +20,7 @@ import { avatar } from "@/styles/Ichat.style";
 import ChatProfile from "./chatProfile";
 
 export default function ChatHeader() {
-  const [currentChat] = useAppContext<Chat>(ChatContext);
+  const { currentChat } = useAppContext(ChatContext) as ChatContextType;
   const [chatProfileOpen, setChatProfileOpen] = React.useState(false);
   return (
     <React.Fragment>
@@ -33,7 +34,11 @@ export default function ChatHeader() {
                   alt={currentChat?.name}
                   sx={avatar}
                 >
-                  {currentChat?.name?.charAt(0)}
+                  {currentChat?.group ? (
+                    <GroupIcon />
+                  ) : (
+                    currentChat?.name?.charAt(0)
+                  )}
                 </Avatar>
               </IconButton>
               <Typography component={"span"} textTransform={"capitalize"}>
