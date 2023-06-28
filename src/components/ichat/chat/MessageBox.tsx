@@ -31,7 +31,7 @@ function MessageBox({ setBottom }: any) {
   ) as ChatContexType;
   const currentChatId = currentChat?.id as string;
   const [user] = useAppContext(UserContext) as Context<User>;
-  const [socket] = useAppContext(SocketIoContext) as Context<Socket>;
+  // const [socket] = useAppContext(SocketIoContext) as Context<Socket>;
 
   const { chatMessages, setChatMessages } = useAppContext(
     ChatMessagesContext
@@ -58,7 +58,7 @@ function MessageBox({ setBottom }: any) {
       ...prev,
       [currentChatId]: newMessages,
     }));
-    socket?.emit("send-message", { ...data, recipients: currentChat?.users });
+    // socket?.emit("send-message", { ...data, recipients: currentChat?.users });
     setMessage("");
     setBottom("50px");
     setChats((prev) => {
