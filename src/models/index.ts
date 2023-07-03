@@ -10,6 +10,8 @@ export interface Chat {
   group: boolean;
 }
 
+export type ChatWithInterlocutor = Chat & { interlocutorId?: string };
+
 export interface Message {
   id: string;
   sender: string;
@@ -46,9 +48,9 @@ export interface UserAuthInfo {
 //that isn't the logged in user or current User
 
 export type ChatContext = {
-  chats: (Chat & { interlocutor: string })[];
+  chats: { [id: string]: ChatWithInterlocutor };
   setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
-  currentChat: Chat | undefined;
+  currentChat: ChatWithInterlocutor | undefined;
   setCurrentChat: React.Dispatch<React.SetStateAction<Chat | undefined>>;
   isLoading: boolean;
   isError: boolean;
@@ -56,9 +58,7 @@ export type ChatContext = {
 
 export type ChatMessagesContext = {
   chatMessages: ChatMessages;
-  setChatMessages: React.Dispatch<
-    React.SetStateAction<ChatMessages | undefined>
-  >;
+  setChatMessages: React.Dispatch<React.SetStateAction<ChatMessages | undefined>>;
   isLoading: boolean;
   error: any;
 };

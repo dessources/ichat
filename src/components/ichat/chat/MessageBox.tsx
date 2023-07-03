@@ -26,9 +26,7 @@ import {
 } from "@/contexts";
 
 function MessageBox({ setBottom }: any) {
-  const { currentChat, setChats } = useAppContext(
-    ChatContext
-  ) as ChatContexType;
+  const { currentChat, setChats } = useAppContext(ChatContext) as ChatContexType;
   const currentChatId = currentChat?.id as string;
   const [user] = useAppContext(UserContext) as Context<User>;
   const [socket] = useAppContext(SocketIoContext) as Context<Socket>;
@@ -54,17 +52,15 @@ function MessageBox({ setBottom }: any) {
           lastFetched: chatMessages[currentChatId].lastFetched,
         }
       : { messages: [data] };
+
     setChatMessages?.((prev) => ({
-      ...prev,
       [currentChatId]: newMessages,
+      ...prev,
     }));
+    // setCurrentChat()
     socket?.emit("send-message", { ...data, recipients: currentChat?.users });
     setMessage("");
     setBottom("50px");
-    setChats((prev) => {
-      const others = prev.filter((item) => item.id !== currentChat?.id);
-      return [currentChat as Chat, ...others];
-    });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

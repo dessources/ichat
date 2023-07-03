@@ -1,15 +1,17 @@
 import clientPromise from "../../../lib/mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
+
 import authorize from "./middlewares/authorize";
 import authenticate from "./middlewares/authenticate";
-import { Collection } from "mongodb";
-import { Chat } from "@/models";
 import allowMethods from "./middlewares/allowMethods";
+
+import { Collection } from "mongodb";
+import { Chat, User } from "@/models";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const client = await clientPromise;
   const chats: Collection<Chat> = client.db("ichat").collection("chats");
-  console.log("\n\nreceived a request\n\n");
+  const users: Collection<User> = client.db("ichat").collection("users");
 
   switch (req.method) {
     case "GET":
@@ -37,13 +39,22 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       }
       break;
     case "POST":
-      console.dir(req.body.data, { depth: null });
-      // chats
-      //   .insertOne(req.body.data)
-      //   .then(() =>
-      //     res.status(200).json({ message: "Chat created successfully" })
-      //   );
-      res.status(200).json(req.body.data);
+      try {
+        const chat = req.body.data;
+        let interlocutor: User | {} = {};
+
+        if (!req.body.data.group) {
+          interlocutor = (await users.findOne({
+            id: chat.interlocutorId,
+          })) as User;
+        }
+        const { name, profilePicture: chatPicture } = interlocutor as User;
+        res.status(200).json({ ...chat, name, chatPicture });
+      } catch (e) {
+        process.env.NODE_ENV !== "production" && console.log(e);
+        res.status(500).json({ message: "Could not save chat" });
+      }
+
       break;
     default:
       res.status(500).json({ message: "Could not save chat" });

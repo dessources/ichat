@@ -1,4 +1,4 @@
-import { UserAuthInfo, User, Chat } from "@/models";
+import { UserAuthInfo, User, Chat, ChatWithInterlocutor } from "@/models";
 import axios, { axiosPrivate } from "../../lib/axios";
 
 import { validateInputs } from "@/utils/validate";
@@ -61,7 +61,7 @@ class UserService {
   }: {
     url: string;
     userId: string;
-  }): Promise<Chat[]> {
+  }): Promise<ChatWithInterlocutor[]> {
     // Get the chats
     const chats = await axiosPrivate.get<Chat[]>(url).then((res) => res.data);
 
@@ -77,12 +77,12 @@ class UserService {
             .getUser(otherUserId)
             .then((otherUser) => ({
               ...chat,
-              interlocutor: otherUserId,
+              interlocutorId: otherUserId,
               name: otherUser.name,
               chatPicture: otherUser.profilePicture,
             }))
             .catch((err) => console.log(err));
-          return result as Chat;
+          return result as ChatWithInterlocutor;
         } else return chat;
       });
       return await Promise.all(normalizedChats);

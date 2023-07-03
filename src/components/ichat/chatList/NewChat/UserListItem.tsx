@@ -1,7 +1,12 @@
 import React, { use } from "react";
 //models
 
-import { ChatContext as ChatContextType, Context, User } from "@/models";
+import {
+  ChatContext as ChatContextType,
+  ChatMessagesContext as ChatMessagesContextType,
+  Context,
+  User,
+} from "@/models";
 import {
   ListItemButton,
   IconButton,
@@ -17,7 +22,7 @@ import contentService from "@/services/contentService";
 //styles
 import * as styles from "@/styles/NewChat.style";
 import useAppContext from "@/hooks/useAppContext";
-import { ChatContext, UserContext } from "@/contexts";
+import { ChatContext, ChatMessagesContext, UserContext } from "@/contexts";
 
 function UserListItem({
   user,
@@ -29,9 +34,14 @@ function UserListItem({
 }: any) {
   const [checked, setChecked] = React.useState(selected);
   const [currentUser] = useAppContext(UserContext) as Context<User>;
-  const { setChats, setCurrentChat } = useAppContext(
+  const { setChats, setCurrentChat, chats } = useAppContext(
     ChatContext
   ) as ChatContextType;
+
+  const { chatMessages } = useAppContext(
+    ChatMessagesContext
+  ) as ChatMessagesContextType;
+
   const handleClick = () => {
     if (isGroup) {
       setChecked(!checked);
@@ -39,6 +49,9 @@ function UserListItem({
         removeUser(user);
       } else addUser(user);
     } else {
+      if (chatMessages[user.id]) {
+        setCurrentChat(chats[user.id]);
+      }
       contentService
         .createNewChat(
           {
@@ -48,12 +61,14 @@ function UserListItem({
           false
         )
         .then((chat) => {
-          setChats((prev) => [chat, ...prev]);
+          console.log("the chat returned from the backend is :", chat);
+          setChats((prev) => ({ [user.id]: chat, ...prev }));
           setCurrentChat(chat);
           setOpen(false);
         });
     }
   };
+
   return (
     <ListItemButton sx={styles.userListItem} onClick={handleClick}>
       <IconButton color="inherit" sx={{ p: 0.5 }}>

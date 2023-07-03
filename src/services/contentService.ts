@@ -28,7 +28,7 @@ class ContentService {
   }
 
   async createNewChat(data: CreateChatData, isGroup: boolean) {
-    let chat: Required<Chat>;
+    let chat: Required<Chat> & { interlocutorId: string };
     const id = uuid4();
     const users = data.users.map((user) => user.id);
 
@@ -38,13 +38,14 @@ class ContentService {
       group: isGroup,
       chatPicture: data.chatPicture || "",
       name: data.name || "",
+      interlocutorId: !isGroup ? users[0] : "",
     };
-    console.log("about to post");
+
     const result = axiosPrivate.post("/chats", { data: chat });
     return result
       .then(({ data }) => data)
       .catch((e) => {
-        //todo handle errors
+        //TODO handle errors
       });
   }
 }

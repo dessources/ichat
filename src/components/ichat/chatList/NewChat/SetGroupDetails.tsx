@@ -6,14 +6,7 @@ import { ChatContext, UserContext } from "@/contexts";
 //utils
 import contentService from "@/services/contentService";
 //mui
-import {
-  List,
-  Button,
-  Typography,
-  Box,
-  TextField,
-  Avatar,
-} from "@mui/material";
+import { List, Button, Typography, Box, TextField, Avatar } from "@mui/material";
 import {
   ArrowBack as ArrowBackIcon,
   CameraAlt as CameraIcon,
@@ -57,7 +50,7 @@ function SetGroupDetails({
         .createNewChat(chatData, true)
         .then((chat) => {
           setCurrentChat(chat);
-          setChats((prev) => [chat, ...prev]);
+          setChats((prev) => ({ [chat.id]: chat, ...prev }));
           setOpen(false);
         })
         .catch(() => {

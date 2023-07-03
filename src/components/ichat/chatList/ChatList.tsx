@@ -30,7 +30,7 @@ export default function ChatList() {
 
   //Filter the chats by the search term inputted
   // by the user
-  const chatList = chats
+  const chatList = Object.values(chats)
     ?.filter((chat) => searchRegExp.test(chat.name as string))
     .map((chat, i) => <ChatListItem key={i} chat={chat} />);
 
@@ -54,10 +54,12 @@ export default function ChatList() {
         </Typography>
       ) : (
         <>
+          {/* Header */}
           <Box sx={styles.header}>
             <Typography sx={styles.title} variant="h5">
               Chats
             </Typography>
+            {/* New CHat Icon */}
             <Box title="Start a new chat" sx={styles.addChatIcon}>
               <Button onClick={() => setNewChatOpen(true)}>
                 <AddChatIcon sx={{ fill: "var(--accent_color)" }} />
@@ -66,6 +68,7 @@ export default function ChatList() {
             </Box>
           </Box>
 
+          {/* Search Box */}
           <Box sx={styles.search}>
             <InputBase
               sx={styles.inputBase}

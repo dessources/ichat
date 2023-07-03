@@ -24,7 +24,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { user } = req.query;
 
   try {
-    const results = users.find({ username: { $regex: user as string } }).toArray();
+    const results = users
+      .find({ username: { $regex: new RegExp(user as string, "i") } })
+      .toArray();
     await results
       .then((r) => {
         const data = r.slice(0, 10).map((item) => ({ ...item, password: "" }));

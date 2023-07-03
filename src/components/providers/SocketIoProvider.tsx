@@ -18,7 +18,7 @@ import { Socket, io } from "socket.io-client";
 
 function SocketIoProvider(props: any) {
   const [user] = useAppContext(UserContext) as [User];
-  const { setChats, currentChat } = useAppContext(
+  const { setCurrentChat, currentChat, chats } = useAppContext(
     ChatContext
   ) as ChatContextType;
   const { chatMessages, setChatMessages } = useAppContext(
@@ -68,16 +68,13 @@ function SocketIoProvider(props: any) {
         [data.chat]: newMessages,
       }));
 
-      setChats((prev) => {
-        const others = prev.filter((c) => c.id !== currentChat?.id);
-        return [currentChat as Chat, ...others];
-      });
+      setCurrentChat(chats[data.chat]);
     };
     socket?.on("receive-message", receiveMessageListener);
     return () => {
       socket?.off("receive-message", receiveMessageListener);
     };
-  }, [chatMessages, setChatMessages, socket, currentChat, setChats]);
+  }, [chatMessages, setChatMessages, socket, chats, setCurrentChat]);
 
   return <SocketIoContext.Provider value={[socket, setSocket]} {...props} />;
 }
