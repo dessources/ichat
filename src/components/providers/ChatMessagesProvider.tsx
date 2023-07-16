@@ -13,6 +13,7 @@ import contentService from "@/services/contentService";
 
 function ChatMessagesProvider(props: any) {
   const { currentChat } = useAppContext(ChatContext) as ChatContextType;
+
   const currentChatId = currentChat?.id as string;
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState();
@@ -90,10 +91,7 @@ function ChatMessagesProvider(props: any) {
           setNewMessages(
             chatMessages[currentChatId]
               ? {
-                  messages: [
-                    ...chatMessages[currentChatId].messages,
-                    ...messages,
-                  ],
+                  messages: [...chatMessages[currentChatId].messages, ...messages],
                   lastFetched,
                 }
               : { messages, lastFetched }

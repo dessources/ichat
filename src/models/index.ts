@@ -4,6 +4,7 @@
 
 export interface Chat {
   id: string;
+  secondaryId: string;
   name?: string;
   chatPicture?: string;
   users: string[];

@@ -10,7 +10,7 @@ import {
   Chat,
   User,
   ChatMessagesContext as ChatMessagesContextType,
-  ChatContext as ChatContexType,
+  ChatContext as ChatContextType,
   Context,
 } from "@/models";
 import { Socket } from "socket.io-client";
@@ -26,7 +26,9 @@ import {
 } from "@/contexts";
 
 function MessageBox({ setBottom }: any) {
-  const { currentChat, setChats } = useAppContext(ChatContext) as ChatContexType;
+  const { currentChat, setChats, chats } = useAppContext(
+    ChatContext
+  ) as ChatContextType;
   const currentChatId = currentChat?.id as string;
   const [user] = useAppContext(UserContext) as Context<User>;
   const [socket] = useAppContext(SocketIoContext) as Context<Socket>;
@@ -54,11 +56,18 @@ function MessageBox({ setBottom }: any) {
       : { messages: [data] };
 
     setChatMessages?.((prev) => ({
-      [currentChatId]: newMessages,
       ...prev,
+      [currentChatId]: newMessages,
     }));
     // setCurrentChat()
+
     socket?.emit("send-message", { ...data, recipients: currentChat?.users });
+    //removing this chat from the list and replacing it at the top
+    delete chats[currentChat?.secondaryId as string];
+    setChats((prev) => ({
+      [currentChat?.secondaryId as string]: currentChat,
+      ...prev,
+    }));
     setMessage("");
     setBottom("50px");
   };

@@ -6,7 +6,13 @@ import useAppContext from "@/hooks/useAppContext";
 import { ChatContext, UserContext } from "@/contexts";
 
 //models
-import { Chat, User, Context, ChatContext as ChatContextType } from "@/models";
+import {
+  Chat,
+  User,
+  Context,
+  ChatContext as ChatContextType,
+  ChatWithInterlocutor,
+} from "@/models";
 
 //mui
 import Box from "@mui/material/Box";
@@ -22,12 +28,20 @@ import NewChat from "./NewChat/NewChatBox";
 import * as styles from "@/styles/ChatList.style";
 
 export default function ChatList() {
-  const { chats, isLoading, isError } = useAppContext(
+  const { chats, isLoading, isError, currentChat, setChats } = useAppContext(
     ChatContext
   ) as ChatContextType;
 
   const [searchRegExp, setSearchRegExp] = React.useState(/$/);
 
+  React.useEffect(() => {
+    if (currentChat) {
+      delete chats[currentChat?.secondaryId as string];
+      const chatId = currentChat.secondaryId;
+      setChats((prev) => ({ [chatId]: currentChat, ...prev }));
+    }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentChat]);
   //Filter the chats by the search term inputted
   // by the user
   const chatList = Object.values(chats)

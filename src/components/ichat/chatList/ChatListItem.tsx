@@ -13,9 +13,7 @@ function ChatListItem({ chat }: { chat: ChatWithInterlocutor }) {
     ChatContext
   ) as ChatContextType;
 
-  const selected =
-    currentChat?.id === chat.id ||
-    chat.interlocutorId === currentChat?.interlocutorId;
+  const selected = currentChat?.secondaryId === chat?.secondaryId;
   return (
     <Box sx={styles.chatListItem} onFocus={() => setCurrentChat?.(chat)}>
       <ListItemButton sx={styles.chat} selected={selected}>

@@ -38,10 +38,6 @@ function UserListItem({
     ChatContext
   ) as ChatContextType;
 
-  const { chatMessages } = useAppContext(
-    ChatMessagesContext
-  ) as ChatMessagesContextType;
-
   const handleClick = () => {
     if (isGroup) {
       setChecked(!checked);
@@ -49,23 +45,25 @@ function UserListItem({
         removeUser(user);
       } else addUser(user);
     } else {
-      if (chatMessages[user.id]) {
+      if (chats[user.id]) {
         setCurrentChat(chats[user.id]);
+        setOpen(false);
+      } else {
+        contentService
+          .createNewChat(
+            {
+              users: [user],
+              currentUserId: currentUser?.id as string,
+            },
+            false
+          )
+          .then((chat) => {
+            chat.secondaryId = user.id;
+            setChats((prev) => ({ [user.id]: chat, ...prev }));
+            setCurrentChat(chat);
+            setOpen(false);
+          });
       }
-      contentService
-        .createNewChat(
-          {
-            users: [user],
-            currentUserId: currentUser?.id as string,
-          },
-          false
-        )
-        .then((chat) => {
-          console.log("the chat returned from the backend is :", chat);
-          setChats((prev) => ({ [user.id]: chat, ...prev }));
-          setCurrentChat(chat);
-          setOpen(false);
-        });
     }
   };
 

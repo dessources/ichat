@@ -47,9 +47,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           interlocutor = (await users.findOne({
             id: chat.interlocutorId,
           })) as User;
+          const { name, profilePicture: chatPicture } = interlocutor as User;
+          res.status(200).json({ ...chat, name, chatPicture });
+        } else {
+          res.status(200).json(chat);
         }
-        const { name, profilePicture: chatPicture } = interlocutor as User;
-        res.status(200).json({ ...chat, name, chatPicture });
       } catch (e) {
         process.env.NODE_ENV !== "production" && console.log(e);
         res.status(500).json({ message: "Could not save chat" });

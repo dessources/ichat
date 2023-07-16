@@ -23,15 +23,17 @@ interface SetGroupDetailsProps {
   selectedUsers: User[];
   setSlide: React.Dispatch<React.SetStateAction<0 | 1 | 2>>;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleClose: () => void;
 }
 
 function SetGroupDetails({
   setSlide,
   selectedUsers,
   setOpen,
+  handleClose,
 }: SetGroupDetailsProps) {
   const [groupName, setGroupName] = React.useState("");
-  const { setChats, setCurrentChat } = useAppContext(
+  const { setCurrentChat, setChats } = useAppContext(
     ChatContext
   ) as ChatContextType;
   const currentUserId = useAppContext(UserContext)?.[0]?.id as string;
@@ -49,9 +51,11 @@ function SetGroupDetails({
       contentService
         .createNewChat(chatData, true)
         .then((chat) => {
-          setCurrentChat(chat);
+          chat.secondaryId = chat.id;
           setChats((prev) => ({ [chat.id]: chat, ...prev }));
-          setOpen(false);
+          setCurrentChat(chat);
+
+          handleClose();
         })
         .catch(() => {
           //todo handle create chat errors

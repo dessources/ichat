@@ -25,10 +25,12 @@ export default function ChatProvider(props: any) {
   React.useEffect(() => {
     let formattedChats: { [id: string]: ChatWithInterlocutor } = {};
 
-    chatData.forEach((chat) => {
+    chatData?.forEach((chat) => {
       if (chat.group) {
+        chat.secondaryId = chat.id;
         formattedChats[chat.id] = chat;
       } else {
+        chat.secondaryId = chat.interlocutorId as string;
         formattedChats[chat.interlocutorId as string] = chat;
       }
     });

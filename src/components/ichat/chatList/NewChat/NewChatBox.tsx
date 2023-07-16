@@ -45,6 +45,7 @@ function NewChatBase({ open, setOpen }: any) {
       selectedUsers={selectedUsers}
       setSlide={setSlide}
       setOpen={setOpen}
+      handleClose={handleClose}
     />,
   ];
 
