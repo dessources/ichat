@@ -45,8 +45,8 @@ export default function ChatProvider(props: any) {
         setChats,
         currentChat,
         setCurrentChat,
-        isError,
         isLoading,
+        isError,
       }}
       {...props}
     />

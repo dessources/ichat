@@ -59,7 +59,6 @@ function MessageBox({ setBottom }: any) {
       ...prev,
       [currentChatId]: newMessages,
     }));
-    // setCurrentChat()
 
     socket?.emit("send-message", { ...data, recipients: currentChat?.users });
     //removing this chat from the list and replacing it at the top
@@ -68,6 +67,7 @@ function MessageBox({ setBottom }: any) {
       [currentChat?.secondaryId as string]: currentChat,
       ...prev,
     }));
+    // socket?.emit("send-message", { ...data, recipients: currentChat?.users });
     setMessage("");
     setBottom("50px");
   };

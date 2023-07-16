@@ -23,7 +23,7 @@ import * as styles from "@/styles/Ichat.style";
 
 import Sidebar from "./Sidebar";
 import SocketIoProvider from "../providers/SocketIoProvider";
-import ChatProvider from "../providers/ChatProvider";
+import ChatProvider from "@/components/providers/ChatProvider";
 
 export default function Ichat() {
   // const [mobileOpen, setMobileOpen] = React.useState(false);
