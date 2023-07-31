@@ -13,7 +13,7 @@ import * as styles from "@/styles/UnauthApp.style";
 import { findExistingUsername } from "@/utils/findExistingUsername";
 import useAppContext from "@/hooks/useAppContext";
 import { AuthContext } from "@/contexts";
-
+import { Context } from "@/models";
 interface FormLoginProps {
   create: boolean;
   setStatus: Function;
@@ -21,7 +21,7 @@ interface FormLoginProps {
 }
 
 function FormLogin({ create = false, setError, setStatus }: FormLoginProps) {
-  const [, setAuth] = useAppContext(AuthContext);
+  const [, setAuth] = useAppContext(AuthContext) as Context<boolean>;
   const [checked, setChecked] = React.useState(false);
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");

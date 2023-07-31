@@ -3,7 +3,7 @@ import useAppContext from "@/hooks/useAppContext";
 import { UserContext } from "@/contexts";
 
 //models
-import { User } from "@/models";
+import { User, Context } from "@/models";
 // mui
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
@@ -21,7 +21,7 @@ import Profile from "./Profile";
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
 export default function Header() {
-  const [user] = useAppContext<User>(UserContext);
+  const [user] = useAppContext(UserContext) as Context<User>;
   const [profileOpen, setProfileOpen] = React.useState(false);
   return (
     <React.Fragment>

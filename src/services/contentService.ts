@@ -28,7 +28,7 @@ class ContentService {
   }
 
   async createNewChat(data: CreateChatData, isGroup: boolean) {
-    let chat: Required<Chat> & { interlocutorId: string };
+    let chat: Partial<Chat> & { interlocutorId: string };
     const id = uuid4();
     const users = data.users.map((user) => user.id);
 
