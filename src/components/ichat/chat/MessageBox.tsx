@@ -45,6 +45,7 @@ function MessageBox({ setBottom }: any) {
       sender: user?.id as string,
       content: message,
       chat: currentChat?.id as string,
+      group: !!currentChat?.group,
       timestamp: new Date(),
     };
 
@@ -61,13 +62,16 @@ function MessageBox({ setBottom }: any) {
     }));
 
     socket?.emit("send-message", { ...data, recipients: currentChat?.users });
+
     //removing this chat from the list and replacing it at the top
-    delete chats[currentChat?.secondaryId as string];
-    setChats((prev) => ({
-      [currentChat?.secondaryId as string]: currentChat,
-      ...prev,
-    }));
-    // socket?.emit("send-message", { ...data, recipients: currentChat?.users });
+    setChats((prev) => {
+      delete prev[currentChat?.secondaryId as string];
+      return {
+        [currentChat?.secondaryId as string]: currentChat!,
+        ...prev,
+      };
+    });
+
     setMessage("");
     setBottom("50px");
   };

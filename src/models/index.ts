@@ -17,6 +17,7 @@ export interface Message {
   id: string;
   sender: string;
   chat: string;
+  group: boolean;
   content: string;
   timestamp: Date;
 }
@@ -50,7 +51,9 @@ export interface UserAuthInfo {
 
 export type ChatContext = {
   chats: { [id: string]: ChatWithInterlocutor };
-  setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
+  setChats: React.Dispatch<
+    React.SetStateAction<{ [id: string]: ChatWithInterlocutor }>
+  >;
   currentChat: ChatWithInterlocutor | undefined;
   setCurrentChat: React.Dispatch<React.SetStateAction<Chat | undefined>>;
   isLoading: boolean;

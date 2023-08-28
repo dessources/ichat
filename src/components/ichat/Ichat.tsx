@@ -60,14 +60,14 @@ function Main() {
     <>
       <ChatProvider>
         <ChatMessagesProvider>
-          <SocketIoProvider>
-            <Box sx={styles.main}>
-              <ChatList />
-              <ContextProvider context={ChatUsersContext}>
+          <ContextProvider context={ChatUsersContext}>
+            <SocketIoProvider>
+              <Box sx={styles.main}>
+                <ChatList />
                 <Chat />
-              </ContextProvider>
-            </Box>
-          </SocketIoProvider>
+              </Box>
+            </SocketIoProvider>
+          </ContextProvider>
         </ChatMessagesProvider>
       </ChatProvider>
     </>

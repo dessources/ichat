@@ -28,22 +28,15 @@ import NewChat from "./NewChat/NewChatBox";
 import * as styles from "@/styles/ChatList.style";
 
 export default function ChatList() {
-  const { chats, isLoading, isError, currentChat, setChats } = useAppContext(
+  const { chats, isLoading, isError } = useAppContext(
     ChatContext
   ) as ChatContextType;
 
   const [searchRegExp, setSearchRegExp] = React.useState(/$/);
 
-  React.useEffect(() => {
-    if (currentChat) {
-      delete chats[currentChat?.secondaryId as string];
-      const chatId = currentChat.secondaryId;
-      setChats((prev) => ({ [chatId]: currentChat, ...prev }));
-    }
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentChat]);
   //Filter the chats by the search term inputted
   // by the user
+  console.log(chats);
   const chatList = Object.values(chats)
     ?.filter((chat) => searchRegExp.test(chat.name as string))
     .map((chat, i) => <ChatListItem key={i} chat={chat} />);
