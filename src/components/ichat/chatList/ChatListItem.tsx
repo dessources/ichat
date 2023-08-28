@@ -14,8 +14,10 @@ function ChatListItem({ chat }: { chat: ChatWithInterlocutor }) {
   ) as ChatContextType;
 
   const selected = currentChat?.secondaryId === chat?.secondaryId;
+
   return (
-    <Box sx={styles.chatListItem} onFocus={() => setCurrentChat?.(chat)}>
+    //Somehow I had put onFocus instead of Onclick
+    <Box sx={styles.chatListItem} onClick={() => setCurrentChat?.(chat)}>
       <ListItemButton sx={styles.chat} selected={selected}>
         <IconButton color="inherit" sx={{ p: 0.5 }}>
           <Avatar src={chat.chatPicture} alt={chat.name} sx={avatar}>

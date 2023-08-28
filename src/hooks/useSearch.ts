@@ -10,7 +10,7 @@ function useSearch(username: string) {
   React.useEffect(() => {
     if (username)
       axiosPrivate
-        .post(`/search/users/${username.toLowerCase()}`)
+        .get(`/search/users/${username.toLowerCase()}`)
         .then(({ data }) => setSearchResults(data));
   }, [username]);
   return { searchResults };

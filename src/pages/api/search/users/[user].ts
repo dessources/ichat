@@ -9,23 +9,19 @@ import allowMethods from "../../middlewares/allowMethods";
 import { User } from "@/models";
 import type { Collection } from "mongodb";
 
-// type DatedfEWFa = {
-//   name: string;
-// };
-
-// export default authenticate(
-//   authorize(function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-//     res.status(200).json({ name: "John Doe" });
-//   })
-// );
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const client = await clientPromise;
   const users: Collection<User> = client.db("ichat").collection("users");
-  const { user } = req.query;
+  const { user: search } = req.query;
 
   try {
+    //We select all the users where the name or username field matches the search
+    //query
+    const matchingExpression = { $regex: new RegExp(search as string, "i") };
     const results = users
-      .find({ username: { $regex: new RegExp(user as string, "i") } })
+      .find({
+        $or: [{ username: matchingExpression }, { name: matchingExpression }],
+      })
       .toArray();
     await results
       .then((r) => {
@@ -41,4 +37,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default allowMethods(["POST"], handler);
+export default allowMethods(["GET"], handler);
