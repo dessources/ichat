@@ -3,7 +3,7 @@ import React from "react";
 
 //utils && hooks && context
 import useAppContext from "@/hooks/useAppContext";
-import { ChatContext, UserContext } from "@/contexts";
+import { ChatContext, ChatMessagesContext, UserContext } from "@/contexts";
 
 //models
 import {
@@ -12,6 +12,7 @@ import {
   Context,
   ChatContext as ChatContextType,
   ChatWithInterlocutor,
+  ChatMessagesContext as ChatMessagesContextType,
 } from "@/models";
 
 //mui
@@ -32,13 +33,19 @@ export default function ChatList() {
     ChatContext
   ) as ChatContextType;
 
+  // const { chatMessages } = useAppContext(
+  //   ChatMessagesContext
+  // ) as ChatMessagesContextType;
+
   const [searchRegExp, setSearchRegExp] = React.useState(/$/);
 
   //Filter the chats by the search term inputted
   // by the user
-  console.log(chats);
+
   const chatList = Object.values(chats)
-    ?.filter((chat) => searchRegExp.test(chat.name as string))
+    ?.filter((chat) => {
+      return searchRegExp.test(chat.name as string);
+    })
     .map((chat, i) => <ChatListItem key={i} chat={chat} />);
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {

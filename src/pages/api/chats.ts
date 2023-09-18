@@ -19,7 +19,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
       try {
         const { userId } = req.query as { userId: string };
-        console.log(userId);
+
         result = await chats.find({ users: { $in: [userId] } }).toArray();
         return res.status(200).json(result);
       } catch (err) {

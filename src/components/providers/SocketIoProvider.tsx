@@ -59,7 +59,6 @@ function SocketIoProvider(props: any) {
   //receive message event listener
   React.useEffect(() => {
     const receiveMessageListener = (message: Message) => {
-      console.log(message);
       const newMessages = chatMessages[message.chat]
         ? {
             ...chatMessages[message.chat],
@@ -72,31 +71,17 @@ function SocketIoProvider(props: any) {
         [message.chat]: newMessages,
       }));
 
-      //if the sender of the message is not the current user, designate
-      //the chat with that sender's id as secondary id as the first chat
-      let newCurrentChatId = message.group ? message.id : message.sender;
-
-      if (message.sender !== user.id) setCurrentChat(chats[newCurrentChatId]);
-
-      if (chats[newCurrentChatId]) {
-        setChats((prev) => {
-          console.log("this is prev:", prev);
-
-          console.log("this is chats: ", chats);
-          const newCurrentChat = prev[newCurrentChatId];
-          console.log("the new current chat is: ", newCurrentChat);
-          delete prev[newCurrentChatId];
-          console.log("after deleting, the chats are: ", chats);
-          console.log("this how chats should look like after: ", {
-            [newCurrentChatId]: newCurrentChat,
-            ...prev,
-          });
-          return {
-            [newCurrentChatId]: chats[newCurrentChatId],
-            ...prev,
-          };
-        });
-      }
+      // console.log("the chats are", chats);
+      // console.log("the chat Messages are", chatMessages);
+      const chatId = message.group ? message.id : message.sender;
+      setChats((prev) => {
+        const chat = structuredClone(prev[chatId]);
+        delete prev[chatId];
+        return {
+          [chatId]: chat,
+          ...prev,
+        };
+      });
     };
     socket?.on("receive-message", receiveMessageListener);
     return () => {

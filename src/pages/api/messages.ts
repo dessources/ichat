@@ -41,7 +41,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     // Saving a message
     case "POST":
       const { message } = req.body;
-      console.log(message);
+      message;
       //set the timestamp back to a date object
       message.timestamp = new Date(message.timestamp);
       try {

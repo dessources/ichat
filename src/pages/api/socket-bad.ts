@@ -20,10 +20,9 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
       const roomId = socket.handshake.query.roomId;
       fetch(`{orib}`);
       process.env.NODE_ENV !== "production" &&
-        console.log("joinged room ", roomId);
-      //each room contains all the clients where
-      //one user is connected
-      socket.join(roomId as string);
+        //each room contains all the clients where
+        //one user is connected
+        socket.join(roomId as string);
       socket.on("send-message", (data: Message & { recipients: string[] }) => {
         //for each recipients send the message to their room
         process.env.NODE_ENV !== "production" && console.log(data.recipients);

@@ -48,7 +48,6 @@ class UserService {
   }
 
   async setUser(user: User): Promise<any> {
-    console.log("setin the user");
     const response = axiosPrivate.post("/users", { updatedProfile: user });
     return response
       .then(({ data }) => Promise.resolve(data))

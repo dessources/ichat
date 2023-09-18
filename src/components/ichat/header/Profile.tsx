@@ -32,7 +32,6 @@ function Profile({ open, setOpen }: any) {
 
   const handleClose = React.useCallback(async () => {
     if (updatedInfo.updated) {
-      console.log("profile has changed we proceed");
       userService.setUser({ ...(user as User), ...updatedInfo });
       setUser?.((user) => ({ ...(user as User), ...updatedInfo }));
     }
