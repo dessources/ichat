@@ -1,7 +1,6 @@
 import React from "react";
 import {
   ChatContext,
-  ChatUsersContext,
   ChatMessagesContext,
   SocketIoContext,
   UserContext,
@@ -9,12 +8,9 @@ import {
 
 import {
   User,
-  Chat,
-  ChatUsers,
   Message,
   ChatMessagesContext as ChatMessagesContextType,
   ChatContext as ChatContextType,
-  Context,
 } from "@/models";
 import useAppContext from "@/hooks/useAppContext";
 import { Socket, io } from "socket.io-client";

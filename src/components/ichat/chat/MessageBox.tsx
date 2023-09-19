@@ -52,7 +52,6 @@ function MessageBox({ setBottom }: any) {
     const newMessages = chatMessages[currentChatId]
       ? {
           messages: [...chatMessages[currentChatId].messages, data],
-          lastFetched: chatMessages[currentChatId].lastFetched,
         }
       : { messages: [data] };
 

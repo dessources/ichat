@@ -7,11 +7,7 @@ import { ChatContext, ChatMessagesContext, UserContext } from "@/contexts";
 
 //models
 import {
-  Chat,
-  User,
-  Context,
   ChatContext as ChatContextType,
-  ChatWithInterlocutor,
   ChatMessagesContext as ChatMessagesContextType,
 } from "@/models";
 
@@ -44,7 +40,7 @@ export default function ChatList() {
 
   const chatList = Object.values(chats)
     ?.filter((chat) => {
-      return searchRegExp.test(chat.name as string);
+      return searchRegExp.test(chat?.name as string);
     })
     .map((chat, i) => <ChatListItem key={i} chat={chat} />);
 

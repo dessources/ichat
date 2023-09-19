@@ -23,7 +23,7 @@ export interface Message {
 }
 
 export interface ChatMessages {
-  [chat: string]: { messages: Message[]; lastFetched?: Date };
+  [chat: string]: { messages: Message[] };
 }
 
 export interface User {

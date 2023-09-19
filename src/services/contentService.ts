@@ -13,15 +13,10 @@ interface CreateChatData {
   currentUserId: string;
 }
 class ContentService {
-  async getMessages(
-    { url, chatId }: key,
-    sentAfter = new Date(0)
-  ): Promise<Message[]> {
+  async getMessages(chatId: string, lastMessageId?: string): Promise<Message[]> {
     // Get the messages
     const messages = await axiosPrivate
-      .get<Message[]>(
-        `${url}?chatId=${chatId}&sentAfter=${sentAfter.toISOString()}`
-      )
+      .get<Message[]>(`/messages?chatId=${chatId}&lastMessageId=${lastMessageId}`)
       .then((res) => res.data);
 
     return messages;

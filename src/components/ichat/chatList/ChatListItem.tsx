@@ -20,11 +20,11 @@ function ChatListItem({ chat }: { chat: ChatWithInterlocutor }) {
     <Box sx={styles.chatListItem} onClick={() => setCurrentChat?.(chat)}>
       <ListItemButton sx={styles.chat} selected={selected}>
         <IconButton color="inherit" sx={{ p: 0.5 }}>
-          <Avatar src={chat.chatPicture} alt={chat.name} sx={avatar}>
-            {chat.group ? <GroupIcon /> : chat?.name?.charAt(0)}
+          <Avatar src={chat?.chatPicture} alt={chat?.name} sx={avatar}>
+            {chat?.group ? <GroupIcon /> : chat?.name?.charAt(0)}
           </Avatar>
         </IconButton>
-        <Typography component="span">{chat.name}</Typography>
+        <Typography component="span">{chat?.name}</Typography>
       </ListItemButton>
     </Box>
   );

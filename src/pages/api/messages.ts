@@ -18,18 +18,26 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       let result: Message[];
 
       try {
-        const { chatId, sentAfter } = req.query;
+        const { chatId, lastMessageId: lastClientMessageId } = req.query;
 
-        //Get all messages sent in the corresponding chat after the sentAfter
-        //Date
-        result = await messages
-          .find({
-            $and: [
-              { chat: chatId },
-              { timestamp: { $gte: new Date(<string>sentAfter) } },
-            ],
-          })
-          .toArray();
+        //If last MessageId is not provided, return all message in the corresponding chat
+        const allMessages = await messages.find({ chat: chatId }).toArray();
+        if (lastClientMessageId === "undefined") {
+          result = allMessages;
+          console.log(chatId, lastClientMessageId);
+        }
+
+        //else check whether the database and the client have the same value for the last message
+        //if they don't, load the latest messages. If not do nothing
+        else {
+          const lastDBMessageId = allMessages[allMessages.length - 1]?.id;
+          if (lastClientMessageId !== lastDBMessageId) {
+            const lastClientMessageIndex = allMessages.findIndex(
+              (item) => item.id === lastClientMessageId
+            );
+            result = allMessages.slice(lastClientMessageIndex);
+          } else result = [];
+        }
 
         return res.status(200).json(result);
       } catch (err) {
