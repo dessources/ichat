@@ -29,9 +29,9 @@ export default function ChatList() {
     ChatContext
   ) as ChatContextType;
 
-  // const { chatMessages } = useAppContext(
-  //   ChatMessagesContext
-  // ) as ChatMessagesContextType;
+  const { isLoading: messagesLoading } = useAppContext(
+    ChatMessagesContext
+  ) as ChatMessagesContextType;
 
   const [searchRegExp, setSearchRegExp] = React.useState(/$/);
 
@@ -58,7 +58,7 @@ export default function ChatList() {
         <Typography sx={styles.title} component="p">
           Error !
         </Typography>
-      ) : isLoading ? (
+      ) : isLoading || messagesLoading ? (
         <Typography sx={styles.title} component="p">
           Loading ...
         </Typography>

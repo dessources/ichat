@@ -54,7 +54,9 @@ function SocketIoProvider(props: any) {
 
   //receive message event listener
   React.useEffect(() => {
-    const receiveMessageListener = (message: Message) => {
+    const receiveMessageListener = (
+      message: Message & { recipients: string[] }
+    ) => {
       const newMessages = chatMessages[message.chat]
         ? {
             ...chatMessages[message.chat],
@@ -69,7 +71,20 @@ function SocketIoProvider(props: any) {
 
       // console.log("the chats are", chats);
       // console.log("the chat Messages are", chatMessages);
-      const chatId = message.group ? message.id : message.sender;
+
+      //If the message is sent to a group chat, use that chat's id to reference
+      // the chat. Else, if the sender's id is different from the current user's id
+      // choose the id of the sender to reference the corresponding chat.
+      //Else, if this client is also the sender, meaning if it is another device
+      //on which the sender of the message is also currently logged in, we find
+      // the id that is not that of the current user from the recipients's list and
+      // use it to reference the corresponding chat.
+      const chatId = message.group
+        ? message.chat
+        : message.sender !== user.id
+        ? message.sender
+        : (message.recipients.find((el) => el !== user.id) as string);
+
       setChats((prev) => {
         const chat = structuredClone(prev[chatId]);
         delete prev[chatId];
