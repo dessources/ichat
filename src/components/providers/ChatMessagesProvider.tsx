@@ -35,26 +35,28 @@ function ChatMessagesProvider(props: any) {
         setIsLoading(false);
       });
     }
-    //
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chats]);
 
   React.useEffect(() => {
     if (currentChatId) {
       const currentMessages = chatMessages[currentChatId]?.messages;
+
       //if we have  fetched messages
       //add them to the corresponding chat
       //if the current chat has no messages fetch them
-
-      const lastMessageId = currentMessages[currentMessages.length - 1].id;
-      contentService
-        .getMessages(currentChatId, lastMessageId)
-        .then((messages) => {
-          setChatMessages((chatMessages) => ({
-            ...chatMessages,
-            [currentChatId]: { messages: [...currentMessages, ...messages] },
-          }));
-        })
-        .catch((err) => setError(err));
+      if (currentMessages?.length) {
+        const lastMessageId = currentMessages[currentMessages.length - 1].id;
+        contentService
+          .getMessages(currentChatId, lastMessageId)
+          .then((messages) => {
+            setChatMessages((chatMessages) => ({
+              ...chatMessages,
+              [currentChatId]: { messages: [...currentMessages, ...messages] },
+            }));
+          })
+          .catch((err) => setError(err));
+      }
     }
 
     //eslint-disable-next-line react-hooks/exhaustive-deps
