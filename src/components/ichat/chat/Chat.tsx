@@ -46,8 +46,8 @@ export default function Chat() {
         }));
       });
     }
-    ////eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chatUsers, currentChat, currentChatId, setChatUsers, currentUser]);
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatUsers, currentChat, setChatUsers]);
 
   return currentChat ? (
     <Box sx={styles.chat}>

@@ -59,6 +59,10 @@ export const message: SxProps<Theme> = {
   position: "relative",
   wordWrap: "break-word",
   overflowWrap: "anywhere",
+
+  "& .senderUsername": {
+    fontWeight: "bold",
+  },
 };
 
 export const sent = {

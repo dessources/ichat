@@ -24,7 +24,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         const allMessages = await messages.find({ chat: chatId }).toArray();
         if (lastClientMessageId === "undefined") {
           result = allMessages;
-          console.log(chatId, lastClientMessageId);
+          // console.log(chatId, lastClientMessageId);
         }
 
         //else check whether the database and the client have the same value for the last message
@@ -49,7 +49,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     // Saving a message
     case "POST":
       const { message } = req.body;
-      message;
+
       //set the timestamp back to a date object
       message.timestamp = new Date(message.timestamp);
       try {

@@ -39,7 +39,7 @@ function SetGroupDetails({
   const currentUserId = useAppContext(UserContext)?.[0]?.id as string;
 
   //todo: Save new chats to database
-  async function createChatHandler() {
+  async function createGroupHandler() {
     if (groupName) {
       let chatData = {
         name: groupName,
@@ -111,7 +111,7 @@ function SetGroupDetails({
 
       {/* cancel or create group chat */}
       <Box sx={{ ...styles.nextCancelButtons, marginTop: "1rem" }}>
-        <Button className="next" onClick={createChatHandler}>
+        <Button className="next" onClick={createGroupHandler}>
           Create
         </Button>
         <Button className="cancel" onClick={() => setSlide(0)}>
