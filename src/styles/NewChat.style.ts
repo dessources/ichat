@@ -4,7 +4,7 @@ import theme from "@/themes/ichat";
 import { alpha } from "@mui/material/styles";
 
 export const newChatModal = {
-  width: "4rem",
+  width: "5rem",
   height: "fit-content",
   maxHeight: "10rem",
 };
@@ -17,7 +17,7 @@ export const newChatBox = {
   marginLeft: "300px",
   borderRadius: "20px",
   background: "var(--dark_gray)",
-  width: "20rem",
+  width: "24rem",
   maxHeight: "30rem",
   height: "fit-content",
   padding: "10px 10px",
@@ -70,32 +70,34 @@ export const groupChatIcon = {
 };
 
 export const selectedUsers = {
-  display: "flex",
-
-  alignItems: "center",
-  gap: "5px",
   padding: "2px 2px 1px 2px",
   border: "1px solid #d7d7d7",
   minHeight: "2.5rem",
+  maxHeight: "2.5rem",
   borderRadius: "4px",
-  overflowX: "auto",
+  overflow: "auto",
   cursor: "pointer",
   "&::-webkit-scrollbar": {
     height: "5px",
+    width: "5px",
   },
 
   "&::-webkit-scrollbar-thumb": {
     backgroundColor: "#9f9f9f",
     borderRadius: "2px",
     borderColor: "transparent",
+    width: "5px",
   },
 };
 
 export const selectedUser = {
   padding: "0.5px",
+  margin: "0 3px 3px 1px",
+  height: "1.75rem",
+  borderRadius: "5px",
+  position: "static",
   background: alpha(theme.palette.primary.main, 0.7),
   color: "#fff",
-  height: "1.75rem",
 
   "&:hover": {
     background: alpha(theme.palette.primary.main, 0.6),
@@ -137,6 +139,7 @@ export const userDetails = {
 
 export const userListItemCheckBox = {
   "& .MuiSvgIcon-root": { fontSize: 28 },
+  color: "#fff8",
 };
 
 export const nextCancelButtons = {
@@ -144,8 +147,10 @@ export const nextCancelButtons = {
   justifyContent: "center",
   gap: "1rem",
   marginBottom: "0.5rem",
+
   "& button": {
     padding: "1px 1rem",
+    borderRadius: "5px",
   },
   "& .cancel": {
     color: "white",

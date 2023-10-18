@@ -37,14 +37,13 @@ export const title: SxProps<Theme> = {
   py: "0.5rem",
   px: 3,
   gap: "1rem",
-  color: "rgba(255, 255, 255, 0.7)",
 };
 
 export const addChatIcon: SxProps<Theme> = {
   display: "flex",
   alignItems: "flex-end",
   "& svg": {
-    fill: "rgba(255, 255, 255, 0.7)",
+    fill: "white",
     transform: "rotateY(180deg)",
   },
 };
