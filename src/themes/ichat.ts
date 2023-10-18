@@ -14,6 +14,7 @@ let theme = createTheme({
   typography: {
     allVariants: {
       fontFamily: '"Inter", sans-serif',
+      color: "white",
     },
     h5: {
       fontWeight: 500,

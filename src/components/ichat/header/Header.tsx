@@ -18,7 +18,7 @@ import * as styles from "@/styles/Header.style";
 import { avatar } from "@/styles/Ichat.style";
 import Profile from "./Profile";
 
-const lightColor = "rgba(255, 255, 255, 0.7)";
+// const lightColor = "rgba(255, 255, 255, 0.7)";
 
 export default function Header() {
   const [user] = useAppContext(UserContext) as Context<User>;
