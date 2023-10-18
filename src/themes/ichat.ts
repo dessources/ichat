@@ -12,6 +12,9 @@ let theme = createTheme({
     },
   },
   typography: {
+    allVariants: {
+      fontFamily: '"Inter", sans-serif',
+    },
     h5: {
       fontWeight: 500,
       fontSize: 26,
@@ -139,8 +142,10 @@ theme = {
     MuiAvatar: {
       styleOverrides: {
         root: {
-          width: 32,
-          height: 32,
+          fontFamily: '"Inter", sans-serif',
+          fontWeight: 500,
+          width: "2.30rem",
+          height: "2.30rem",
         },
       },
     },

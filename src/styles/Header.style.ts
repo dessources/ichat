@@ -4,6 +4,7 @@ import { SxProps, Theme } from "@mui/material";
 export const root: SxProps<Theme> | undefined = {
   height: "3rem",
   boxShadow: "none",
+  fontWeight: "bold",
 };
 
 export const toolbar: SxProps<Theme> = {

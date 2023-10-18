@@ -106,6 +106,7 @@ export const chat = {
   },
   "& span": {
     color: "#fff",
+    fontWeight: 500,
   },
 };
 

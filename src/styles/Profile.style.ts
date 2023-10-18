@@ -82,7 +82,6 @@ export const textEditable: SxProps<Theme> = {
 export const textField: SxProps<Theme> = {
   border: "none",
   width: "100%",
-  fontFamily: "Helvetica",
   fontSize: "15px",
   marginRight: "15px",
 

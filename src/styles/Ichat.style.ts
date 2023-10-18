@@ -43,7 +43,7 @@ export const emptyChatArea: SxProps<Theme> = {
   background: "var(--light_gray)",
   "& h3": {
     color: "white",
-    fontFamily: "Montserrat",
+    fontWeight: "bold",
   },
   userSelect: "none",
 };

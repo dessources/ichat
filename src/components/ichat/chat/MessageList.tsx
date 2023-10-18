@@ -12,8 +12,6 @@ import formatTime from "@/utils/formatTime";
 
 //models
 import {
-  Message,
-  Chat,
   User,
   ChatMessagesContext as ChatMessagesContextType,
   Context,
@@ -69,6 +67,7 @@ function MessageList({ bottom }: any) {
               user?.id === message.sender
                 ? ""
                 : currentChatUsers[message.sender]?.username;
+
             return (
               <Box
                 key={i}

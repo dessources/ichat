@@ -37,7 +37,7 @@
   transform: translateZ(0);
 }
 .header h1 {
-  font-family: Montserrat, sans-serif;
+  font-family: "Inter" sans-serif;
   font-size: 4rem;
   font-weight: 800;
   letter-spacing: 2px;

@@ -51,10 +51,7 @@ export const message: SxProps<Theme> = {
   width: "fit-content",
   maxWidth: "45%",
   borderRadius: "5px",
-  borderTop: "1px solid",
-
   boxShadow: "2px 8px 5px #272727",
-  fontFamily: "Helvetica",
   fontSize: "14px",
   position: "relative",
   wordWrap: "break-word",
@@ -69,15 +66,15 @@ export const sent = {
   background: "var(--sent_message_color)",
   alignSelf: "flex-end",
   borderColor: "#136757",
+  borderTopRightRadius: "0px",
   "&::before": {
     content: `" "`,
     position: "absolute",
-
-    top: "-1px",
+    top: 0,
     width: " 20px",
     borderRight: "10px solid transparent",
     borderRadius: "6px",
-    right: "-10px",
+    right: "-9.5px",
     borderTop: "10px solid var(--sent_message_color)",
   },
 };
@@ -86,18 +83,17 @@ export const received: SxProps<Theme> = {
   background: "var(--received_message_color)",
   alignSelf: "flex-start",
   borderColor: "#3f3f3f",
+  borderTopLeftRadius: "0px",
   "&::before": {
     content: `" "`,
     position: "absolute",
-    zIndex: "-1",
-    top: "-1px",
+    top: 0,
     width: " 20px",
     borderRight: "10px solid transparent",
     borderRadius: "6px",
     left: "-10px",
     transform: "rotateY(180deg)",
     borderTop: "10px solid var(--received_message_color)",
-    boxShadow: "2px 8px 5px #272727",
   },
 };
 
@@ -124,7 +120,6 @@ export const textField: SxProps<Theme> = {
   width: "90%",
   padding: "0 10px",
   color: "#d7d7d7",
-  fontFamily: "Helvetica",
   fontSize: "15px",
   marginRight: "15px",
   "& textarea::-webkit-scrollbar": {
