@@ -13,7 +13,7 @@ let theme = createTheme({
   },
   typography: {
     allVariants: {
-      fontFamily: '"Inter", sans-serif',
+      fontFamily: ' "Inter", sans-serif',
       color: "white",
     },
     h5: {
@@ -147,6 +147,13 @@ theme = {
           fontWeight: 500,
           width: "2.30rem",
           height: "2.30rem",
+        },
+      },
+    },
+    MuiBackdrop: {
+      styleOverrides: {
+        root: {
+          background: "#2727272F",
         },
       },
     },

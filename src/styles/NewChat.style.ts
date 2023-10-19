@@ -7,6 +7,7 @@ export const newChatModal = {
   width: "5rem",
   height: "fit-content",
   maxHeight: "10rem",
+  background: "white",
 };
 
 export const newChatBox = {

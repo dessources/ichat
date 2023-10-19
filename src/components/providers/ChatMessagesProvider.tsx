@@ -30,7 +30,6 @@ function ChatMessagesProvider(props: any) {
       });
 
       Promise.all(result).then(() => {
-        console.log(initialChatMessages);
         setChatMessages(initialChatMessages);
         setIsLoading(false);
       });

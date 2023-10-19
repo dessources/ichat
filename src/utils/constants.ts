@@ -1,4 +1,5 @@
 import type { AxiosRequestConfig } from "axios";
+import emojiRegexFunc from "emoji-regex";
 
 export const MIN_PASSWORD_LENGTH = 8;
 export const MAX_USERNAME_LENGTH = 41;
@@ -15,3 +16,10 @@ export const AXIOS_CONFIG: AxiosRequestConfig = {
     Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_ACCESS_TOKEN}`,
   },
 };
+
+const emojiString = emojiRegexFunc().toString();
+
+export const EMOJI_REGEXP = new RegExp(
+  `(${emojiString.substring(1, emojiString.length - 2)}){1,}`,
+  "g"
+);
