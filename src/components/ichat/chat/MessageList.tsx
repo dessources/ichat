@@ -9,6 +9,7 @@ import {
 } from "@/contexts";
 //utils
 import formatTime from "@/utils/formatTime";
+import formatEmoji from "@/utils/formatEmoji";
 
 //models
 import {
@@ -57,6 +58,11 @@ function MessageList({ bottom }: any) {
   const messages = chatMessages[currentChatId]?.messages?.sort(
     (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
   );
+
+  React.useEffect(() => {
+    formatEmoji(document.body);
+  });
+
   return (
     <>
       {messages?.length ? (
@@ -76,7 +82,7 @@ function MessageList({ bottom }: any) {
                 {message.group && (
                   <span className="senderUsername">{senderUsername}</span>
                 )}
-                <span>{message.content}</span>
+                <span className="format-emoji">{message.content}</span>
                 <span style={styles.time}>
                   {message.timestamp ? formatTime(message.timestamp) : null}
                 </span>

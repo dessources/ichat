@@ -14,6 +14,10 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Montserrat:wght@100;400;800&family=Shantell+Sans:wght@400;600&display=swap"
           rel="stylesheet"
         />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <body>
         <Main />
