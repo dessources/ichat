@@ -61,7 +61,7 @@ function MessageList({ bottom }: any) {
 
   React.useEffect(() => {
     formatEmoji(document.body);
-  });
+  },[currentChatId]);
 
   return (
     <>
