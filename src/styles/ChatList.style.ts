@@ -127,6 +127,46 @@ export const chatList: SxProps<Theme> = {
 export const chatListItem: SxProps<Theme> = {
   textTransform: "capitalize",
 };
+export const chatInfo: SxProps<Theme> = {
+  display: "flex",
+  justifyContent: "space-between",
+  flexGrow: 1,
+};
+export const lastMessageExcerpt: React.CSSProperties = {
+  color: "#919191",
+  fontSize: "0.75rem",
+};
+
+export const chatDetails: SxProps<Theme> = {
+  alignSelf: "center",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: "2px",
+
+  "& .unreadMessageCount": {
+    fontSize: "0.75rem",
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: "50%",
+    height: "18px",
+    width: "18px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+};
+
+// width: 23px;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     line-height: 0;
+//     font-size: 13px;
+//     height: 23px;
+//     background-color: #0a80ff;
+//     color: #fff;
+//     border-radius: 50%;
+//     margin-left: auto;
 
 export const noResult: SxProps<Theme> = {
   display: "flex",

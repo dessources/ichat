@@ -19,7 +19,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddChatIcon from "@mui/icons-material/AddComment";
 //my components
 import ChatListItem from "./ChatListItem";
-import NewChat from "./NewChat/NewChatBox";
+import NewChat from "@/components/ichat/NewChat/NewChatBox";
 
 //styles
 import * as styles from "@/styles/ChatList.style";

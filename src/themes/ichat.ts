@@ -3,7 +3,7 @@ import { createTheme } from "@mui/material/styles";
 let theme = createTheme({
   palette: {
     primary: {
-      main: "#82E9B4", //green-ish
+      main: "#025c4c" || "#82E9B4", //green-ish
       light: "#63ccff",
       dark: "rgba(21, 16, 104,  0.95)",
     },
@@ -110,16 +110,16 @@ theme = {
         },
       },
     },
-    MuiListItemButton: {
-      styleOverrides: {
-        root: {
-          "&.Mui-selected": {
-            color: "#4fc3f7",
-            bgcolor: "red",
-          },
-        },
-      },
-    },
+    // MuiListItemButton: {
+    //   styleOverrides: {
+    //     root: {
+    //       "&.Mui-selected": {
+    //         color: "#4fc3f7",
+    //         bgcolor: "red",
+    //       },
+    //     },
+    //   },
+    // },
     MuiListItemText: {
       styleOverrides: {
         primary: {

@@ -33,6 +33,8 @@ export default function ChatProvider(props: any) {
         chat.secondaryId = chat.interlocutorId as string;
         formattedChats[chat.interlocutorId as string] = chat;
       }
+
+      chat.unreadMessageCount = Math.round(Math.random() * 10);
     });
 
     setChats(formattedChats);

@@ -9,6 +9,7 @@ export interface Chat {
   chatPicture?: string;
   users: string[];
   group: boolean;
+  unreadMessageCount?: number;
 }
 
 export type ChatWithInterlocutor = Chat & { interlocutorId?: string };
@@ -20,6 +21,7 @@ export interface Message {
   group: boolean;
   content: string;
   timestamp: Date;
+  status?: "sent" | "delivered" | "read";
 }
 
 export interface ChatMessages {
@@ -46,7 +48,7 @@ export interface UserAuthInfo {
   rememberUser?: boolean;
 }
 
-//an interlocutor is whichever user in a non-chat group
+//an interlocutor is whichever user in a non-group chat
 //that isn't the logged in user or current User
 
 export type ChatContext = {

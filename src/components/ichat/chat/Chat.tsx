@@ -21,7 +21,6 @@ import MessageBox from "./MessageBox";
 //styles
 import * as styles from "@/styles/Ichat.style";
 import userService from "@/services/userService";
-import ContextProvider from "@/components/providers/ContextProvider";
 
 export default function Chat() {
   const { currentChat } = useAppContext(ChatContext) as ChatContextType;
