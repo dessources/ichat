@@ -60,8 +60,9 @@ function MessageList({ bottom }: any) {
   );
 
   React.useEffect(() => {
+    console.log("formatting");
     formatEmoji(document.body);
-  },[currentChatId]);
+  }, [currentChatId, chatMessages]);
 
   return (
     <>

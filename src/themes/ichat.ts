@@ -113,7 +113,9 @@ theme = {
     MuiListItemButton: {
       styleOverrides: {
         root: {
-          "&.Mui-selected": { background: theme.palette.primary.main },
+          "&.Mui-selected": {
+            background: `${theme.palette.primary.main} !important`,
+          },
         },
       },
     },
