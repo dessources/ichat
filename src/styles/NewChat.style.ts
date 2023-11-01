@@ -74,7 +74,7 @@ export const selectedUsers = {
   padding: "2px 2px 1px 2px",
   border: "1px solid #d7d7d7",
   minHeight: "2.5rem",
-  maxHeight: "2.5rem",
+  maxHeight: "5rem",
   borderRadius: "4px",
   overflow: "auto",
   cursor: "pointer",

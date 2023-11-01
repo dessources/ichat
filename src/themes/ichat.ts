@@ -3,8 +3,8 @@ import { createTheme } from "@mui/material/styles";
 let theme = createTheme({
   palette: {
     primary: {
-      main: "#025c4c" || "#82E9B4", //green-ish
-      light: "#63ccff",
+      main: "#025c4c", //green-ish
+      light: "#82E9B4",
       dark: "rgba(21, 16, 104,  0.95)",
     },
     secondary: {
@@ -110,16 +110,13 @@ theme = {
         },
       },
     },
-    // MuiListItemButton: {
-    //   styleOverrides: {
-    //     root: {
-    //       "&.Mui-selected": {
-    //         color: "#4fc3f7",
-    //         bgcolor: "red",
-    //       },
-    //     },
-    //   },
-    // },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          "&.Mui-selected": { background: theme.palette.primary.main },
+        },
+      },
+    },
     MuiListItemText: {
       styleOverrides: {
         primary: {
