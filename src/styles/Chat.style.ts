@@ -59,6 +59,8 @@ export const message: SxProps<Theme> = {
 
   "& .senderUsername": {
     fontWeight: "bold",
+    fontSize: "0.75rem",
+    color: "var(--accent_color)",
   },
 };
 
