@@ -9,6 +9,7 @@ import { ChatContext, ChatMessagesContext, UserContext } from "@/contexts";
 import {
   ChatContext as ChatContextType,
   ChatMessagesContext as ChatMessagesContextType,
+  Chat,
 } from "@/models";
 
 //mui
@@ -25,13 +26,20 @@ import NewChat from "@/components/ichat/NewChat/NewChatBox";
 import * as styles from "@/styles/ChatList.style";
 
 export default function ChatList() {
-  const { chats, isLoading, isError } = useAppContext(
+  const { chats, isLoading, isError, currentChat, setChats } = useAppContext(
     ChatContext
   ) as ChatContextType;
 
   const { isLoading: messagesLoading } = useAppContext(
     ChatMessagesContext
   ) as ChatMessagesContextType;
+
+  React.useEffect(() => {
+    setChats((prev) => ({
+      ...prev,
+      [currentChat?.secondaryId as string]: currentChat as Chat,
+    }));
+  }, [currentChat, setChats]);
 
   const [searchRegExp, setSearchRegExp] = React.useState(/$/);
 
@@ -40,6 +48,7 @@ export default function ChatList() {
 
   const chatList = Object.values(chats)
     ?.filter((chat) => {
+      console.log(chat.unreadMessageCount);
       return searchRegExp.test(chat?.name as string);
     })
     .map((chat, i) => <ChatListItem key={i} chat={chat} />);

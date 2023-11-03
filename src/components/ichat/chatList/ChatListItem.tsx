@@ -49,7 +49,9 @@ function ChatListItem({ chat }: { chat: ChatWithInterlocutor }) {
             </div>
           </Box>
           <Box sx={styles.chatDetails}>
-            <span className="unreadMessageCount">{chat.unreadMessageCount}</span>
+            {chat.unreadMessageCount! > 0 && (
+              <span className="unreadMessageCount">{chat.unreadMessageCount}</span>
+            )}
             <span style={time}>{formatTime(lastMessage?.timestamp)}</span>
           </Box>
         </Box>
