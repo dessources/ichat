@@ -2,6 +2,7 @@ import React from "react";
 import { SxProps, Theme } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import theme from "@/themes/ichat";
+import { time } from "@/styles/Chat.style";
 
 // export const root: SxProps<Theme> = {};
 
@@ -130,6 +131,7 @@ export const chatListItem: SxProps<Theme> = {
 export const chatInfo: SxProps<Theme> = {
   display: "flex",
   justifyContent: "space-between",
+  alignItems: "flex-start",
   flexGrow: 1,
 };
 export const lastMessageExcerpt: React.CSSProperties = {
@@ -138,11 +140,12 @@ export const lastMessageExcerpt: React.CSSProperties = {
 };
 
 export const chatDetails: SxProps<Theme> = {
-  alignSelf: "center",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+  justifyContent: "center",
   gap: "2px",
+  paddingTop: "4px",
 
   "& .unreadMessageCount": {
     fontSize: "0.75rem",
@@ -155,6 +158,11 @@ export const chatDetails: SxProps<Theme> = {
     alignItems: "center",
     justifyContent: "center",
   },
+};
+
+export const timestamp = {
+  ...time,
+  alignSelf: "normal",
 };
 
 // width: 23px;

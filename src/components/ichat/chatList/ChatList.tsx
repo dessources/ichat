@@ -48,7 +48,7 @@ export default function ChatList() {
 
   const chatList = Object.values(chats)
     ?.filter((chat) => {
-      console.log(chat.unreadMessageCount);
+      console.log(chat?.unreadMessageCount);
       return searchRegExp.test(chat?.name as string);
     })
     .map((chat, i) => <ChatListItem key={i} chat={chat} />);

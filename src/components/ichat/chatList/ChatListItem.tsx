@@ -14,7 +14,6 @@ import { ChatContext, ChatMessagesContext } from "@/contexts";
 import useAppContext from "@/hooks/useAppContext";
 
 //styles
-import { time } from "@/styles/Chat.style";
 import formatTime from "@/utils/formatTime";
 
 function ChatListItem({ chat }: { chat: ChatWithInterlocutor }) {
@@ -49,10 +48,12 @@ function ChatListItem({ chat }: { chat: ChatWithInterlocutor }) {
             </div>
           </Box>
           <Box sx={styles.chatDetails}>
+            <span style={styles.timestamp}>
+              {formatTime(lastMessage?.timestamp)}
+            </span>
             {chat.unreadMessageCount! > 0 && (
               <span className="unreadMessageCount">{chat.unreadMessageCount}</span>
             )}
-            <span style={time}>{formatTime(lastMessage?.timestamp)}</span>
           </Box>
         </Box>
       </ListItemButton>
