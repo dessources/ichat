@@ -1,22 +1,26 @@
 import React from "react";
 
 //models
-import { ChatMessages, Message, ChatContext as ChatContextType } from "@/models";
+import { ChatMessages, ChatContext as ChatContextType, Context } from "@/models";
 import useAppContext from "@/hooks/useAppContext";
-import { ChatContext, ChatMessagesContext } from "@/contexts";
+import { ChatContext, ChatMessagesContext, SocketIoContext } from "@/contexts";
 import contentService from "@/services/contentService";
+import { Socket } from "socket.io-client";
 
 function ChatMessagesProvider(props: any) {
-  const { currentChat, chats } = useAppContext(ChatContext) as ChatContextType;
+  const { currentChat, chats, setChats } = useAppContext(
+    ChatContext
+  ) as ChatContextType;
 
   const currentChatId = currentChat?.id as string;
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState();
 
   const [chatMessages, setChatMessages] = React.useState<ChatMessages>({});
-
+const [socket] = useAppContext(SocketIoContext) as Context<Socket>
   //Initializing
   React.useEffect(() => {
+    //if we have no messages get them
     if (!Object.keys(chatMessages).length) {
       const initialChatMessages = {} as ChatMessages;
       setIsLoading(true);
@@ -26,6 +30,12 @@ function ChatMessagesProvider(props: any) {
         const messages = await contentService
           .getMessages(chat.id)
           .then((messages) => messages);
+        //loop over the messages starting from the most recent one
+        //to count the unread messages
+        for (let i = messages.length - 1; i > 0; i--) {
+          if (messages[i].status === "read") break;
+          messages[i].status !== "read" && chat.unreadMessageCount++;
+        }
         initialChatMessages[chat.id] = { messages };
       });
 
@@ -49,10 +59,27 @@ function ChatMessagesProvider(props: any) {
         contentService
           .getMessages(currentChatId, lastMessageId)
           .then((messages) => {
-            setChatMessages((chatMessages) => ({
-              ...chatMessages,
-              [currentChatId]: { messages: [...currentMessages, ...messages] },
-            }));
+             const newMessages = [...currentMessages, ...messages];
+             const readMessages = [];
+
+             for (let i = newMessages.length - 1; i > 0; i--) {
+               if (newMessages[i].status === "read") break;
+               newMessages[i].status = "read";
+               readMessages.push(newMessages[i].id);
+               chats[currentChat?.secondaryId as string].unreadMessageCount = 0;
+             }
+
+            //  socket?.emit("messages-read", {messages:readMessages})
+
+             console.log(readMessages);
+            setChatMessages((chatMessages) => {
+              return {
+                ...chatMessages,
+                [currentChatId]: { messages: [...newMessages] },
+              };
+            });
+
+            setChats(chats);
           })
           .catch((err) => setError(err));
       }

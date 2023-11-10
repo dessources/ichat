@@ -15,7 +15,7 @@ import Image from "next/image";
 
 //styles
 import * as styles from "@/styles/Header.style";
-import { avatar } from "@/styles/Ichat.style";
+
 import Profile from "./Profile";
 
 // const lightColor = "rgba(255, 255, 255, 0.7)";
@@ -48,7 +48,11 @@ export default function Header() {
                 sx={{ p: 0.5 }}
                 onClick={() => setProfileOpen(true)}
               >
-                <Avatar src={user?.profilePicture} alt="My Avatar" sx={avatar}>
+                <Avatar
+                  src={user?.profilePicture}
+                  alt="My Avatar"
+                  sx={styles.profilePicture}
+                >
                   {user?.name.charAt(0)}
                 </Avatar>
               </IconButton>

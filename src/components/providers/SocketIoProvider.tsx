@@ -88,6 +88,8 @@ function SocketIoProvider(props: any) {
       setChats((prev) => {
         const chat = structuredClone(prev[chatId]);
         delete prev[chatId];
+        chat.unreadMessageCount = chat.unreadMessageCount as number;
+        chat.id !== currentChat?.id && chat.unreadMessageCount++;
         return {
           [chatId]: chat,
           ...prev,
@@ -101,6 +103,7 @@ function SocketIoProvider(props: any) {
   }, [
     chatMessages,
     chats,
+    currentChat,
     setChatMessages,
     setChats,
     setCurrentChat,

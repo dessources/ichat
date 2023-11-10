@@ -25,8 +25,8 @@ function ChatListItem({ chat }: { chat: ChatWithInterlocutor }) {
     ChatMessagesContext
   ) as ChatMessagesContextType;
 
-  const lastMessageIndex = chatMessages[chat.id]?.messages.length - 1;
-  const lastMessage = chatMessages[chat.id]?.messages[lastMessageIndex];
+  const lastMessageIndex = chatMessages[chat?.id]?.messages.length - 1;
+  const lastMessage = chatMessages[chat?.id]?.messages[lastMessageIndex];
   const selected = currentChat?.secondaryId === chat?.secondaryId;
 
   return (

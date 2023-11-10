@@ -63,9 +63,10 @@ function MessageList({ bottom }: any) {
   );
 
   //set new message count to 0
-  if (currentChat?.unreadMessageCount) {
-    setCurrentChat((prev) => ({ ...prev, unreadMessageCount: 0 } as Chat));
-  }
+  // if (currentChat?.unreadMessageCount) {
+  //   setCurrentChat((prev) => ({ ...prev, unreadMessageCount: 0 } as Chat));
+  // }
+
   console.log(
     "the current chat unread message count is",
     currentChat?.unreadMessageCount

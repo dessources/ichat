@@ -9,7 +9,7 @@ export interface Chat {
   chatPicture?: string;
   users: string[];
   group: boolean;
-  unreadMessageCount?: number;
+  unreadMessageCount: number;
 }
 
 export type ChatWithInterlocutor = Chat & { interlocutorId?: string };

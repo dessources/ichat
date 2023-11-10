@@ -34,7 +34,7 @@ export default function ChatProvider(props: any) {
         formattedChats[chat.interlocutorId as string] = chat;
       }
 
-      chat.unreadMessageCount = Math.round(Math.random() * 10);
+      chat.unreadMessageCount = 0;
     });
 
     setChats(formattedChats);

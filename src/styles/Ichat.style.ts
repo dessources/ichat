@@ -30,10 +30,12 @@ export const main: SxProps = {
 export const avatar: SxProps<Theme> = {
   textTransform: "uppercase",
   background: "#444",
+  height: 48,
+  width: 48,
 };
 
 export const emptyChatArea: SxProps<Theme> = {
-  width: "100%",
+  flexGrow: 1,
   display: "flex",
   flexDirection: "column",
   gap: "10px",
@@ -46,4 +48,5 @@ export const emptyChatArea: SxProps<Theme> = {
     fontWeight: "bold",
   },
   userSelect: "none",
+  pointerEvents: "none",
 };

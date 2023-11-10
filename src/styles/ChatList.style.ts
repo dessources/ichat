@@ -97,8 +97,8 @@ export const inputBase: SxProps<Theme> = {
 };
 
 export const chat = {
-  py: "0.5rem",
-  px: 3,
+  py: "0.25rem",
+  px: 1.5,
   gap: "1rem",
   color: "rgba(255, 255, 255, 0.7)",
   "&:hover": {
