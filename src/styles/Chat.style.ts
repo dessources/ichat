@@ -29,7 +29,7 @@ export const messageList = (bottom?: string): SxProps<Theme> => ({
   padding: "1rem 10%",
   display: "flex",
   flexDirection: "column",
-  rowGap: "0.2rem",
+  rowGap: "0.3rem",
   overflowY: "auto",
 
   "&::-webkit-scrollbar": {
@@ -99,8 +99,26 @@ export const received: SxProps<Theme> = {
 
 export const time: React.CSSProperties = {
   fontSize: "10px",
-  alignSelf: "flex-end",
   opacity: 0.6,
+};
+
+export const messageInfo: SxProps<Theme> = {
+  fontSize: "10px",
+
+  alignSelf: "flex-end",
+  "& .status": {
+    // display: "inline-block",
+    marginLeft: "3px",
+    fontWeight: "700",
+    letterSpacing: "-3px",
+  },
+  "& .read": {
+    color: "#438eef",
+  },
+
+  "& .delivered, & .sent": {
+    opacity: 0.6,
+  },
 };
 
 export const messageBox: SxProps<Theme> = {

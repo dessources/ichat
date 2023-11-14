@@ -18,6 +18,7 @@ import {
   Context,
   ChatContext as ChatContextType,
   ChatUsers,
+  Message,
   Chat,
 } from "@/models";
 
@@ -81,6 +82,7 @@ function MessageList({ bottom }: any) {
         <Box sx={styles.messageList(bottom)} ref={listRef}>
           {messages.map((message, i) => {
             const type = user?.id === message.sender ? "sent" : "received";
+            const status = message.status;
             const senderUsername =
               user?.id === message.sender
                 ? ""
@@ -95,9 +97,17 @@ function MessageList({ bottom }: any) {
                   <span className="senderUsername">{senderUsername}</span>
                 )}
                 <span className="format-emoji">{message.content}</span>
-                <span style={styles.time}>
-                  {message.timestamp ? formatTime(message.timestamp) : null}
-                </span>
+                <Box sx={styles.messageInfo}>
+                  <span style={styles.time}>
+                    {" "}
+                    {message.timestamp ? formatTime(message.timestamp) : null}
+                  </span>
+                  {type === "sent" && (
+                    <span className={`status ${status}`}>
+                      {status === "sent" ? "\u2713" : "\u2713\u2713"}
+                    </span>
+                  )}
+                </Box>
               </Box>
             );
           })}

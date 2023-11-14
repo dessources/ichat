@@ -21,7 +21,7 @@ export interface Message {
   group: boolean;
   content: string;
   timestamp: Date;
-  status?: "sent" | "delivered" | "read";
+  status: "sent" | "delivered" | "read";
 }
 
 export interface ChatMessages {
@@ -67,6 +67,7 @@ export type ChatMessagesContext = {
   setChatMessages: React.Dispatch<React.SetStateAction<ChatMessages | undefined>>;
   isLoading: boolean;
   error: any;
+  setError: React.Dispatch<React.SetStateAction<any>>;
 };
 
 export type Context<T> =

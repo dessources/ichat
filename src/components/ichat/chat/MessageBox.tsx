@@ -38,7 +38,7 @@ function MessageBox({ setBottom }: any) {
   const [message, setMessage] = React.useState("");
 
   const handleSendMessage = () => {
-    const data: Message = {
+    const data = {
       id: uuid4(),
       sender: user?.id as string,
       content: message,
@@ -47,11 +47,13 @@ function MessageBox({ setBottom }: any) {
       timestamp: new Date(),
     };
 
-    const newMessages = chatMessages[currentChatId]
-      ? {
-          messages: [...chatMessages[currentChatId].messages, data],
-        }
-      : { messages: [data] };
+    const newMessages = (
+      chatMessages[currentChatId]
+        ? {
+            messages: [...chatMessages[currentChatId].messages, data],
+          }
+        : { messages: [data] }
+    ) as { messages: Message[] };
 
     setChatMessages?.((prev) => ({
       ...prev,

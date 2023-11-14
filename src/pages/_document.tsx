@@ -18,6 +18,7 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap"
           rel="stylesheet"
         />
+        <link rel="preload" as="image" href="chat_background.png" />
       </Head>
       <body>
         <Main />

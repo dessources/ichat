@@ -25,6 +25,7 @@ function SocketIoProvider(props: any) {
     ChatMessagesContext
   ) as ChatMessagesContextType;
 
+  //Socket connection initializer
   React.useEffect(() => {
     let newSocket: Socket | null = null;
 
@@ -52,9 +53,9 @@ function SocketIoProvider(props: any) {
     };
   }, [user]);
 
-  //receive message event listener
+  // event listeners
   React.useEffect(() => {
-    const receiveMessageListener = (
+    const receiveMessageHandler = (
       message: Message & { recipients: string[] }
     ) => {
       const newMessages = chatMessages[message.chat]
@@ -95,10 +96,65 @@ function SocketIoProvider(props: any) {
           ...prev,
         };
       });
+
+      socket?.emit("message-received", {
+        id: message.id,
+        chatId: message.chat,
+        sender: message.sender,
+      });
+
+      if (message.chat === currentChat?.id) {
+        socket?.emit("messages-read", {
+          messageIds: [message.id],
+          chatId: message.chat,
+          sender: message.sender,
+        });
+      }
     };
-    socket?.on("receive-message", receiveMessageListener);
+
+    const messageReadHandler = ({
+      messages,
+      chatId,
+    }: {
+      messages: string[];
+      chatId: string;
+    }) => {
+      let messageList = chatMessages[chatId].messages;
+      for (let i = messageList.length - 1; i >= 0; i--) {
+        //if we get to a message marked "read" or a message that
+        //was sent to us. It means We have looked at all the latest
+        //messages we sent that were unread so we break out of the loop
+        if (messageList[i].status === "read" || messageList[i].sender !== user?.id)
+          break;
+        else if (messageList[i].status === "delivered")
+          messageList[i].status = "read";
+      }
+      const newMessages = { messages: messageList };
+
+      setChatMessages?.((prev) => ({ ...prev, [chatId]: newMessages }));
+    };
+    const messageReceivedHandler = ({
+      id,
+      chatId,
+    }: {
+      id: string;
+      chatId: string;
+    }) => {
+      const chat = chatMessages[chatId];
+      console.log("the chat messages are ", chatMessages);
+      console.log(chatId, chat);
+
+      chat.messages[chat.messages.length - 1].status = "delivered";
+
+      setChatMessages((prev) => ({ ...prev, [chatId]: chat }));
+    };
+    socket?.on("receive-message", receiveMessageHandler);
+    socket?.on("messages-read", messageReadHandler);
+    socket?.on("message-received", messageReceivedHandler);
     return () => {
-      socket?.off("receive-message", receiveMessageListener);
+      socket?.off("messages-read", messageReadHandler);
+
+      socket?.off("receive-message", receiveMessageHandler);
     };
   }, [
     chatMessages,
