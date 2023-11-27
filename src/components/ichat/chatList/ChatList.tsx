@@ -34,12 +34,12 @@ export default function ChatList() {
     ChatMessagesContext
   ) as ChatMessagesContextType;
 
-  React.useEffect(() => {
-    setChats((prev) => ({
-      ...prev,
-      [currentChat?.secondaryId as string]: currentChat as Chat,
-    }));
-  }, [currentChat, setChats]);
+  // React.useEffect(() => {
+  //   setChats((prev) => ({
+  //     ...prev,
+  //     [currentChat?.secondaryId as string]: currentChat as Chat,
+  //   }));
+  // }, [currentChat, setChats]);
 
   const [searchRegExp, setSearchRegExp] = React.useState(/$/);
 
