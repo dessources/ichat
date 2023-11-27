@@ -33,22 +33,22 @@ export default function ChatProvider(props: any) {
         chat.secondaryId = chat.interlocutorId as string;
         formattedChats[chat.interlocutorId as string] = chat;
       }
-
+      //initializing the unreadmessageCount property
       chat.unreadMessageCount = 0;
     });
 
     setChats(formattedChats);
   }, [chatData]);
 
-  React.useEffect(() => {
-    // setCurrentChat(chats[currentChat?.secondaryId as string]);
-    console.log(
-      "From chat object unread count: ",
-      chats[currentChat?.secondaryId as string]?.unreadMessageCount
-    );
-    console.log("From currentChat unread Cout: ", currentChat?.unreadMessageCount);
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chats]);
+  // React.useEffect(() => {
+  //   // setCurrentChat(chats[currentChat?.secondaryId as string]);
+  //   console.log(
+  //     "From chat object unread count: ",
+  //     chats[currentChat?.secondaryId as string]?.unreadMessageCount
+  //   );
+  //   console.log("From currentChat unread Cout: ", currentChat?.unreadMessageCount);
+  //   //eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [chats]);
 
   return (
     <ChatContext.Provider

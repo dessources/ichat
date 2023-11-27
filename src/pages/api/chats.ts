@@ -10,8 +10,12 @@ import { Chat, User } from "@/models";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const client = await clientPromise;
-  const chats: Collection<Chat> = client.db("ichat").collection("chats");
-  const testChats: Collection<Chat> = client.db("ichat").collection("test_chats");
+  const chats: Collection<Omit<Chat, "unreadMessageCount">> = client
+    .db("ichat")
+    .collection("chats");
+  const testChats: Collection<Omit<Chat, "unreadMessageCount">> = client
+    .db("ichat")
+    .collection("test_chats");
   const users: Collection<User> = client.db("ichat").collection("users");
 
   switch (req.method) {
@@ -48,7 +52,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
         console.log(chat);
         const { users: chatUsers, name: chatName, group, id } = chat;
-        testChats.insertOne({ users: chatUsers, name: chatName, group, id });
+        testChats.insertOne({
+          users: chatUsers,
+          name: chatName,
+          group,
+          id,
+        });
 
         //if the chat is not a group chat find the other user that
         //the current user wants to communicate with

@@ -61,22 +61,18 @@ export default function newMessageHandler({
       };
     });
 
-    setTimeout(() => {
-      socket?.emit("message-received", {
-        id: message.id,
+    socket?.emit("message-received", {
+      id: message.id,
+      chatId: message.chat,
+      sender: message.sender,
+    });
+
+    if (message.chat === currentChat?.id) {
+      socket?.emit("messages-read", {
+        messageIds: [message.id],
         chatId: message.chat,
         sender: message.sender,
       });
-    }, 3000);
-
-    if (message.chat === currentChat?.id) {
-      setTimeout(() => {
-        socket?.emit("messages-read", {
-          messageIds: [message.id],
-          chatId: message.chat,
-          sender: message.sender,
-        });
-      }, 6000);
     }
   };
 }

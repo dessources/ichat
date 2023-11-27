@@ -59,7 +59,21 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         res.status(500).json({ message: "Something went wrong", error: err });
       }
       res.json("saved message!");
+      break;
+    //updating a message
+    case "PUT":
+      try {
+        const messageId: string = req.body.message.id;
+        await messages.updateOne({ id: messageId }, { $set: req.body.message });
+        res.status(201).json({ message: "message updated" });
+      } catch (e) {
+        process.env.NODE_ENV !== "production" && console.log(e);
+        res.status(500).json({ message: "unable to update message" });
+      }
   }
 }
 
-export default allowMethods(["GET", "POST"], authenticate(authorize(handler)));
+export default allowMethods(
+  ["GET", "POST", "PUT"],
+  authenticate(authorize(handler))
+);

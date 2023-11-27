@@ -27,6 +27,7 @@ export default function authenticate(next: NextApiHandler) {
 
       // Call the next middleware or API route handler function
       await next(req, res);
+      req.method === "PUT" && console.log("\nWe got here too ?\n");
     } catch (error: any) {
       process.env.NODE_ENV === "test" && console.error(error);
       return res.status(401).json({ message: "Authentication Failed" });

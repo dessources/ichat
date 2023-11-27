@@ -65,9 +65,10 @@ function MessageBox({ setBottom }: any) {
 
     //removing this chat from the list and replacing it at the top
     setChats((prev) => {
+      const chat = structuredClone(prev[currentChat?.secondaryId as string]);
       delete prev[currentChat?.secondaryId as string];
       return {
-        [currentChat?.secondaryId as string]: currentChat!,
+        [currentChat?.secondaryId as string]: chat,
         ...prev,
       };
     });
