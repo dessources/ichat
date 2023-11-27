@@ -45,6 +45,7 @@ function MessageBox({ setBottom }: any) {
       chat: currentChat?.id as string,
       group: !!currentChat?.group,
       timestamp: new Date(),
+      status: "sent",
     };
 
     const newMessages = (

@@ -62,55 +62,58 @@ export default function ChatList() {
 
   return (
     <Box sx={styles.paper}>
-      {isError ? (
+      {
+        //TODO work on erro! bug
+        /*isError ? (
         <Typography sx={styles.title} component="p">
           Error !
         </Typography>
-      ) : isLoading || messagesLoading ? (
-        <Typography sx={styles.title} component="p">
-          Loading ...
-        </Typography>
-      ) : (
-        <>
-          {/* Header */}
-          <Box sx={styles.header}>
-            <Typography sx={styles.title} variant="h5">
-              Chats
-            </Typography>
-            {/* New CHat Icon */}
-            <Box title="Start a new chat" sx={styles.addChatIcon}>
-              <Button onClick={() => setNewChatOpen(true)}>
-                <AddChatIcon sx={{ fill: "var(--accent_color)" }} />
-              </Button>
-              <NewChat open={newChatOpen} setOpen={setNewChatOpen}></NewChat>
+      ) : */ isLoading || messagesLoading ? (
+          <Typography sx={styles.title} component="p">
+            Loading ...
+          </Typography>
+        ) : (
+          <>
+            {/* Header */}
+            <Box sx={styles.header}>
+              <Typography sx={styles.title} variant="h5">
+                Chats
+              </Typography>
+              {/* New CHat Icon */}
+              <Box title="Start a new chat" sx={styles.addChatIcon}>
+                <Button onClick={() => setNewChatOpen(true)}>
+                  <AddChatIcon sx={{ fill: "var(--accent_color)" }} />
+                </Button>
+                <NewChat open={newChatOpen} setOpen={setNewChatOpen}></NewChat>
+              </Box>
             </Box>
-          </Box>
 
-          {/* Search Box */}
-          <Box sx={styles.search}>
-            <InputBase
-              sx={styles.inputBase}
-              onKeyDown={handleEnter}
-              onChange={(e) => setSearchRegExp(new RegExp(e.target.value, "i"))}
-              // value={searchRegExp}
-              placeholder="Search chat"
-              inputProps={{ "aria-label": "search" }}
-            />
+            {/* Search Box */}
+            <Box sx={styles.search}>
+              <InputBase
+                sx={styles.inputBase}
+                onKeyDown={handleEnter}
+                onChange={(e) => setSearchRegExp(new RegExp(e.target.value, "i"))}
+                // value={searchRegExp}
+                placeholder="Search chat"
+                inputProps={{ "aria-label": "search" }}
+              />
 
-            <Box sx={styles.searchIconWrapper}>
-              <SearchIcon />
+              <Box sx={styles.searchIconWrapper}>
+                <SearchIcon />
+              </Box>
             </Box>
-          </Box>
 
-          <List disablePadding sx={styles.chatList}>
-            {chatList?.length ? (
-              chatList
-            ) : (
-              <Typography sx={styles.noResult}>No results</Typography>
-            )}
-          </List>
-        </>
-      )}
+            <List disablePadding sx={styles.chatList}>
+              {chatList?.length ? (
+                chatList
+              ) : (
+                <Typography sx={styles.noResult}>No results</Typography>
+              )}
+            </List>
+          </>
+        )
+      }
     </Box>
   );
 }

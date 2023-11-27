@@ -106,6 +106,7 @@ export default function Chat() {
               chatId: currentChatId,
             });
           })
+          //potentialo bug source
           .catch((err) => setError(err));
       }
     }

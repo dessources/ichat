@@ -27,7 +27,7 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
         //for each recipients send the message to their room
         process.env.NODE_ENV !== "production" && console.log(data.recipients);
         data.recipients.forEach((id) =>
-          socket.to(id).emit("receive-message", { ...data, recipients: [] })
+          socket.to(id).emit("new-message", { ...data, recipients: [] })
         );
       });
     });
