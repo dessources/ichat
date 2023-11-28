@@ -53,7 +53,7 @@ export default authorize(async (req, res) => {
           .toArray()
           .then((arr) => arr?.[0])
           .catch((err) => {
-            console.log(err);
+            process.env.NODE_ENV !== "production" && console.log(err);
             return res.status(500).json(err);
           });
 

@@ -21,7 +21,6 @@ export default function newMessageHandler({
   user,
 }: newMessageHandlerType) {
   return (message: Message & { recipients: string[] }) => {
-    console.log(`Message ${message.content} has been received`);
     const newMessages = chatMessages[message.chat]
       ? {
           ...chatMessages[message.chat],
@@ -51,8 +50,9 @@ export default function newMessageHandler({
       : (message.recipients.find((el) => el !== user.id) as string);
 
     setChats((prev: any) => {
-      const chat = structuredClone(prev[chatId]);
-      delete prev[chatId];
+      const chat = prev[chatId];
+
+      // delete prev[chatId];
       chat.unreadMessageCount = chat.unreadMessageCount as number;
       chat.id !== currentChat?.id && chat.unreadMessageCount++;
       return {
@@ -61,8 +61,8 @@ export default function newMessageHandler({
       };
     });
 
-    socket?.emit("message-received", {
-      id: message.id,
+    socket?.emit("messages-received", {
+      messageIds: [message.id],
       chatId: message.chat,
       sender: message.sender,
     });

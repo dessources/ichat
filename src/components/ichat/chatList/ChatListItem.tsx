@@ -1,16 +1,24 @@
+import React from "react";
 import {
   ChatWithInterlocutor,
   ChatContext as ChatContextType,
   ChatMessagesContext as ChatMessagesContextType,
+  Context,
+  User,
 } from "@/models";
+import type { Socket } from "socket.io-client";
 
-import React from "react";
 import ListItemButton from "@mui/material/ListItemButton";
 import { Avatar, IconButton, Typography, Divider, Box } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 import * as styles from "@/styles/ChatList.style";
 import { avatar } from "@/styles/Ichat.style";
-import { ChatContext, ChatMessagesContext } from "@/contexts";
+import {
+  ChatContext,
+  ChatMessagesContext,
+  SocketIoContext,
+  UserContext,
+} from "@/contexts";
 import useAppContext from "@/hooks/useAppContext";
 
 //styles
@@ -24,10 +32,30 @@ function ChatListItem({ chat }: { chat: ChatWithInterlocutor }) {
   const { chatMessages } = useAppContext(
     ChatMessagesContext
   ) as ChatMessagesContextType;
-
-  const lastMessageIndex = chatMessages[chat?.id]?.messages.length - 1;
-  const lastMessage = chatMessages[chat?.id]?.messages[lastMessageIndex];
+  const [user] = useAppContext(UserContext) as Context<User>;
+  const [socket] = useAppContext(SocketIoContext) as Context<Socket>;
+  const messageList = chatMessages[chat?.id]?.messages;
+  const lastMessageIndex = messageList?.length - 1;
+  const lastMessage = messageList?.[lastMessageIndex];
   const selected = currentChat?.secondaryId === chat?.secondaryId;
+
+  //send a message received notification if there are messages
+  // received that are not yet read because the client was disconnected
+  const unreadMessages = [];
+  for (let i = messageList?.length - 1; i >= 0; i--) {
+    if (messageList?.[i].status !== "sent" || messageList?.[i].sender === user?.id)
+      break;
+    messageList[i].status = "delivered";
+    unreadMessages.push(messageList?.[i].id);
+  }
+
+  if (unreadMessages.length) {
+    socket?.emit("messages-received", {
+      messageIds: unreadMessages,
+      chatId: lastMessage.chat,
+      sender: lastMessage.sender,
+    });
+  }
 
   return (
     //Somehow I had put onFocus instead of Onclick

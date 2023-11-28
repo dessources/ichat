@@ -25,7 +25,7 @@ export default function Home() {
         <title> Ichat </title>
         <meta name="description" content="Chat app" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/chat.png" />
+        <link rel="icon" href="/chat.png" as="image" />
       </Head>
 
       <ThemeProvider theme={theme}>
