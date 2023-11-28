@@ -31,7 +31,7 @@ function UnauthApp() {
       .then(() => {
         setAuth?.(true);
       })
-      .catch((err) => console.log(err))
+      .catch((err) => process.env.NODE_ENV !== "production" && console.log(err))
       .finally(() => {
         setStatus("done");
       });

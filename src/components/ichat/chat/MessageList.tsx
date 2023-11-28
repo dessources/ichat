@@ -35,9 +35,7 @@ import Spinner from "@/components/Spinner";
 function MessageList({ bottom }: any) {
   const [chatUsers] = useAppContext(ChatUsersContext) as Context<ChatUsers>;
   const [user] = useAppContext(UserContext) as Context<User>;
-  const { currentChat, setCurrentChat, setChats } = useAppContext(
-    ChatContext
-  ) as ChatContextType;
+  const { currentChat } = useAppContext(ChatContext) as ChatContextType;
   const { chatMessages, isLoading, error } = useAppContext(
     ChatMessagesContext
   ) as ChatMessagesContextType;
@@ -63,10 +61,6 @@ function MessageList({ bottom }: any) {
     (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
   );
 
-  console.log(
-    "the current chat unread message count is",
-    currentChat?.unreadMessageCount
-  );
   React.useEffect(() => {
     formatEmoji(document.body);
   }, [currentChatId, chatMessages]);

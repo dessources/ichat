@@ -5,7 +5,7 @@ export default function useAppContext<T = any>(context: React.Context<T>): T {
   const value = React.useContext(context);
 
   if (!value) {
-    console.log(context);
+    process.env.NODE_ENV !== "production" && console.log(context);
     throw new Error(
       `You are trying to access a context outside of its scope or the context is undefined`
     );

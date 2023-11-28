@@ -65,6 +65,7 @@ export default function Chat() {
 
   React.useEffect(() => {
     if (currentChat) {
+      //set Current Chat unread message count to 0
       setChats((prev) => ({
         ...prev,
         [currentChat.secondaryId as string]: {
@@ -73,23 +74,27 @@ export default function Chat() {
         },
       }));
 
-      const currentMessages = chatMessages[currentChatId]?.messages;
+      const currentMessages = chatMessages[currentChatId]?.messages || [];
       //if we have  fetched messages
       //add them to the corresponding chat
       //if the current chat has no messages fetch them
       if (currentMessages?.length) {
-        const lastMessageId = currentMessages[currentMessages.length - 1].id;
+        const lastMessageId = currentMessages[currentMessages.length - 1]?.id;
         contentService
           .getMessages(currentChatId, lastMessageId)
           .then((messages) => {
             const newMessages = [...currentMessages, ...messages];
             const readMessages = [];
-            for (let i = newMessages.length - 1; i > 0; i--) {
+            for (let i = newMessages.length - 1; i >= 0; i--) {
+              //If we get to a message that the current user has sent
+              //it means that we went through all the new messages that
+              // he has received
               if (
-                newMessages[i].sender !== currentUser?.id ||
+                newMessages[i].sender === currentUser?.id ||
                 newMessages[i].status === "read"
               )
                 break;
+              // console.log("I changed to read");
               newMessages[i].status = "read";
               readMessages.push(newMessages[i].id);
             }

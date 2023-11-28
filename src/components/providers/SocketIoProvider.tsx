@@ -80,13 +80,14 @@ function SocketIoProvider(props: any) {
     const messageReceivedHandlerReturn = messageReceivedHandler({
       chatMessages,
       setChatMessages,
+      userId: user?.id,
     });
     socket?.on("new-message", newMessageHandlerReturn);
     socket?.on("messages-read", messageReadHandlerReturn);
-    socket?.on("message-received", messageReceivedHandlerReturn);
+    socket?.on("messages-received", messageReceivedHandlerReturn);
     return () => {
       socket?.off("messages-read", messageReadHandlerReturn);
-      socket?.off("message-received", messageReceivedHandlerReturn);
+      socket?.off("messages-received", messageReceivedHandlerReturn);
       socket?.off("new-message", newMessageHandlerReturn);
     };
   }, [

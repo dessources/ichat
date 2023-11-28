@@ -4,7 +4,7 @@ import { getCookie, setCookie } from "cookies-next";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const refreshToken = getCookie("refreshToken", { req, res });
-    console.log(refreshToken);
+
     try {
       // Verify the refresh token
       const { username } = verifyRefreshToken(<string>refreshToken) as {

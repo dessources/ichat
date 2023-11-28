@@ -64,7 +64,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     case "PUT":
       try {
         const messageId: string = req.body.message.id;
+        let theMessage = await messages.findOne({ id: messageId });
+
         await messages.updateOne({ id: messageId }, { $set: req.body.message });
+        theMessage = await messages.findOne({ id: messageId });
+
         res.status(201).json({ message: "message updated" });
       } catch (e) {
         process.env.NODE_ENV !== "production" && console.log(e);
