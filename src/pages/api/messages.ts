@@ -64,7 +64,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     case "PUT":
       try {
         const messageId: string = req.body.message.id;
-
         await messages.updateOne({ id: messageId }, { $set: req.body.message });
 
         res.status(201).json({ message: "message updated" });
