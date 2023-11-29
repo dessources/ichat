@@ -44,15 +44,16 @@ function SocketIoProvider(props: any) {
             ? "https://ichat-socket.onrender.com"
             : "http://localhost:3001";
 
-        newSocket = io(socketURL, {
-          query: { roomId: user?.id },
-          auth: { token: process.env.NEXT_PUBLIC_API_ACCESS_TOKEN },
-        });
-
-        newSocket.on("connect", () => {
-          console.log("Socket.io is connected");
-          setSocket?.(newSocket as Socket);
-        });
+        setTimeout(() => {
+          newSocket = io(socketURL, {
+            query: { roomId: user?.id },
+            auth: { token: process.env.NEXT_PUBLIC_API_ACCESS_TOKEN },
+          });
+          newSocket.on("connect", () => {
+            console.log("Socket.io is connected");
+            setSocket?.(newSocket as Socket);
+          });
+        }, 5000);
       }
     })();
 

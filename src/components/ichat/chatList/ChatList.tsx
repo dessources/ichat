@@ -3,14 +3,20 @@ import React from "react";
 
 //utils && hooks && context
 import useAppContext from "@/hooks/useAppContext";
-import { ChatContext, ChatMessagesContext, UserContext } from "@/contexts";
+import {
+  ChatContext,
+  ChatMessagesContext,
+  SocketIoContext,
+  UserContext,
+} from "@/contexts";
 
 //models
 import {
   ChatContext as ChatContextType,
   ChatMessagesContext as ChatMessagesContextType,
-  Chat,
+  Context,
 } from "@/models";
+import type { Socket } from "socket.io-client";
 
 //mui
 import Box from "@mui/material/Box";
@@ -33,6 +39,8 @@ export default function ChatList() {
   const { isLoading: messagesLoading } = useAppContext(
     ChatMessagesContext
   ) as ChatMessagesContextType;
+
+  const [socket] = useAppContext(SocketIoContext) as Context<Socket>;
 
   const [searchRegExp, setSearchRegExp] = React.useState(/$/);
 
@@ -61,9 +69,14 @@ export default function ChatList() {
         <Typography sx={styles.title} component="p">
           Error !
         </Typography>
-      ) : */ isLoading || messagesLoading ? (
+      ) : */
+        isLoading || messagesLoading ? (
+          //if the chat details or message or socket.io are still
+          //loading, show the loading animation instead.
           <Typography sx={styles.title} component="p">
-            Loading ...
+            {socket
+              ? "Loading ..."
+              : "Establishing connection with message transfer service..."}
           </Typography>
         ) : (
           <>
