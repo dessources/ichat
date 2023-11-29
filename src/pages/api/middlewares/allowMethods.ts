@@ -6,7 +6,11 @@ export default function allowMethods(
   return async function (req: NextApiRequest, res: NextApiResponse) {
     if (allowedMethods.includes(<string>req.method)) await next(req, res);
     else {
-      res.status(405).json({ message: `Method ${req.method} not allowed` });
+      res
+        .status(405)
+        .json({
+          message: `Method ${req.method} not allowed. Allowed metthods are ${allowedMethods}`,
+        });
     }
   };
 }
