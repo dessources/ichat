@@ -60,7 +60,6 @@ export default function ChatList() {
   };
 
   const [newChatOpen, setNewChatOpen] = React.useState(false);
-
   return (
     <Box sx={styles.paper}>
       {
@@ -70,7 +69,7 @@ export default function ChatList() {
           Error !
         </Typography>
       ) : */
-        isLoading || messagesLoading ? (
+        !socket || isLoading || messagesLoading ? (
           //if the chat details or message or socket.io are still
           //loading, show the loading animation instead.
           <Typography sx={styles.title} component="p">
