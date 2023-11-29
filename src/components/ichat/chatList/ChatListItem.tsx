@@ -48,7 +48,7 @@ function ChatListItem({ chat }: { chat: ChatWithInterlocutor }) {
     messageList[i].status = "delivered";
     unreadMessages.push(messageList?.[i].id);
   }
-
+  console.log("ChatList is trying to access socket.io");
   if (unreadMessages.length) {
     socket?.emit("messages-received", {
       messageIds: unreadMessages,

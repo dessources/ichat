@@ -50,6 +50,7 @@ function SocketIoProvider(props: any) {
         });
 
         newSocket.on("connect", () => {
+          console.log("Socket.io is connected");
           setSocket?.(newSocket as Socket);
         });
       }
