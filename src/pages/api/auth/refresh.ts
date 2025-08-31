@@ -1,10 +1,12 @@
 import { verifyRefreshToken, generateAccessToken } from "@/utils/jwt";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getCookie, setCookie } from "cookies-next";
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method === "POST") {
-    const refreshToken = getCookie("refreshToken", { req, res });
-    console.log(refreshToken);
+    const refreshToken = await getCookie("refreshToken", { req, res });
     try {
       // Verify the refresh token
       const { username } = verifyRefreshToken(<string>refreshToken) as {
@@ -19,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const accessToken = generateAccessToken({ username });
 
       // Set the new access token as a cookie with a short expiration time
-      setCookie(`accessToken`, accessToken, {
+      await setCookie(`accessToken`, accessToken, {
         req,
         res,
         httpOnly: true,

@@ -13,10 +13,11 @@ import {
   LONG_REFRESH_TOKEN_DAYS_COUNT,
   SHORT_REFRESH_TOKEN_DAYS_COUNT,
 } from "@/utils/constants";
+
 export default authorize(async (req, res) => {
   try {
     if (req.method === "POST") {
-      const refreshToken = getCookie("refreshToken", { req, res });
+      const refreshToken = await getCookie("refreshToken", { req, res });
 
       //Try login in with the refresh token
       if (refreshToken) {
@@ -31,7 +32,7 @@ export default authorize(async (req, res) => {
 
         // Set a cookie with the new access token
 
-        setCookie("accessToken", accessToken, {
+        await setCookie("accessToken", accessToken, {
           req,
           res,
           httpOnly: true,
@@ -43,7 +44,9 @@ export default authorize(async (req, res) => {
         return res.status(200).end();
       } else {
         const client = await clientPromise;
-        const users: mongoDB.Collection = client.db("ichat").collection("users");
+        const users: mongoDB.Collection = client
+          .db("ichat")
+          .collection("users");
         const data = req.body;
         const username = data?.username;
         const user = await users
@@ -76,7 +79,7 @@ export default authorize(async (req, res) => {
 
           // Set the access token as a cookie with a short expiration time
 
-          setCookie("accessToken", accessToken, {
+          await setCookie("accessToken", accessToken, {
             req,
             res,
             httpOnly: true,
@@ -86,7 +89,7 @@ export default authorize(async (req, res) => {
 
           // Set the refresh token as a cookie with a longer expiration time
 
-          setCookie("refreshToken", refreshToken, {
+          await setCookie("refreshToken", refreshToken, {
             req,
             res,
             httpOnly: true,
@@ -99,7 +102,9 @@ export default authorize(async (req, res) => {
         } else throw new Error();
       }
     } else {
-      return res.status(405).json({ message: "Bad Request, only POST accepted" });
+      return res
+        .status(405)
+        .json({ message: "Bad Request, only POST accepted" });
     }
   } catch (err) {
     process.env.NODE_ENV === "test" && console.log(err);

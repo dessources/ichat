@@ -28,7 +28,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       } else {
         //if we didn't find a user then,
         //return the user whose access token is in the access token cookie
-        const accessToken = getCookie("accessToken", { req, res });
+        const accessToken = await getCookie("accessToken", { req, res });
 
         if (accessToken) {
           const { username } = verifyAccessToken(accessToken as string) as {

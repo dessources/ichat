@@ -18,10 +18,10 @@ export default authenticate(
       users.updateOne({ id: user?.id }, { $set: { online: false } });
 
       // Set the access token to null
-      setCookie(`accessToken`, "", { req, res });
+      await setCookie(`accessToken`, "", { req, res });
 
       // Set the refresh token as a cookie with a longer expiration time
-      setCookie(`refreshToken`, "", { req, res });
+      await setCookie(`refreshToken`, "", { req, res });
 
       // Return the access token in the response
       return res.status(200).json({ message: "Logged out successfully" });

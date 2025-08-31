@@ -35,7 +35,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Set the access token as a cookie with a short expiration time
 
-    setCookie("accessToken", accessToken, {
+    await setCookie("accessToken", accessToken, {
       req,
       res,
       httpOnly: true,
@@ -46,7 +46,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Set the refresh token as a cookie with a longer expiration time
 
-    setCookie("refreshToken", refreshToken, {
+    await setCookie("refreshToken", refreshToken, {
       req,
       res,
       httpOnly: true,
@@ -59,7 +59,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       .insertOne(newUser)
       .then(() => res.status(201).end())
       .catch((err) => {
-        process.env.NODE_ENV !== "production" && console.dir(err, { depth: null });
+        process.env.NODE_ENV !== "production" &&
+          console.dir(err, { depth: null });
         res.status(500).json({ message: "Could not register user" });
       });
   } catch (err) {

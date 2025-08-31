@@ -5,7 +5,7 @@ import { getCookie, getCookies } from "cookies-next";
 export default function authenticate(next: NextApiHandler) {
   return async function (req: NextApiRequest, res: NextApiResponse) {
     // Parse the cookies
-    const accessToken = getCookie("accessToken", { req, res });
+    const accessToken = await getCookie("accessToken", { req, res });
 
     try {
       if (!accessToken) {

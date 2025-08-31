@@ -26,7 +26,7 @@ axiosPrivate.interceptors.response.use(
 
     if (error?.response?.status === 401 && !prevRequest?.sent) {
       prevRequest.sent = true;
-      await axios.post("/auth/refresh");
+      await axios.post("/api/auth/refresh");
 
       return axiosPrivate(prevRequest);
     }
