@@ -10,6 +10,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const client = await clientPromise;
+
   const users: mongoDB.Collection = client.db("ichat").collection("users");
   const data = req.body;
 
@@ -58,7 +59,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return await users
       .insertOne(newUser)
       .then(() => res.status(201).end())
-      .catch((err) => {
+      .catch(async (err) => {
         process.env.NODE_ENV !== "production" &&
           console.dir(err, { depth: null });
         res.status(500).json({ message: "Could not register user" });

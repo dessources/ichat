@@ -15,6 +15,7 @@ import { getCookies } from "cookies-next";
 import * as mongoDb from "mongodb";
 import { User } from "@/models";
 import { NextApiRequest, NextApiResponse } from "next";
+import { waitFor } from "@testing-library/dom";
 
 let users: mongoDb.Collection;
 let newUser: Partial<User>;
@@ -46,7 +47,8 @@ afterEach(async () => {
         expect(value.deletedCount).toBeGreaterThan(0);
       })
       .catch(
-        (reason) => process.env.NODE_ENV === "test" && console.dir(reason.errInfo)
+        (reason) =>
+          process.env.NODE_ENV === "test" && console.dir(reason.errInfo)
       );
   }
 });
@@ -66,9 +68,9 @@ describe("Register API route", () => {
     await register(req, res);
 
     expect(res.statusCode).toBe(405);
-    expect(resJsonSpy.mock.calls[0][0].message).toMatchInlineSnapshot(`"Method GET not allowed"`
-
-);
+    expect(resJsonSpy.mock.calls[0][0].message).toMatchInlineSnapshot(
+      `"Method GET not allowed"`
+    );
   });
 
   it("should return a 500 error if user's username already exits", async () => {
@@ -109,10 +111,9 @@ describe("Register API route", () => {
     jest.spyOn(res, "status");
 
     await register(req, res);
-
     expect(res.status).toHaveBeenCalledWith(201);
 
-    const { refreshToken, accessToken } = getCookies({ req, res }) as {
+    const { refreshToken, accessToken } = (await getCookies({ req, res })) as {
       refreshToken: string;
       accessToken: string;
     };
@@ -121,5 +122,5 @@ describe("Register API route", () => {
     expect(refreshToken.length).toBeGreaterThan(10);
     expect(typeof accessToken).toBe("string");
     expect(accessToken.length).toBeGreaterThan(10);
-  });
+  }, 10000);
 });

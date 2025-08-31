@@ -1,27 +1,27 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createMocks, RequestMethod } from "node-mocks-http";
-// import { faker } from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 import { User } from "@/models";
 import { v4 as uuid4 } from "uuid";
 
-// export function createRandomUser(): Partial<User> & { password: string } {
-//   return {
-//     id: uuid4(),
-//     name: faker.person.fullName(),
-//     username: faker.internet.username(),
-//     profilePicture: faker.image.avatar(),
-//     password: faker.internet.password(),
-//   };
-// }
 export function createRandomUser(): Partial<User> & { password: string } {
   return {
     id: uuid4(),
-    name: "John Doe",
-    username: "Doe.man",
-    profilePicture: "faker.image.avatar",
-    password: "faker.internet.password",
+    name: faker.person.fullName(),
+    username: faker.internet.userName(),
+    profilePicture: faker.image.avatar(),
+    password: faker.internet.password(),
   };
 }
+// export function createRandomUser(): Partial<User> & { password: string } {
+//   return {
+//     id: uuid4(),
+//     name: "John Doe",
+//     username: "Doe.man",
+//     profilePicture: "faker.image.avatar",
+//     password: "faker.internet.password",
+//   };
+// }
 
 export function mockRequestResponse(
   method: RequestMethod,
