@@ -8,6 +8,7 @@ import { Chat } from "@/models";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
+import Item from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
@@ -26,7 +27,7 @@ export default function ChatHeader() {
       <AppBar elevation={1} sx={styles.header}>
         <Toolbar sx={styles.toolbar}>
           <Grid container spacing={1} alignItems="center">
-            <Grid item onClick={() => setChatProfileOpen(true)}>
+            <Item onClick={() => setChatProfileOpen(true)}>
               <IconButton color="inherit" sx={{ p: 0.5 }}>
                 <Avatar
                   src={currentChat?.chatPicture}
@@ -39,10 +40,10 @@ export default function ChatHeader() {
               <Typography component={"span"} textTransform={"capitalize"}>
                 {currentChat?.name}
               </Typography>
-            </Grid>
-            <Grid item xs />
+            </Item>
+            <Item />
 
-            <Grid item></Grid>
+            <Item></Item>
           </Grid>
         </Toolbar>
       </AppBar>

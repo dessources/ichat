@@ -8,6 +8,7 @@ import { User } from "@/models";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
+import Item from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
@@ -28,7 +29,7 @@ export default function Header() {
       <AppBar color="secondary" position="fixed" elevation={1} sx={styles.root}>
         <Toolbar sx={styles.toolbar}>
           <Grid container spacing={1} alignItems="center">
-            <Grid item>
+            <Item>
               <Box sx={styles.logoContainer}>
                 <Image
                   src="/chat.png"
@@ -39,10 +40,10 @@ export default function Header() {
                 />{" "}
                 Ichat
               </Box>
-            </Grid>
-            <Grid item xs />
+            </Item>
+            <Item />
 
-            <Grid item>
+            <Item>
               <IconButton
                 color="inherit"
                 sx={{ p: 0.5 }}
@@ -52,7 +53,7 @@ export default function Header() {
                   {user?.name.charAt(0)}
                 </Avatar>
               </IconButton>
-            </Grid>
+            </Item>
           </Grid>
         </Toolbar>
       </AppBar>
