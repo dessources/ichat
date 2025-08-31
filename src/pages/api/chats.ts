@@ -14,7 +14,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     try {
       const { userId } = req.query as { userId: string };
-      console.log(userId);
+      process.env.NODE_ENV !== "production" && console.log(userId);
       result = await chats.find({ users: { $in: [userId] } }).toArray();
     } catch (err) {
       process.env.NODE_ENV !== "production" && console.log(err);

@@ -35,7 +35,6 @@ export default function Chat() {
         .map((id) => userService.getUser(id));
 
       Promise.all(chatUsersPromise).then((result) => {
-        console.log(result);
         setChatUsers?.((prev: ChatUsers) => ({
           ...prev,
           [currentChatId]: result,

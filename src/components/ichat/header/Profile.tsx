@@ -1,4 +1,4 @@
-import React from "react";
+import React, { RefObject } from "react";
 //models
 import { User } from "@/models";
 //mui
@@ -74,7 +74,7 @@ function Profile({ open, setOpen }: any) {
             disabled
             style={{ fontSize: "20px" }}
           />
-          <EditIcon onClick={handleEdit(nameRef)} />
+          <EditIcon onClick={handleEdit(nameRef as RefObject<HTMLElement>)} />
         </Box>
 
         {/*About section */}
@@ -95,7 +95,9 @@ function Profile({ open, setOpen }: any) {
               variant="standard"
               sx={styles.textField}
             />
-            <EditIcon onClick={handleEdit(aboutRef)} />
+            <EditIcon
+              onClick={handleEdit(aboutRef as RefObject<HTMLElement>)}
+            />
           </Box>
         </Box>
 

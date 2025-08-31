@@ -76,7 +76,7 @@ function MessageBox({ setBottom }: any) {
    * UI Effects
    */
   //when the value of message changes, update the "bottom" state
-  const messageBoxRef = React.useRef<HTMLDivElement>();
+  const messageBoxRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     if (message !== "")

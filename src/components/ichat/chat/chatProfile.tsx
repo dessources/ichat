@@ -21,7 +21,7 @@ function ChatProfile({ open, setOpen }: any) {
     setOpen(false);
   }, [setOpen]);
 
-  console.log(currentChatUsers);
+  process.env.NODE_ENV !== "production" && console.log(currentChatUsers);
 
   return (
     <Modal
@@ -31,7 +31,11 @@ function ChatProfile({ open, setOpen }: any) {
       slots={{ backdrop: Backdrop }}
     >
       <Box sx={styles.profileBox} className="profileBox">
-        <Avatar src={currentChat?.chatPicture} alt="My Avatar" sx={styles.avatar}>
+        <Avatar
+          src={currentChat?.chatPicture}
+          alt="My Avatar"
+          sx={styles.avatar}
+        >
           {currentChat?.name?.charAt(0)}
         </Avatar>
 
