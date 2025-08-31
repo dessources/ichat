@@ -8,7 +8,7 @@ async function createRandomUser(): Promise<
 > {
   return {
     name: faker.person.fullName(),
-    username: faker.internet.username(),
+    username: faker.internet.userName(),
     profilePicture: faker.image.avatar(),
     password: await hash(faker.internet.password(), SALT_ROUNDS),
   };
