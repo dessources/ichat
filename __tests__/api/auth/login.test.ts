@@ -103,7 +103,7 @@ describe("Login API route", () => {
   it("should return a 401 error if refreshToken is incorrect", async () => {
     reqRes = mockRequestResponse("POST");
     const { req, res } = reqRes;
-    setCookie("refreshToken", "badToken", { req, res });
+    await setCookie("refreshToken", "badToken", { req, res });
     const ResJsonSpy = jest.spyOn(res, "json");
 
     await login(req, res);
@@ -137,7 +137,7 @@ describe("Login API route", () => {
   it("should set a JWT access token cookie if authentication with refresh token is successful", async () => {
     reqRes = mockRequestResponse("POST");
     const { req, res } = reqRes;
-    setCookie("refreshToken", process.env.TEST_USER_REFRESH_TOKEN, {
+    await setCookie("refreshToken", process.env.TEST_USER_REFRESH_TOKEN, {
       req,
       res,
     });

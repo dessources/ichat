@@ -16,9 +16,12 @@ let accessToken: string;
 beforeAll(async () => {
   //login in in order to receive an access token
   const { req, res } = mockRequestResponse("POST");
-  setCookie("refreshToken", process.env.TEST_USER_REFRESH_TOKEN, { req, res });
+  await setCookie("refreshToken", process.env.TEST_USER_REFRESH_TOKEN, {
+    req,
+    res,
+  });
   await login(req, res);
-  accessToken = getCookie("accessToken", { req, res }) as string;
+  accessToken = (await getCookie("accessToken", { req, res })) as string;
 });
 
 afterEach(() => {
@@ -38,6 +41,7 @@ afterAll(async () => {
 describe("Messages API route", () => {
   it("Should return a 403 code if request sent without/with bad API access token", async () => {
     //request made with an invalid api access token
+    let x = 0;
     reqRes = mockRequestResponse(
       "POST",
       { chatId: "" },
@@ -47,7 +51,7 @@ describe("Messages API route", () => {
     const resJsonSpy = jest.spyOn(res, "json");
 
     // add the user access token cookie to the request
-    setCookie("accessToken", accessToken, { req, res });
+    await setCookie("accessToken", accessToken, { req, res });
     await messages(req, res);
 
     expect(res.statusCode).toBe(403);
@@ -74,7 +78,7 @@ describe("Messages API route", () => {
     reqRes = mockRequestResponse("GET");
     const { req, res } = reqRes;
     req.query = { chatId: process.env.TEST_CHAT_ID };
-    setCookie("accessToken", accessToken, { req, res });
+    await setCookie("accessToken", accessToken, { req, res });
     const resJsonSpy = jest.spyOn(res, "json");
 
     await messages(req, res);
