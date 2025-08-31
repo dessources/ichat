@@ -69,18 +69,6 @@ afterAll(async () => {
 });
 
 describe("Login API route", () => {
-  // it("is none of your business", async () => {
-  //   reqRes = mockRequestResponse("POST");
-  //   setCookie("refreshToken", process.env.TEST_USER_REFRESH_TOKEN, reqRes);
-  //   const { req, res } = reqRes;
-  //   jest.spyOn(res, "json");
-
-  //   await login(req, res);
-  //   expect(res.statusCode).toBe(200);
-
-  //   expect(4).toBe(4);
-  // });
-
   it("should return a 401 error if user does not exist", async () => {
     //Mock the request, response context
     reqRes = mockRequestResponse("POST");
@@ -107,7 +95,9 @@ describe("Login API route", () => {
 
     expect(res.statusCode).toBe(401);
     expect(typeof ResJsonSpy.mock.calls[0][0]?.message).toBe("string");
-    expect(ResJsonSpy.mock.calls[0][0].message).toMatchInlineSnapshot(`"Could not login user"`);
+    expect(ResJsonSpy.mock.calls[0][0].message).toMatchInlineSnapshot(
+      `"Could not login user"`
+    );
   });
 
   it("should return a 401 error if refreshToken is incorrect", async () => {
@@ -133,7 +123,7 @@ describe("Login API route", () => {
     await login(req, res);
     expect(res.status).toHaveBeenCalledWith(200);
 
-    const { refreshToken, accessToken } = getCookies({ req, res }) as {
+    const { refreshToken, accessToken } = (await getCookies({ req, res })) as {
       refreshToken: string;
       accessToken: string;
     };
@@ -147,13 +137,19 @@ describe("Login API route", () => {
   it("should set a JWT access token cookie if authentication with refresh token is successful", async () => {
     reqRes = mockRequestResponse("POST");
     const { req, res } = reqRes;
-    setCookie("refreshToken", process.env.TEST_USER_REFRESH_TOKEN, { req, res });
+    setCookie("refreshToken", process.env.TEST_USER_REFRESH_TOKEN, {
+      req,
+      res,
+    });
 
     jest.spyOn(res, "status");
 
     await login(req, res);
     expect(res.status).toHaveBeenCalledWith(200);
-    const accessToken = getCookie("accessToken", { req, res }) as string;
+    const accessToken = (await getCookie("accessToken", {
+      req,
+      res,
+    })) as string;
     expect(typeof accessToken).toBe("string");
 
     expect(accessToken.length).toBeGreaterThan(10);

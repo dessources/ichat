@@ -75,7 +75,7 @@ describe("validateInputs", () => {
   test("throws an error for invalid name", () => {
     expect(() => {
       validateInputs("J", "captain", "Abc123!@#", "Abc123!@#");
-    }).toThrowError(
+    }).toThrow(
       "Validation failed: Name must be between 2 and 50 characters long and only contain letters and spaces. "
     );
   });
@@ -88,7 +88,7 @@ describe("validateInputs", () => {
         "Abc123!@#",
         "Abc123!@#"
       );
-    }).toThrowError(
+    }).toThrow(
       "Validation failed: Username must be between 3 and 41 characters long and can only contain letters, numbers, periods, and underscores. "
     );
   });
@@ -96,7 +96,7 @@ describe("validateInputs", () => {
   test("throws an error for invalid password", () => {
     expect(() => {
       validateInputs("Jean-Luc Picard", "captain", "password", "password");
-    }).toThrowError(
+    }).toThrow(
       "Validation failed: Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character. "
     );
   });
@@ -104,7 +104,7 @@ describe("validateInputs", () => {
   test("throws an error for passwords that do not match", () => {
     expect(() => {
       validateInputs("Jean-Luc Picard", "captain", "Abc123!@#", "Abc123");
-    }).toThrowError(
+    }).toThrow(
       "Validation failed: The password and confirm password fields do not match."
     );
   });
