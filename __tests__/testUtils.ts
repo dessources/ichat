@@ -18,8 +18,8 @@ export function createRandomUser(): Partial<User> & { password: string } {
     id: uuid4(),
     name: "John Doe",
     username: "Doe.man",
-    profilePicture: "faker.image.avatar()",
-    password: "faker.internet.password()",
+    profilePicture: "faker.image.avatar",
+    password: "faker.internet.password",
   };
 }
 

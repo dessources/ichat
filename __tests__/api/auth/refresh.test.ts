@@ -32,7 +32,7 @@ describe("Refresh  Api Route", () => {
   it("Should return a 401 error if refresh token is invalid", async () => {
     reqRes = mockRequestResponse("POST");
     const { req, res } = reqRes;
-    setCookie("refreshToken", "BadRefreshToken", { req, res });
+    await setCookie("refreshToken", "BadRefreshToken", { req, res });
 
     const resJsonSpy = jest.spyOn(res, "json");
 
@@ -48,12 +48,18 @@ describe("Refresh  Api Route", () => {
   it("Should return a new access Token when refresh token valid", async () => {
     reqRes = mockRequestResponse("POST");
     const { req, res } = reqRes;
-    setCookie("refreshToken", process.env.TEST_USER_REFRESH_TOKEN, { req, res });
+    await setCookie("refreshToken", process.env.TEST_USER_REFRESH_TOKEN, {
+      req,
+      res,
+    });
 
     await refresh(req, res);
 
     expect(res.statusCode).toBe(200);
-    const accessToken = getCookie("accessToken", { req, res }) as string;
+    const accessToken = (await getCookie("accessToken", {
+      req,
+      res,
+    })) as string;
 
     expect(typeof accessToken).toBe("string");
     expect(accessToken.length).toBeGreaterThan(10);

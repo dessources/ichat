@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
+// import "@testing-library/jest-dom/extend-expect";
 import Home from "../../src/pages/index";
 
 it("renders homepage unchanged", () => {
@@ -7,4 +7,5 @@ it("renders homepage unchanged", () => {
   // code to make test fail on purpose
   //   expect(4).toBe(5);
   // expect(container).toMatchSnapshot();
+  // expect(4).toBe(4);
 });

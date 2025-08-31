@@ -29,7 +29,7 @@ describe("Authenticate middleware", () => {
     const { req, res } = mockRequestResponse("GET");
 
     //passing an expired token
-    setCookie("accessToken", process.env.NEXT_PUBLIC_API_ACCESS_TOKEN, {
+    await setCookie("accessToken", process.env.BAD_API_ACCESS_TOKEN, {
       req,
       res,
       maxAge: -1,
@@ -49,7 +49,7 @@ describe("Authenticate middleware", () => {
 
   it("should call the next middleware if the  accessToken cookie is valid", async () => {
     const { req, res } = mockRequestResponse("GET");
-    setCookie("accessToken", process.env.NEXT_PUBLIC_API_ACCESS_TOKEN, {
+    await setCookie("accessToken", process.env.NEXT_PUBLIC_API_ACCESS_TOKEN, {
       req,
       res,
     });

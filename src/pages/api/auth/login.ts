@@ -51,7 +51,6 @@ export default authorize(async (req, res) => {
         const username = data?.username;
         const user = await users
           .find({ username: username })
-
           .collation({ locale: "en", strength: 2 })
           .toArray()
           .then((arr) => arr?.[0])
@@ -59,6 +58,8 @@ export default authorize(async (req, res) => {
             console.log(err);
             return res.status(500).json(err);
           });
+
+        console.log(user);
 
         const passwordsMatch = user
           ? await compare(data.password, user?.password)

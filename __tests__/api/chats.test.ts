@@ -19,7 +19,7 @@ beforeAll(async () => {
   const { req, res } = mockRequestResponse("POST");
   setCookie("refreshToken", process.env.TEST_USER_REFRESH_TOKEN, { req, res });
   await login(req, res);
-  accessToken = getCookie("accessToken", { req, res }) as string;
+  accessToken = (await getCookie("accessToken", { req, res })) as string;
 });
 
 afterEach(() => {

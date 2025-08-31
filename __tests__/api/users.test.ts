@@ -21,9 +21,12 @@ let userObj = {
 beforeAll(async () => {
   //login in in order to receive an access token
   const { req, res } = mockRequestResponse("POST");
-  setCookie("refreshToken", process.env.TEST_USER_REFRESH_TOKEN, { req, res });
+  await setCookie("refreshToken", process.env.TEST_USER_REFRESH_TOKEN, {
+    req,
+    res,
+  });
   await login(req, res);
-  accessToken = getCookie("accessToken", { req, res }) as string;
+  accessToken = (await getCookie("accessToken", { req, res })) as string;
 });
 
 afterEach(() => {
@@ -52,7 +55,7 @@ describe("Users API route", () => {
     const resJsonSpy = jest.spyOn(res, "json");
 
     // add the user access token cookie to the request
-    setCookie("accessToken", accessToken, { req, res });
+    await setCookie("accessToken", accessToken, { req, res });
     await users(req, res);
 
     expect(res.statusCode).toBe(403);
@@ -103,7 +106,7 @@ describe("Users API route", () => {
   it("Should return a 200 code and a user if request valid with no param given but with valid access Token cookie", async () => {
     reqRes = mockRequestResponse("GET");
     const { req, res } = reqRes;
-    setCookie("accessToken", accessToken, { req, res });
+    await setCookie("accessToken", accessToken, { req, res });
     const resJsonSpy = jest.spyOn(res, "json");
     await users(req, res);
 
